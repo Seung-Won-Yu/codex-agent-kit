@@ -1,0 +1,47 @@
+#:schema https://developers.openai.com/codex/config-schema.json
+
+# Redacted sample based on my local Codex setup.
+# Replace model names, paths, and project roots for your own machine.
+
+model = "gpt-5.5"
+model_reasoning_effort = "high"
+
+[features]
+goals = true
+unified_exec = true
+shell_tool = true
+multi_agent = true
+shell_snapshot = true
+tool_suggest = true
+skill_mcp_dependency_install = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."notion@openai-curated"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
+enabled = true
+
+[projects."/path/to/your/workspace"]
+trust_level = "trusted"
+
+[desktop]
+ambient-suggestions-enabled = true
+conversationDetailMode = "STEPS_COMMANDS"
+
+[mcp_servers.node_repl]
+args = []
+command = "/path/to/Codex.app/Contents/Resources/node_repl"
+startup_timeout_sec = 120
+
+[mcp_servers.node_repl.env]
+CODEX_HOME = "/path/to/.codex"
+NODE_REPL_NODE_MODULE_DIRS = ""
