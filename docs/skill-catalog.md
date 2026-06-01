@@ -1,5 +1,7 @@
 # Skill Catalog
 
+This catalog explains the practical role of each skill included in this kit. The goal is not to use every skill at once. The goal is to choose the smallest skill set that improves the output.
+
 ## Design And Product Flow
 
 | Skill | Use When |
@@ -27,6 +29,24 @@
 | --- | --- |
 | `supabase` | Any Supabase work: Auth, RLS, Storage, Realtime, CLI, MCP, migrations. |
 | `supabase-postgres-best-practices` | Postgres query, schema, index, RLS, and performance review. |
+
+## Simple Descriptions
+
+| Skill | Description |
+| --- | --- |
+| `brief-to-tasks` | Breaks a product or design brief into ordered work items that can be implemented. |
+| `claude-design` | Produces polished visual artifacts for exploring UI direction before coding. |
+| `design-brief` | Clarifies the audience, problem, tone, constraints, and intended outcome. |
+| `design-flow` | Connects the whole design process from brief to review in one guided lane. |
+| `design-review` | Checks whether a finished screen matches the brief and feels polished. |
+| `design-tokens` | Creates a reusable visual system for color, spacing, type, radius, and themes. |
+| `frontend-design-audit` | Finds usability, layout, readability, and visual consistency issues in existing UI. |
+| `gpt-taste` | Adds stronger art direction and higher visual ambition to frontend work. |
+| `image-to-code` | Turns screenshot or image references into implementation guidance. |
+| `information-architecture` | Plans navigation, content groups, pages, and user flow structure. |
+| `supabase` | Handles Supabase-specific product and backend work. |
+| `supabase-postgres-best-practices` | Keeps database schema, RLS, indexes, and queries healthier. |
+| `ux-enhancer` | Improves React UI ergonomics, scanability, and decision clarity. |
 
 ## Routing Notes
 

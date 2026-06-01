@@ -4,6 +4,17 @@ My personal Codex routing rules and reusable agent skills.
 
 This repository is a clean, shareable version of the local setup I use for product planning, frontend design, UX review, Supabase work, and implementation handoff. It intentionally excludes local sessions, auth files, caches, generated images, browser state, SQLite databases, and app runtime files.
 
+## What This Is
+
+This kit is my lightweight operating system for working with Codex. It helps rough ideas become the right kind of output: a product brief, design direction, frontend task list, UX review, Supabase plan, or implementation handoff.
+
+Instead of backing up my whole local Codex folder, this repo keeps only the parts that are useful to share:
+
+- reusable skills
+- routing rules for choosing the right role
+- a safe config example
+- small docs that explain how the setup fits together
+
 ## What's Inside
 
 ```text
@@ -34,13 +45,41 @@ messy request
 
 The default entry point is `AGENTS.md`. It maps rough requests into roles such as `@product`, `@game`, `@dev`, `@arch`, `@doc`, and `@intel`, then selects the narrowest skill needed for the job.
 
+## How I Use It
+
+I use this setup when I want Codex to behave less like a single generic assistant and more like a small team with clear lanes.
+
+- Product ideas go through brief, structure, and task breakdown.
+- UI work gets design direction, tokens, critique, and implementation notes.
+- Existing screens can be audited for clarity and polish.
+- Supabase work gets separated into app logic, schema, RLS, and Postgres performance.
+- Messy requests are routed into the smallest useful workflow before execution.
+
 ## Skill Groups
 
-| Group | Skills |
+| Group | What It Helps With | Skills |
 | --- | --- |
-| Product/design planning | `design-brief`, `information-architecture`, `design-flow`, `brief-to-tasks` |
-| Visual/UI quality | `claude-design`, `design-tokens`, `design-review`, `frontend-design-audit`, `gpt-taste`, `image-to-code`, `ux-enhancer` |
-| Backend/data | `supabase`, `supabase-postgres-best-practices` |
+| Product/design planning | Turns vague product ideas into a brief, information architecture, and buildable tasks. | `design-brief`, `information-architecture`, `design-flow`, `brief-to-tasks` |
+| Visual/UI quality | Improves visual direction, design tokens, screenshots, UI critique, and React usability. | `claude-design`, `design-tokens`, `design-review`, `frontend-design-audit`, `gpt-taste`, `image-to-code`, `ux-enhancer` |
+| Backend/data | Keeps Supabase, RLS, schema, and Postgres performance work grounded and reviewable. | `supabase`, `supabase-postgres-best-practices` |
+
+## Included Skills
+
+| Skill | Short Description |
+| --- | --- |
+| `brief-to-tasks` | Converts a design or product brief into a practical implementation checklist. |
+| `claude-design` | Creates high-fidelity HTML-style design artifacts and visual directions. |
+| `design-brief` | Captures audience, goals, constraints, tone, and product intent before building. |
+| `design-flow` | Runs a full design workflow from brief to IA, tokens, tasks, and review. |
+| `design-review` | Reviews a UI against a brief and points out polish, hierarchy, and usability issues. |
+| `design-tokens` | Defines reusable colors, spacing, typography, radius, shadow, and theme values. |
+| `frontend-design-audit` | Audits existing web screens for clarity, consistency, and visual quality. |
+| `gpt-taste` | Pushes frontend work toward a stronger, more distinctive visual result. |
+| `image-to-code` | Uses image references as the source for precise UI implementation. |
+| `information-architecture` | Organizes pages, navigation, content hierarchy, and user flows. |
+| `supabase` | Guides Supabase Auth, RLS, Storage, Realtime, CLI, MCP, and migrations. |
+| `supabase-postgres-best-practices` | Reviews Postgres schemas, indexes, RLS policies, and query performance. |
+| `ux-enhancer` | Refactors React screens for simpler decisions, better scanning, and cleaner flows. |
 
 ## Quick Install
 
