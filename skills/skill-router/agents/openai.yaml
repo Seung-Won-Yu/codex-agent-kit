@@ -1,0 +1,5 @@
+interface:
+  display_name: "Skill Router"
+  short_description: "Route work to the right Codex skills"
+  default_prompt: "Use $skill-router to choose the right skills and workflow for this request."
+

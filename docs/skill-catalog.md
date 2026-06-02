@@ -6,6 +6,7 @@ This catalog explains the practical role of each skill included in this kit. The
 
 | Skill | Use When |
 | --- | --- |
+| `skill-router` | Route broad or ambiguous requests into the smallest useful skill bundle. |
 | `design-flow` | Run a full design process from brief to tasks. |
 | `design-brief` | Define the product/user/design intent before building. |
 | `information-architecture` | Plan navigation, page structure, content hierarchy, and flows. |
@@ -69,6 +70,7 @@ These skills are imported or adapted from the Open Design ecosystem and kept und
 | `od-plan-design-review` | Rates design quality, explains what better looks like, and catches AI-looking UI. |
 | `od-platform-design` | Collects platform design constraints for cross-platform product work. |
 | `od-research-decision-room` | Turns qualitative signals into evidence, themes, options, and experiment queues. |
+| `skill-router` | Chooses roles, lanes, and the smallest useful skill set, including `od-*` artifact routing. |
 | `supabase` | Handles Supabase-specific product and backend work. |
 | `supabase-postgres-best-practices` | Keeps database schema, RLS, indexes, and queries healthier. |
 | `ux-enhancer` | Improves React UI ergonomics, scanability, and decision clarity. |

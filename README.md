@@ -62,6 +62,7 @@ I use this setup when I want Codex to behave less like a single generic assistan
 | Group | What It Helps With | Skills |
 | --- | --- | --- |
 | Product/design planning | Turns vague product ideas into a brief, information architecture, and buildable tasks. | `design-brief`, `information-architecture`, `design-flow`, `brief-to-tasks` |
+| Routing/orchestration | Chooses the smallest useful skill bundle and prevents over-stacking. | `skill-router` |
 | Visual/UI quality | Improves visual direction, design tokens, screenshots, UI critique, and React usability. | `claude-design`, `design-tokens`, `design-review`, `frontend-design-audit`, `gpt-taste`, `image-to-code`, `ux-enhancer` |
 | Backend/data | Keeps Supabase, RLS, schema, and Postgres performance work grounded and reviewable. | `supabase`, `supabase-postgres-best-practices` |
 | Open Design imports | Adds artifact, dashboard, research, chart, diagram, and cross-platform design workflows inspired by Open Design. | `od-design-md`, `od-plan-design-review`, `od-research-decision-room`, `od-d3-visualization`, `od-data-report`, `od-hand-drawn-diagrams`, `od-motion-frames`, `od-live-dashboard`, `od-platform-design` |
@@ -89,6 +90,7 @@ I use this setup when I want Codex to behave less like a single generic assistan
 | `od-plan-design-review` | Runs a score-based senior design review and flags weak AI-looking UI patterns. |
 | `od-platform-design` | References cross-platform design guidance across Apple HIG, Material, and WCAG. |
 | `od-research-decision-room` | Synthesizes messy research evidence into an HTML decision-room artifact. |
+| `skill-router` | Chooses roles, lanes, and skill bundles, including the imported `od-*` workflows. |
 | `supabase` | Guides Supabase Auth, RLS, Storage, Realtime, CLI, MCP, and migrations. |
 | `supabase-postgres-best-practices` | Reviews Postgres schemas, indexes, RLS policies, and query performance. |
 | `ux-enhancer` | Refactors React screens for simpler decisions, better scanning, and cleaner flows. |

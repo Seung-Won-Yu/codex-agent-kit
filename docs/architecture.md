@@ -13,6 +13,8 @@ This kit separates three layers:
 
 It is intentionally written as policy rather than code so it can be read and edited quickly.
 
+`skills/skill-router/` contains the reusable router skill. Its bundled `references/skill-catalog.md` and `references/activation-matrix.md` are the detailed lookup tables used when several skills could fit.
+
 ## 2. Skill Layer
 
 `skills/` contains reusable workflows. Each skill has a `SKILL.md` with:
