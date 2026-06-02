@@ -1,0 +1,5 @@
+interface:
+  display_name: "Mobile Game Design"
+  short_description: "Core loops, FTUE, retention, and GDD flow"
+  brand_color: "#F59E0B"
+  default_prompt: "Use $mobile-game-design to turn this rough mobile game idea into a focused concept brief."

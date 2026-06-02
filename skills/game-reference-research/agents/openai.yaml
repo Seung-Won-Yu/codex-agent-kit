@@ -1,0 +1,5 @@
+interface:
+  display_name: "Game Reference Research"
+  short_description: "Research and turn sources into skill references"
+  brand_color: "#0EA5E9"
+  default_prompt: "Use $game-reference-research to research this mobile game topic and turn it into a Codex skill reference."

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Player Experience Review"
+  short_description: "Persona playthroughs that expose friction"
+  brand_color: "#06B6D4"
+  default_prompt: "Use $player-experience-review to walk through this game flow as a target player."

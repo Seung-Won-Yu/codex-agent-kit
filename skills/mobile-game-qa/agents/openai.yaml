@@ -1,0 +1,5 @@
+interface:
+  display_name: "Mobile Game QA"
+  short_description: "Touch, layout, feel, and release checks"
+  brand_color: "#EF4444"
+  default_prompt: "Use $mobile-game-qa to verify this mobile game prototype before I show it."

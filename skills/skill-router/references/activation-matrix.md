@@ -27,6 +27,7 @@ Use this table before falling into the larger common-route list. It keeps large 
 | Reference-to-UI | `image-to-code` | Screenshots or images should drive the build | Treating it as a general frontend planner |
 | Full design workflow | `design-flow` | Needs brief -> IA -> tokens -> tasks -> review | Using for quick UI tweaks |
 | Existing UI cleanup | `frontend-design-audit` or `ux-enhancer` | Existing product/page/component needs diagnosis or usability refactor | Applying to greenfield builds with no UI yet |
+| Mobile game design | Exact game skill | Core loop, HUD, playable slice, playtest review, or mobile game QA is central | Treating a game concept like a generic SaaS app |
 | Backend/API/data | `api-and-interface-design`, `database-schema-designer`, or `supabase` | Backend, schema, Auth, RLS, SQL, migrations, or Supabase is central | Pulling in Supabase for non-Supabase stacks |
 | Code implementation | `incremental-implementation` | Repo changes are needed; add TDD/diagnose only if useful | Planning-only answers when the user asked to build |
 | Debugging | `diagnose` | Cause is unknown, flaky, or multi-layered | Refactoring before reproducing |
@@ -114,6 +115,12 @@ Use this when the user wants a project-level workflow, spec system, research kit
 | Cross-platform UI convention or accessibility design check | `od-platform-design` | `accessibility`, `frontend-design-audit` |
 | Full designer-led workflow from idea to implementation | `design-flow` | `design-brief`, `information-architecture`, `design-tokens`, `brief-to-tasks`, `design-review` |
 | Design brief, IA, tokens, or build-task phase explicitly named | Exact phase skill | `product-frontend-engineer`, `frontend-ui-engineering` |
+| Rough mobile game idea, GDD, core loop, quests, rewards, retention | `mobile-game-design` | `prototype-slice-planner`, `game-ui-art-direction` |
+| Game HUD, reward popup, shop, mission, inventory, game-like UI | `game-ui-art-direction` | `frontend-design`, `mobile-game-qa` |
+| Decide first playable MVP/prototype scope | `prototype-slice-planner` | `mobile-game-design`, `product-frontend-engineer` |
+| Playtest-style first-session or fun/friction review | `player-experience-review` | `mobile-game-design`, `prototype-slice-planner` |
+| Mobile game prototype QA | `mobile-game-qa` | `webapp-testing`, `playwright`, `browser-use:browser` |
+| Game design/tool/reference research | `game-reference-research` | `research-synthesizer`, `skill-creator` |
 | Visual UI design only | `frontend-design` | `web-design-guidelines`, `imagegen` |
 | Premium/anti-generic frontend direction | `gpt-taste` | `frontend-design`, `frontend-ui-engineering`, `webapp-testing` |
 | Screenshot/reference image to web UI | `image-to-code` | `frontend-ui-engineering`, `playwright` |

@@ -1,0 +1,5 @@
+interface:
+  display_name: "Prototype Slice Planner"
+  short_description: "Choose the first playable slice to build"
+  brand_color: "#22C55E"
+  default_prompt: "Use $prototype-slice-planner to decide the first playable prototype slice."

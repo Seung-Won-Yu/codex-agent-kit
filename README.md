@@ -63,6 +63,7 @@ I use this setup when I want Codex to behave less like a single generic assistan
 | --- | --- | --- |
 | Product/design planning | Turns vague product ideas into a brief, information architecture, and buildable tasks. | `design-brief`, `information-architecture`, `design-flow`, `brief-to-tasks` |
 | Routing/orchestration | Chooses the smallest useful skill bundle and prevents over-stacking. | `skill-router` |
+| Game design/prototyping | Shapes mobile game ideas into loops, UI direction, playable slices, playtest reviews, and QA passes. | `mobile-game-design`, `game-ui-art-direction`, `prototype-slice-planner`, `player-experience-review`, `mobile-game-qa`, `game-reference-research` |
 | Visual/UI quality | Improves visual direction, design tokens, screenshots, UI critique, and React usability. | `claude-design`, `design-tokens`, `design-review`, `frontend-design-audit`, `gpt-taste`, `image-to-code`, `ux-enhancer` |
 | Backend/data | Keeps Supabase, RLS, schema, and Postgres performance work grounded and reviewable. | `supabase`, `supabase-postgres-best-practices` |
 | Open Design imports | Adds artifact, dashboard, research, chart, diagram, and cross-platform design workflows inspired by Open Design. | `od-design-md`, `od-plan-design-review`, `od-research-decision-room`, `od-d3-visualization`, `od-data-report`, `od-hand-drawn-diagrams`, `od-motion-frames`, `od-live-dashboard`, `od-platform-design` |
@@ -78,9 +79,13 @@ I use this setup when I want Codex to behave less like a single generic assistan
 | `design-review` | Reviews a UI against a brief and points out polish, hierarchy, and usability issues. |
 | `design-tokens` | Defines reusable colors, spacing, typography, radius, shadow, and theme values. |
 | `frontend-design-audit` | Audits existing web screens for clarity, consistency, and visual quality. |
+| `game-reference-research` | Researches game design, UI, tooling, and reference material for reusable skill notes. |
+| `game-ui-art-direction` | Defines mobile game HUDs, reward UI, visual tokens, component states, and screen hierarchy. |
 | `gpt-taste` | Pushes frontend work toward a stronger, more distinctive visual result. |
 | `image-to-code` | Uses image references as the source for precise UI implementation. |
 | `information-architecture` | Organizes pages, navigation, content hierarchy, and user flows. |
+| `mobile-game-design` | Turns rough mobile game ideas into core loops, first sessions, GDD outlines, and prototype briefs. |
+| `mobile-game-qa` | Checks mobile game prototypes for touch usability, HUD readability, feedback, layout, and performance basics. |
 | `od-d3-visualization` | Adds D3-oriented guidance for complex interactive charts and explanatory graphics. |
 | `od-data-report` | Turns CSV, Excel, or JSON data into a polished visual report page. |
 | `od-design-md` | Captures visual rules, tokens, and design direction in a `DESIGN.md` source of truth. |
@@ -90,6 +95,8 @@ I use this setup when I want Codex to behave less like a single generic assistan
 | `od-plan-design-review` | Runs a score-based senior design review and flags weak AI-looking UI patterns. |
 | `od-platform-design` | References cross-platform design guidance across Apple HIG, Material, and WCAG. |
 | `od-research-decision-room` | Synthesizes messy research evidence into an HTML decision-room artifact. |
+| `player-experience-review` | Reviews a game flow from the player's point of view to find confusion, friction, and churn risks. |
+| `prototype-slice-planner` | Chooses the smallest playable prototype slice and separates must-build from fakeable scope. |
 | `skill-router` | Chooses roles, lanes, and skill bundles, including the imported `od-*` workflows. |
 | `supabase` | Guides Supabase Auth, RLS, Storage, Realtime, CLI, MCP, and migrations. |
 | `supabase-postgres-best-practices` | Reviews Postgres schemas, indexes, RLS policies, and query performance. |

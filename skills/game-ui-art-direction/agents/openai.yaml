@@ -1,0 +1,5 @@
+interface:
+  display_name: "Game UI Art Direction"
+  short_description: "Game HUD, visual style, and UI token rules"
+  brand_color: "#8B5CF6"
+  default_prompt: "Use $game-ui-art-direction to define a mobile game UI style and component rules."
