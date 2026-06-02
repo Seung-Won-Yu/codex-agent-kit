@@ -24,11 +24,13 @@ Instead of backing up my whole local Codex folder, this repo keeps only the part
 │   └── codex.config.sample.toml      # Redacted Codex config example
 ├── docs/
 │   ├── architecture.md               # How the kit is organized
+│   ├── open-design-imports.md        # Imported Open Design skills and rationale
 │   ├── skill-catalog.md              # Included skills and when to use them
 │   └── security-checklist.md         # What must never be committed
 ├── scripts/
 │   └── install.sh                    # Optional local install helper
-└── skills/                           # Personal/shared skills
+├── skills/                           # Personal/shared skills
+└── third_party/                      # Third-party license notices
 ```
 
 ## Core Workflow
@@ -62,6 +64,7 @@ I use this setup when I want Codex to behave less like a single generic assistan
 | Product/design planning | Turns vague product ideas into a brief, information architecture, and buildable tasks. | `design-brief`, `information-architecture`, `design-flow`, `brief-to-tasks` |
 | Visual/UI quality | Improves visual direction, design tokens, screenshots, UI critique, and React usability. | `claude-design`, `design-tokens`, `design-review`, `frontend-design-audit`, `gpt-taste`, `image-to-code`, `ux-enhancer` |
 | Backend/data | Keeps Supabase, RLS, schema, and Postgres performance work grounded and reviewable. | `supabase`, `supabase-postgres-best-practices` |
+| Open Design imports | Adds artifact, dashboard, research, chart, diagram, and cross-platform design workflows inspired by Open Design. | `od-design-md`, `od-plan-design-review`, `od-research-decision-room`, `od-d3-visualization`, `od-data-report`, `od-hand-drawn-diagrams`, `od-motion-frames`, `od-live-dashboard`, `od-platform-design` |
 
 ## Included Skills
 
@@ -77,6 +80,15 @@ I use this setup when I want Codex to behave less like a single generic assistan
 | `gpt-taste` | Pushes frontend work toward a stronger, more distinctive visual result. |
 | `image-to-code` | Uses image references as the source for precise UI implementation. |
 | `information-architecture` | Organizes pages, navigation, content hierarchy, and user flows. |
+| `od-d3-visualization` | Adds D3-oriented guidance for complex interactive charts and explanatory graphics. |
+| `od-data-report` | Turns CSV, Excel, or JSON data into a polished visual report page. |
+| `od-design-md` | Captures visual rules, tokens, and design direction in a `DESIGN.md` source of truth. |
+| `od-hand-drawn-diagrams` | Points agents toward Excalidraw-style hand-drawn architecture and flow diagrams. |
+| `od-live-dashboard` | Builds self-contained dashboard artifacts with KPIs, activity, and task tables. |
+| `od-motion-frames` | Produces looping CSS motion-composition artifacts for hero/video-style frames. |
+| `od-plan-design-review` | Runs a score-based senior design review and flags weak AI-looking UI patterns. |
+| `od-platform-design` | References cross-platform design guidance across Apple HIG, Material, and WCAG. |
+| `od-research-decision-room` | Synthesizes messy research evidence into an HTML decision-room artifact. |
 | `supabase` | Guides Supabase Auth, RLS, Storage, Realtime, CLI, MCP, and migrations. |
 | `supabase-postgres-best-practices` | Reviews Postgres schemas, indexes, RLS policies, and query performance. |
 | `ux-enhancer` | Refactors React screens for simpler decisions, better scanning, and cleaner flows. |

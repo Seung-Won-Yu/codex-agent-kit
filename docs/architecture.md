@@ -30,6 +30,12 @@ Some skills include `references/`, `examples/`, or assets. Load those progressiv
 
 The real config on a machine may include absolute paths and local project trust entries. Keep those private unless they are intentionally sanitized.
 
+## 4. Third-Party Import Layer
+
+`third_party/` stores license material for imported skill sources. Imported skills are kept in `skills/` with a clear prefix, such as `od-`, so they remain easy to identify and do not collide with local skill names.
+
+Open Design imports are documented in `docs/open-design-imports.md`.
+
 ## What Is Excluded
 
 Raw Codex homes contain many non-portable or private files:

@@ -33,6 +33,7 @@ If multiple roles fit, choose the role that owns the final output. Use others as
 ## Skill Rules
 
 - Prefer installed local skills over inventing a new workflow.
+- Prefer `od-*` skills only when their specialized artifact format is useful; otherwise use the narrower core skill already in this kit.
 - Let `$skill-router` read `references/skill-catalog.md` when the right specialist skill is not obvious.
 - Let `$skill-router` read `references/activation-matrix.md` when multiple skills could fit or when GitHub/community skills are relevant.
 - Prefer one primary skill plus at most two supporting skills.
@@ -69,6 +70,18 @@ Default bundles:
 - Implementation/refactor: `$incremental-implementation`; add `$test-driven-development` when behavior changes and `$diagnose` for unclear failures.
 - Security/compliance: use the narrow exact security skill only when the request or touched surface has strong security cues.
 - Deploy/ops: use the exact deploy, CI/CD, env, Docker, runbook, or monitoring skill for the target platform.
+
+Open Design imports:
+
+- Use `$od-design-md` when a project needs a durable `DESIGN.md` source of truth for visual rules, tokens, and design direction.
+- Use `$od-plan-design-review` as a score-based senior design gate before merging or shipping UI-heavy work.
+- Use `$od-research-decision-room` when messy research notes, interviews, tickets, or survey excerpts need to become an evidence-backed decision artifact.
+- Use `$od-live-dashboard` for self-contained dashboard artifacts with KPIs, activity, and tables.
+- Use `$od-data-report` for CSV, Excel, JSON, or pasted data that should become a polished report page.
+- Use `$od-d3-visualization` when the core value is a complex chart, map, network, treemap, heatmap, or interactive explanatory graphic.
+- Use `$od-hand-drawn-diagrams` for whiteboard-style architecture, flow, system, or concept diagrams.
+- Use `$od-motion-frames` for loopable CSS motion posters, animated heroes, title cards, and video-ready visual frames.
+- Use `$od-platform-design` when a UI must respect cross-platform product conventions across web, iOS, Android, and accessibility.
 
 ## Prototype and Design Routing
 

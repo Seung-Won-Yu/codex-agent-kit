@@ -30,6 +30,22 @@ This catalog explains the practical role of each skill included in this kit. The
 | `supabase` | Any Supabase work: Auth, RLS, Storage, Realtime, CLI, MCP, migrations. |
 | `supabase-postgres-best-practices` | Postgres query, schema, index, RLS, and performance review. |
 
+## Open Design Imports
+
+These skills are imported or adapted from the Open Design ecosystem and kept under an `od-` prefix to avoid collisions with the core kit.
+
+| Skill | Use When |
+| --- | --- |
+| `od-design-md` | A project needs a single `DESIGN.md` source of truth for visual rules and tokens. |
+| `od-platform-design` | You need cross-platform design guidance across web, iOS, Android, and accessibility. |
+| `od-plan-design-review` | You want a score-based senior design gate before merging or shipping UI work. |
+| `od-research-decision-room` | You have messy research evidence and need a shareable product decision artifact. |
+| `od-d3-visualization` | You need complex interactive charts, maps, networks, or explanatory data graphics. |
+| `od-data-report` | You want to turn CSV, Excel, or JSON data into a polished visual report page. |
+| `od-hand-drawn-diagrams` | You need a whiteboard-style flow, architecture, or system diagram. |
+| `od-motion-frames` | You need an animated hero, kinetic poster, title card, or loopable motion frame. |
+| `od-live-dashboard` | You need a self-contained dashboard artifact with KPIs, activity, and tables. |
+
 ## Simple Descriptions
 
 | Skill | Description |
@@ -44,6 +60,15 @@ This catalog explains the practical role of each skill included in this kit. The
 | `gpt-taste` | Adds stronger art direction and higher visual ambition to frontend work. |
 | `image-to-code` | Turns screenshot or image references into implementation guidance. |
 | `information-architecture` | Plans navigation, content groups, pages, and user flow structure. |
+| `od-d3-visualization` | Brings D3-oriented chart and interactive visualization guidance into the kit. |
+| `od-data-report` | Creates a report-style page from structured data files or pasted datasets. |
+| `od-design-md` | Helps create and maintain design-system notes in `DESIGN.md`. |
+| `od-hand-drawn-diagrams` | Routes diagram requests toward sketch-like Excalidraw-style output. |
+| `od-live-dashboard` | Provides a dashboard artifact workflow for operations and team status pages. |
+| `od-motion-frames` | Creates single-page CSS animation compositions for motion-friendly visual output. |
+| `od-plan-design-review` | Rates design quality, explains what better looks like, and catches AI-looking UI. |
+| `od-platform-design` | Collects platform design constraints for cross-platform product work. |
+| `od-research-decision-room` | Turns qualitative signals into evidence, themes, options, and experiment queues. |
 | `supabase` | Handles Supabase-specific product and backend work. |
 | `supabase-postgres-best-practices` | Keeps database schema, RLS, indexes, and queries healthier. |
 | `ux-enhancer` | Improves React UI ergonomics, scanability, and decision clarity. |
