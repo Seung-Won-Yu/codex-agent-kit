@@ -20,6 +20,7 @@ The goal was not to mirror Open Design completely. The imported skills fill gaps
 - motion-frame HTML artifacts
 - cross-platform design constraints
 - `DESIGN.md` as a design-system source of truth
+- image/video generation direction and provider workflow routing
 
 ## Imported Skills
 
@@ -35,9 +36,29 @@ The goal was not to mirror Open Design completely. The imported skills fill gaps
 | `od-motion-frames` | `design-templates/motion-frames` | Creates loopable CSS motion frames for hero/video-style visual output. |
 | `od-live-dashboard` | `design-templates/live-dashboard` | Builds dashboard artifacts with KPIs, activity feeds, and tables. |
 
+## Imported Media Skills
+
+| Skill | Original Source Path | Why It Is Useful |
+| --- | --- | --- |
+| `media-imagegen` | `skills/imagegen` | Routes general image generation and editing workflows. |
+| `media-web-image-direction` | `skills/imagegen-frontend-web` | Creates premium website section image references. |
+| `media-mobile-image-direction` | `skills/imagegen-frontend-mobile` | Creates premium mobile app screen image references. |
+| `media-canvas-design` | `skills/canvas-design` | Directs poster, illustration, and static visual art generation. |
+| `media-poster-hero` | `skills/poster-hero` | Creates vertical marketing poster/share-image artifacts. |
+| `media-screenshots-marketing` | `skills/screenshots-marketing` | Turns app/site screenshots into marketing visuals. |
+| `media-device-mockup-3d` | `skills/mockup-device-3d` | Creates device showcase visuals for products and portfolios. |
+| `media-image-enhancer` | `skills/image-enhancer` | Guides image cleanup, sharpening, denoising, and upscaling. |
+| `media-gif-sticker-maker` | `skills/gif-sticker-maker` | Prepares animated GIF/sticker workflows. |
+| `media-video-hyperframes` | `skills/video-hyperframes` | Builds HyperFrames/Remotion-ready video frame sequences. |
+| `media-remotion` | `skills/remotion` | Routes React/Remotion video composition work. |
+| `media-sora` | `skills/sora` | Prepares Sora-style video prompts and workflows. |
+| `media-fal-generate` | `skills/fal-generate` | Routes Fal.ai provider workflows. |
+| `media-replicate` | `skills/replicate` | Routes Replicate model discovery and provider workflows. |
+
 ## Import Policy
 
 - Keep imported skill names prefixed with `od-`.
+- Keep imported media skill names prefixed with `media-`.
 - Preserve source notes in the copied skill files.
 - Keep the Open Design Apache-2.0 license in `third_party/open-design/LICENSE`.
 - Do not import all of Open Design by default; add only skills that match this kit's workflow.
