@@ -35,24 +35,11 @@ This catalog explains the practical role of each skill included in this kit. The
 | `mobile-game-qa` | A mobile game prototype needs touch, safe-area, HUD, feedback, accessibility, or performance checks. |
 | `game-reference-research` | Game design, UI, engine, tooling, competitor, or GitHub skill references should become reusable notes. |
 
-## Image And Video Generation
+## Codex Image Generation
 
 | Skill | Use When |
 | --- | --- |
-| `media-imagegen` | The user asks to generate or edit an image with the available image-generation tool. |
-| `media-web-image-direction` | A website or landing page needs premium generated section reference images. |
-| `media-mobile-image-direction` | A mobile app needs premium generated screen concepts or app-flow images. |
-| `media-canvas-design` | The output is poster art, illustration, static canvas design, or visual exploration. |
-| `media-poster-hero` | The output is a vertical launch poster, marketing poster, or social share image. |
-| `media-screenshots-marketing` | Product screenshots should become polished marketing or store assets. |
-| `media-device-mockup-3d` | The output is a phone/laptop/device showcase for portfolio or launch visuals. |
-| `media-image-enhancer` | An existing image needs upscale, sharpening, denoising, or cleanup guidance. |
-| `media-gif-sticker-maker` | The output is an animated sticker or GIF concept. |
-| `media-video-hyperframes` | The output is HTML frame sequences, video storyboard, or HyperFrames/Remotion-ready scenes. |
-| `media-remotion` | The output should be a React/Remotion video composition. |
-| `media-sora` | The user specifically wants Sora-style video generation or prompts. |
-| `media-fal-generate` | The user wants Fal.ai image/video generation and provider credentials are available. |
-| `media-replicate` | The user wants Replicate model workflows or model comparison. |
+| `media-image-director` | The user wants an image generated, edited, restyled, prompted, critiqued, or iterated inside Codex. |
 
 ## Backend And Data
 
@@ -93,20 +80,7 @@ These skills are imported or adapted from the Open Design ecosystem and kept und
 | `gpt-taste` | Adds stronger art direction and higher visual ambition to frontend work. |
 | `image-to-code` | Turns screenshot or image references into implementation guidance. |
 | `information-architecture` | Plans navigation, content groups, pages, and user flow structure. |
-| `media-canvas-design` | Guides poster, illustration, and static visual art generation. |
-| `media-device-mockup-3d` | Creates phone/laptop product showcase artifacts with realistic screen framing. |
-| `media-fal-generate` | Routes Fal.ai provider workflows for image/video generation. |
-| `media-gif-sticker-maker` | Prepares GIF and sticker-generation workflows. |
-| `media-image-enhancer` | Guides image cleanup, sharpening, upscaling, and denoising workflows. |
-| `media-imagegen` | Routes direct image generation or editing through available generation tools. |
-| `media-mobile-image-direction` | Creates premium mobile app image references and multi-screen concepts. |
-| `media-poster-hero` | Produces vertical poster/share-image artifact direction. |
-| `media-remotion` | Routes React-based video composition work. |
-| `media-replicate` | Routes Replicate model discovery, comparison, and generation workflows. |
-| `media-screenshots-marketing` | Turns app/site screenshots into marketing-ready visuals. |
-| `media-sora` | Prepares Sora-style short-video prompts and workflows. |
-| `media-video-hyperframes` | Creates HyperFrames/Remotion-ready HTML scene sequences. |
-| `media-web-image-direction` | Creates one premium website reference image per page section. |
+| `media-image-director` | Directs Codex image generation with prompt structure, visual guardrails, critique, and iteration. |
 | `mobile-game-design` | Shapes player fantasy, core action, feedback, reward, session loop, and return loop. |
 | `mobile-game-qa` | Finds mobile playability, touch, HUD, layout, feedback, accessibility, and performance issues. |
 | `od-d3-visualization` | Brings D3-oriented chart and interactive visualization guidance into the kit. |

@@ -23,7 +23,7 @@ Use this table before falling into the larger common-route list. It keeps large 
 | Product prototype | `product-frontend-engineer` | Needs working screens, local preview, state, backend, or deploy | Using visual-only skills when code is needed |
 | Visual design | `claude-design` | Needs artifact, mockup, storyboard, poster, deck, or options | Forcing app architecture before direction is chosen |
 | Open Design artifact | Exact `od-*` skill | The output has a known artifact form: `DESIGN.md`, data report, D3 chart, decision room, diagram, dashboard, motion frame, or score review | Using generic visual design when the user asked for a structured artifact |
-| Media generation | Exact `media-*` skill | Image, video, poster, screenshot, device mockup, sticker, or provider-generation workflow is central | Treating media generation as generic frontend design |
+| Codex image generation | `media-image-director` | Image, poster, thumbnail, UI reference, product mockup, edit, variation, or image prompt is central | Treating image generation as generic frontend design |
 | Premium frontend | `gpt-taste` | Needs distinctive, non-generic, high-motion UI direction | Using it as a substitute for implementation/testing |
 | Reference-to-UI | `image-to-code` | Screenshots or images should drive the build | Treating it as a general frontend planner |
 | Full design workflow | `design-flow` | Needs brief -> IA -> tokens -> tasks -> review | Using for quick UI tweaks |
@@ -57,7 +57,7 @@ When a vague request could mean several creation modes, compare these explicitly
 |---|---|---|
 | "Claude Design처럼", "artifact", "mockup", "시안", "옵션 보여줘", "포스터/덱/스토리보드" | `claude-design` | They need a visual artifact or direction before app code |
 | "Open Design처럼", "DESIGN.md", "decision room", "데이터 리포트", "D3", "화이트보드 다이어그램", "모션 프레임", "대시보드 artifact" | Exact `od-*` skill | They need a structured artifact with a known format |
-| "이미지 생성", "포스터", "썸네일", "앱 스크린샷", "기기 목업", "영상", "Sora", "Fal", "Replicate", "GIF" | Exact `media-*` skill | They need image/video generation direction, prompts, or provider workflow |
+| "이미지 생성", "그림 만들어줘", "포스터", "썸네일", "이미지 프롬프트", "이미지 수정", "레퍼런스 이미지" | `media-image-director` | They need Codex-native image generation, prompting, or iteration |
 | "Lovable처럼", "작동하는 프로토타입", "앱으로", "localhost", "배포", "로그인/DB" | `product-frontend-engineer` + relevant support | They need working screens, state, backend, deployable app code |
 | "처음부터 제대로 디자인 프로세스", "브리프부터", "IA/토큰/태스크까지" | `design-flow` | They need durable design decisions and implementation planning |
 | "뭔가 불편함", "사용자가 헷갈림", "이 UI 봐줘", "전환율 떨어짐" | `frontend-design-audit` or `ux-enhancer` | Existing UI needs diagnosis or usability cleanup |
@@ -115,19 +115,11 @@ Use this when the user wants a project-level workflow, spec system, research kit
 | Whiteboard-style flow, architecture, or system diagram | `od-hand-drawn-diagrams` | `system-design`, `technical-writer` |
 | Animated hero, kinetic poster, title card, loopable visual | `od-motion-frames` | `claude-design`, `imagegen` |
 | Cross-platform UI convention or accessibility design check | `od-platform-design` | `accessibility`, `frontend-design-audit` |
-| General image generation/editing | `media-imagegen` | `media-canvas-design`, `media-image-enhancer` |
-| Premium website/landing page reference images | `media-web-image-direction` | `gpt-taste`, `image-to-code` |
-| Premium mobile app screen image concepts | `media-mobile-image-direction` | `game-ui-art-direction`, `od-platform-design` |
-| Poster, illustration, static visual art | `media-canvas-design` or `media-poster-hero` | `imagegen`, `claude-design` |
-| Marketing screenshots or app store visuals | `media-screenshots-marketing` | `webapp-testing`, `playwright` |
-| Device product showcase or portfolio mockup | `media-device-mockup-3d` | `media-screenshots-marketing`, `claude-design` |
-| Existing image cleanup/upscale/denoise | `media-image-enhancer` | `imagegen` |
-| GIF/sticker concept or provider workflow | `media-gif-sticker-maker` | `imagegen` |
-| HTML video frames, storyboard, mp4-ready scene sequence | `media-video-hyperframes` | `od-motion-frames`, `media-remotion` |
-| React/Remotion video composition | `media-remotion` | `media-video-hyperframes`, `product-frontend-engineer` |
-| Sora-style short video generation | `media-sora` | `media-video-hyperframes` |
-| Fal.ai image/video provider workflow | `media-fal-generate` | `media-imagegen` |
-| Replicate model workflow or model comparison | `media-replicate` | `research-synthesizer` |
+| General image generation/editing | `media-image-director` | `imagegen` capability when available |
+| Poster, thumbnail, social card, README visual | `media-image-director` | `claude-design` for broader art direction |
+| App/game UI reference image | `media-image-director` | `game-ui-art-direction`, `od-platform-design` |
+| Existing image restyle or variation | `media-image-director` | image generation/edit tool |
+| External provider video/image workflow explicitly requested | General Codex + provider setup check | Do not route by default; confirm credentials/tools first |
 | Full designer-led workflow from idea to implementation | `design-flow` | `design-brief`, `information-architecture`, `design-tokens`, `brief-to-tasks`, `design-review` |
 | Design brief, IA, tokens, or build-task phase explicitly named | Exact phase skill | `product-frontend-engineer`, `frontend-ui-engineering` |
 | Rough mobile game idea, GDD, core loop, quests, rewards, retention | `mobile-game-design` | `prototype-slice-planner`, `game-ui-art-direction` |

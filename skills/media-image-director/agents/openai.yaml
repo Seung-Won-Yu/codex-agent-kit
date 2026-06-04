@@ -1,0 +1,4 @@
+interface:
+  display_name: "Media Image Director"
+  short_description: "Direct Codex image generation prompts and iterations"
+  default_prompt: "Use $media-image-director to create or improve this image with Codex image generation."

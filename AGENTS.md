@@ -56,7 +56,7 @@ Use skills as a routing layer, not as ceremony. The default budget is one primar
 - Broad skills such as `$senior-dev-lead`, `$best-practices`, `$karpathy-guidelines`, and `$context-engineering` are supporting lenses, not primary routes unless the user asks for that perspective.
 - Re-route on each new user request. Do not keep a previous turn's skill active unless the new request is clearly part of the same workflow.
 - Pair build skills with verification: frontend work should use browser/playwright/webapp testing when feasible; backend/data work should use focused tests or queries; docs/research should cite sources or validate structure.
-- For media generation, distinguish image direction, actual image generation, provider API workflows, and video-frame planning before choosing a skill.
+- For Codex image generation, use `$media-image-director` to turn rough visual intent into a strong prompt, generate with the available image tool, then critique and iterate.
 
 Default bundles:
 
@@ -66,7 +66,7 @@ Default bundles:
 - Working web prototype: `$product-frontend-engineer`; add `$frontend-ui-engineering`, `$gpt-taste`, `$image-to-code`, or `$supabase` only when the requested surface needs them; verify with `$webapp-testing`, `$playwright`, or Browser.
 - Visual concept/artifact: `$claude-design`; add `$imagegen` for raster assets and Browser/Playwright for inspection.
 - Specialized Open Design artifact: use the exact `od-*` skill when the user asks for `DESIGN.md`, decision room, D3 chart, data report, hand-drawn diagram, motion frame, or live dashboard.
-- Media generation: use exact `media-*` skills for image prompts, generated visuals, web/mobile reference images, posters, screenshots, device mockups, GIF concepts, Sora/Fal/Replicate workflows, Remotion, or HyperFrames.
+- Codex image generation: use `$media-image-director` for image prompts, generated visuals, edits, variations, posters, thumbnails, UI references, game visuals, and product mockup direction.
 - Full design process: `$design-flow`; use `$design-brief`, `$information-architecture`, `$design-tokens`, `$brief-to-tasks`, and `$design-review` only for the needed phase.
 - Existing UI improvement: `$frontend-design-audit` for diagnosis, `$ux-enhancer` for focused React usability refactors.
 - API/data/backend: `$api-and-interface-design` or `$database-schema-designer`; add `$supabase` and `$supabase-postgres-best-practices` for Supabase/Postgres-specific work.
@@ -86,20 +86,12 @@ Open Design imports:
 - Use `$od-motion-frames` for loopable CSS motion posters, animated heroes, title cards, and video-ready visual frames.
 - Use `$od-platform-design` when a UI must respect cross-platform product conventions across web, iOS, Android, and accessibility.
 
-Media generation:
+Codex image generation:
 
-- Use `$media-imagegen` for direct image generation or editing; when the Codex image generation tool is available and the user asks for an image, use it.
-- Use `$media-web-image-direction` for premium website or landing-page section reference images; generate one image per section.
-- Use `$media-mobile-image-direction` for premium mobile app screen concepts and multi-screen flows.
-- Use `$media-canvas-design` for posters, illustrations, static visual art, and style exploration.
-- Use `$media-poster-hero` for vertical marketing posters, share images, launch posters, and event visuals.
-- Use `$media-screenshots-marketing` when screenshots from a local app/site should become polished marketing assets.
-- Use `$media-device-mockup-3d` for portfolio, App Store, launch, or GitHub device showcase visuals.
-- Use `$media-image-enhancer` when an existing image needs cleanup, upscaling, sharpening, or denoising guidance.
-- Use `$media-gif-sticker-maker` for sticker/GIF concepts; provider execution requires the upstream API setup.
-- Use `$media-video-hyperframes` or `$od-motion-frames` for HTML/CSS motion frames, short-video storyboards, and mp4-ready scene sequences.
-- Use `$media-remotion` when the output should be a reproducible React/Remotion video project.
-- Use `$media-sora`, `$media-fal-generate`, or `$media-replicate` only when the user asks for that provider or when provider execution is available. If credentials/tools are missing, produce provider-ready prompts and a rendering plan instead.
+- Use `$media-image-director` when the user asks to create, edit, improve, restyle, or iterate on an image inside Codex.
+- Use it for posters, thumbnails, GitHub/portfolio visuals, app screenshots, mobile/game UI references, product mockups, character concepts, icons, and social cards.
+- If the user asks for an actual image and the Codex image generation tool is available, generate the image instead of only writing a prompt.
+- Keep provider-specific workflows such as Sora, Fal, Replicate, Runway, or Remotion out of the default route unless the user explicitly asks for external tooling.
 
 ## Prototype and Design Routing
 

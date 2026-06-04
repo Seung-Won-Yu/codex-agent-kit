@@ -24,7 +24,7 @@ Instead of backing up my whole local Codex folder, this repo keeps only the part
 │   └── codex.config.sample.toml      # Redacted Codex config example
 ├── docs/
 │   ├── architecture.md               # How the kit is organized
-│   ├── media-generation-routing.md   # Image/video skill routing and provider safety
+│   ├── media-generation-routing.md   # Codex image-generation routing
 │   ├── open-design-imports.md        # Imported Open Design skills and rationale
 │   ├── skill-catalog.md              # Included skills and when to use them
 │   └── security-checklist.md         # What must never be committed
@@ -65,7 +65,7 @@ I use this setup when I want Codex to behave less like a single generic assistan
 | Product/design planning | Turns vague product ideas into a brief, information architecture, and buildable tasks. | `design-brief`, `information-architecture`, `design-flow`, `brief-to-tasks` |
 | Routing/orchestration | Chooses the smallest useful skill bundle and prevents over-stacking. | `skill-router` |
 | Game design/prototyping | Shapes mobile game ideas into loops, UI direction, playable slices, playtest reviews, and QA passes. | `mobile-game-design`, `game-ui-art-direction`, `prototype-slice-planner`, `player-experience-review`, `mobile-game-qa`, `game-reference-research` |
-| Image/video generation | Directs image prompts, web/mobile visual references, posters, screenshots, device mockups, GIF concepts, and video-frame workflows. | `media-imagegen`, `media-web-image-direction`, `media-mobile-image-direction`, `media-canvas-design`, `media-poster-hero`, `media-device-mockup-3d`, `media-video-hyperframes`, `media-sora`, `media-fal-generate`, `media-replicate` |
+| Codex image generation | Directs prompts, edits, variations, posters, thumbnails, UI references, game visuals, and product mockup images through Codex image generation. | `media-image-director` |
 | Visual/UI quality | Improves visual direction, design tokens, screenshots, UI critique, and React usability. | `claude-design`, `design-tokens`, `design-review`, `frontend-design-audit`, `gpt-taste`, `image-to-code`, `ux-enhancer` |
 | Backend/data | Keeps Supabase, RLS, schema, and Postgres performance work grounded and reviewable. | `supabase`, `supabase-postgres-best-practices` |
 | Open Design imports | Adds artifact, dashboard, research, chart, diagram, and cross-platform design workflows inspired by Open Design. | `od-design-md`, `od-plan-design-review`, `od-research-decision-room`, `od-d3-visualization`, `od-data-report`, `od-hand-drawn-diagrams`, `od-motion-frames`, `od-live-dashboard`, `od-platform-design` |
@@ -86,20 +86,7 @@ I use this setup when I want Codex to behave less like a single generic assistan
 | `gpt-taste` | Pushes frontend work toward a stronger, more distinctive visual result. |
 | `image-to-code` | Uses image references as the source for precise UI implementation. |
 | `information-architecture` | Organizes pages, navigation, content hierarchy, and user flows. |
-| `media-canvas-design` | Directs poster, illustration, static art, and visual canvas generation. |
-| `media-device-mockup-3d` | Creates product/device showcase artifacts with app UI embedded in phone or laptop frames. |
-| `media-fal-generate` | Routes Fal.ai image/video provider workflows when credentials and model choice are available. |
-| `media-gif-sticker-maker` | Prepares animated GIF or sticker generation workflows. |
-| `media-image-enhancer` | Guides image cleanup, sharpening, denoising, or upscale workflows. |
-| `media-imagegen` | Routes general image generation or editing through available image generation tools. |
-| `media-mobile-image-direction` | Creates premium mobile app screen reference images and multi-screen flows. |
-| `media-poster-hero` | Builds vertical marketing poster or share-image artifacts. |
-| `media-remotion` | Routes React/Remotion video composition workflows. |
-| `media-replicate` | Routes Replicate model comparison and provider workflows when credentials are available. |
-| `media-screenshots-marketing` | Turns app or website screenshots into marketing visuals. |
-| `media-sora` | Routes Sora-style video generation prompts and workflows when available. |
-| `media-video-hyperframes` | Creates mp4-ready HTML frame sequences for HyperFrames or Remotion-style rendering. |
-| `media-web-image-direction` | Creates one premium website reference image per landing-page section. |
+| `media-image-director` | Directs Codex image generation and editing with better prompts, visual guardrails, critique, and iteration. |
 | `mobile-game-design` | Turns rough mobile game ideas into core loops, first sessions, GDD outlines, and prototype briefs. |
 | `mobile-game-qa` | Checks mobile game prototypes for touch usability, HUD readability, feedback, layout, and performance basics. |
 | `od-d3-visualization` | Adds D3-oriented guidance for complex interactive charts and explanatory graphics. |

@@ -109,91 +109,14 @@ Use this catalog as the local routing map. Prefer installed local skills over ex
 - Use for: motion design, kinetic typography, animated hero, title card, HyperFrames-style output.
 - Pair with: `claude-design`, `imagegen`, `webapp-testing`.
 
-## Image And Video Generation Skills
+## Codex Image Generation Skill
 
-### media-imagegen
+### media-image-director
 
-- Purpose: route direct image generation and image editing through available image-generation tools.
-- Use for: "이미지 생성", "그림 만들어줘", icons, illustrations, social cards, visual references, image edits.
-- Pair with: `media-canvas-design`, `media-image-enhancer`, `imagegen` capability when available.
-
-### media-web-image-direction
-
-- Purpose: generate premium website reference images, one image per section.
-- Use for: landing-page comps, website section images, premium web design references.
-- Pair with: `gpt-taste`, `image-to-code`, `frontend-design`.
-
-### media-mobile-image-direction
-
-- Purpose: generate premium mobile app screen concept images and multi-screen flows.
-- Use for: iOS/Android app mockups, onboarding screens, mobile UI concepts, app-native image references.
-- Pair with: `game-ui-art-direction`, `od-platform-design`, `image-to-code`.
-
-### media-canvas-design
-
-- Purpose: direct poster, illustration, static visual art, and canvas-style image generation.
-- Use for: posters, illustrations, static art, visual exploration, cover images.
-- Pair with: `media-imagegen`, `claude-design`.
-
-### media-poster-hero
-
-- Purpose: create vertical marketing posters or share-image artifacts.
-- Use for: launch posters, social posters, event posters, 9:16 share images.
-- Pair with: `media-imagegen`, `media-canvas-design`.
-
-### media-screenshots-marketing
-
-- Purpose: turn app/site screenshots into polished marketing visuals.
-- Use for: hero screenshots, App Store screenshots, changelog visuals, portfolio preview images.
-- Pair with: `webapp-testing`, `playwright`, `media-device-mockup-3d`.
-
-### media-device-mockup-3d
-
-- Purpose: create phone/laptop/device showcase visuals with app UI embedded.
-- Use for: portfolio mockups, launch visuals, App Store assets, GitHub README previews.
-- Pair with: `media-screenshots-marketing`, `claude-design`.
-
-### media-image-enhancer
-
-- Purpose: guide image cleanup, upscale, denoise, sharpen, and presentation-ready enhancement.
-- Use for: low-resolution images, blurry screenshots, noisy assets, documentation visuals.
-- Pair with: `media-imagegen`.
-
-### media-gif-sticker-maker
-
-- Purpose: prepare animated sticker or GIF generation workflows.
-- Use for: GIF stickers, avatar packs, chat stickers, Pop Mart/Funko-style sticker concepts.
-- Pair with: `media-imagegen`; provider execution may require external API setup.
-
-### media-video-hyperframes
-
-- Purpose: create HyperFrames/Remotion-compatible HTML frame sequences and short-video storyboards.
-- Use for: product videos, short explainers, kinetic frames, mp4-ready scene sequences.
-- Pair with: `od-motion-frames`, `media-remotion`.
-
-### media-remotion
-
-- Purpose: route React/Remotion programmatic video composition work.
-- Use for: reproducible motion graphics, branded explainers, dashboards-to-video, code-rendered videos.
-- Pair with: `media-video-hyperframes`, `product-frontend-engineer`.
-
-### media-sora
-
-- Purpose: prepare Sora-style short-video prompts and workflows.
-- Use for: Sora, cinematic clips, b-roll, OpenAI video prompts.
-- Pair with: `media-video-hyperframes`; provider execution requires Sora/API availability.
-
-### media-fal-generate
-
-- Purpose: route Fal.ai image/video generation provider workflows.
-- Use for: Fal, Flux, SDXL, Ideogram, provider-backed image/video generation.
-- Pair with: `media-imagegen`; provider execution requires Fal credentials and model selection.
-
-### media-replicate
-
-- Purpose: route Replicate model discovery, comparison, and generation workflows.
-- Use for: Replicate API, model comparison, frequently swapped image/audio/video models.
-- Pair with: `research-synthesizer`; provider execution requires Replicate credentials.
+- Purpose: direct Codex-native image generation and editing with stronger prompts, visual guardrails, critique, and iteration.
+- Use for: "이미지 생성", "그림 만들어줘", posters, thumbnails, README visuals, app/game UI references, social cards, product mockups, image edits, restyles, and prompt improvement.
+- Pair with: the available Codex image generation tool when the user wants an actual image; `claude-design` when broader art direction is needed; `game-ui-art-direction` for game UI visuals.
+- Avoid for: external provider workflows such as Sora, Fal, Replicate, Runway, or Remotion unless the user explicitly asks for that setup.
 
 ## OpenAI Official Curated Skills
 
