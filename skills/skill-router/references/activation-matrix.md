@@ -100,3 +100,10 @@ Use this as the final tie-breaker when several installed lean-profile skills cou
 - Do not use `@qa` or QA skills for ordinary coding unless review/testing/audit is the main request.
 - Do not stack multiple planning skills for small tasks. Use one planning skill, then execute.
 - Do not route to removed connector-dependent or niche skills unless the user explicitly asks to install them again.
+
+## Senior Lens Tie-Breakers
+
+- If a backend task is ambiguous, pick the skill based on the deepest uncertainty: architecture -> `system-design`, contract -> `api-and-interface-design`, data -> `database-schema-designer`, Supabase/RLS -> `supabase`.
+- If a frontend task is ambiguous, pick the skill based on output: working screen -> `product-frontend-engineer`, code quality -> `frontend-ui-engineering`, visual taste -> `gpt-taste`, existing UI critique -> `frontend-design-audit`, screenshot-to-code -> `image-to-code`.
+- If a review task is ambiguous, start with `code-review-and-quality` and apply the Staff Review Gate from `senior-engineering-lenses.md`.
+- Do not install separate senior-backend/senior-frontend persona skills unless the user asks; the lenses provide those standards inside the lean profile.

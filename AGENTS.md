@@ -37,6 +37,7 @@ If multiple roles fit, choose the role that owns the final output. Use others as
 - Choose the narrowest exact installed skill before a broad category skill.
 - Do not read the full catalog for obvious tasks. Use the quick routing table first, then consult `$skill-router` references only when multiple choices are plausible.
 - Prefer `od-*` skills only when their specialized artifact format is useful.
+- Apply `skills/skill-router/references/senior-engineering-lenses.md` as a lightweight quality gate for backend, frontend, review, and ship-ready work.
 - Use `$planning-document-writer` for planning/document requests such as PRD, GDD, requirements, feature spec, screen spec, API docs, DB docs, SOP, or runbook.
 - Use `$research-report-writer` or `$research-synthesizer` for research/report requests, benchmarking, market/technical research, trend reports, or decision memos.
 - Use `$ax-consulting-planner` for AX consulting, AI transformation, AI adoption strategy, internal automation, AI PoC, or agent adoption planning.
@@ -70,6 +71,15 @@ Use this table first. It is the normal path for most requests.
 - Pair backend and data changes with focused tests, queries, or migration checks.
 - For image requests, use `$media-image-director` and generate/edit the image when the image tool is available.
 - For missing niche skills, continue with the nearest installed representative skill.
+
+## Senior Engineering Lenses
+
+Use these as checklists, not extra skills:
+
+- Staff review lens: correctness, readability, architecture, security, and performance.
+- Backend lens: contract first, boundary validation, consistent errors, auth/ownership, pagination, idempotency, indexes, migration safety.
+- Frontend lens: user flow first, semantic HTML, composition, loading/empty/error states, accessibility, responsive stability, performance, no generic AI aesthetic.
+- Ship lens: scope, verification, UX states, security basics, clear handoff.
 
 ## Prototype And Design Routing
 

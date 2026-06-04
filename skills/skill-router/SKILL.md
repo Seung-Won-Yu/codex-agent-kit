@@ -17,9 +17,10 @@ This setup uses a lean profile from `config/lean-skills.txt`. If a formerly know
 4. Choose one primary skill from the quick matrix below.
 5. Add at most two support skills when they clearly change the outcome.
 6. Use `references/activation-matrix.md` only as a tie-breaker, and `references/skill-catalog.md` only when you need a short description of a skill family.
-7. Load the selected skill instructions or references only when needed.
-8. Sequence work as planning, execution, verification, and delivery.
-9. If no installed skill fits, use general Codex ability and mention the gap.
+7. Use `references/senior-engineering-lenses.md` as a quality gate for backend, frontend, review, and ship-ready work.
+8. Load the selected skill instructions or references only when needed.
+9. Sequence work as planning, execution, verification, and delivery.
+10. If no installed skill fits, use general Codex ability and mention the gap.
 
 ## Skill Operating Model
 
@@ -55,6 +56,15 @@ This setup uses a lean profile from `config/lean-skills.txt`. If a formerly know
 - API/schema/backend architecture: `api-and-interface-design`, `database-schema-designer`, or `system-design`.
 - Supabase/Postgres: `supabase` and `supabase-postgres-best-practices`.
 - GitHub/CI/deploy: exact GitHub or deploy skill.
+
+## Senior Lenses
+
+Use `references/senior-engineering-lenses.md` to strengthen existing routes:
+
+- Staff review gate for code review, refactors, and risky changes.
+- Senior backend gate for API, schema, Supabase, auth, RLS, and migrations.
+- Senior frontend gate for UI, React, design implementation, image-to-code, and product screens.
+- Ship gate before final response when files or behavior changed.
 
 ## Prototype Mode Counterproposal
 
@@ -125,6 +135,7 @@ If the recommended path is clearly best and low-risk, proceed.
 - For complex build tasks, make a short plan, then execute.
 - For research-backed recommendations, browse current sources and cite them.
 - For file artifacts, use the relevant document/spreadsheet/presentation capability instead of hand-rolling formats.
+- For backend/frontend/review tasks, quietly apply the matching senior engineering lens and surface only useful decisions or findings.
 
 ## Output Contract
 

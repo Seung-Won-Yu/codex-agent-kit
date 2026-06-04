@@ -10,6 +10,8 @@ This catalog mirrors the lean profile in `config/lean-skills.txt`. Route to thes
 - `best-practices`: Broad web/dev best-practice lens when no narrower skill owns the task.
 - `senior-dev-lead`: Senior engineering judgment, tradeoffs, risk framing, and developer handoff.
 
+Reference: `senior-engineering-lenses.md` adds staff review, senior backend, senior frontend, and ship gates without increasing skill count.
+
 ## Design And Frontend
 
 - `product-frontend-engineer`: Working product/frontend prototypes, screens, flows, state, and implementation handoff.

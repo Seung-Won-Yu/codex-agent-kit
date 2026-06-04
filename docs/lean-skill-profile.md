@@ -8,6 +8,7 @@ This profile keeps Codex useful without exposing every installed skill at once.
 - Preserve the custom Seung-Won-Yu skills in this kit.
 - Keep representative skills for design, frontend, games, image generation, GitHub, Supabase, docs, research, and normal implementation.
 - Keep the active skill set small enough to route quickly.
+- Absorb useful "senior developer" standards as shared lenses instead of installing separate persona skills.
 
 ## How To Apply
 
