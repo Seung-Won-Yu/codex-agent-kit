@@ -43,7 +43,7 @@ The active local setup is intentionally lean: about 100 representative skills in
 ├── AGENTS.md                                  # Global lean routing rules
 ├── config/
 │   ├── codex.config.sample.toml               # Redacted config example
-│   └── lean-skills.txt                        # Active keep-list for local skills
+│   └── lean-skills.txt                        # Source keep-list copied to ~/.codex/config
 ├── docs/
 │   ├── architecture.md                        # How the kit is organized
 │   ├── lean-skill-profile.md                  # 102-skill profile notes
@@ -66,8 +66,10 @@ The active local setup is intentionally lean: about 100 representative skills in
 The local Codex skill set is kept near 100 skills using:
 
 ```text
-config/lean-skills.txt
+$CODEX_HOME/config/lean-skills.txt
 ```
+
+That file is installed from this repo's `config/lean-skills.txt`.
 
 The goal is simple: keep enough power for real work, but avoid a noisy skill pile where every request has too many possible routes.
 

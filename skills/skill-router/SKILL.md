@@ -7,7 +7,7 @@ description: Lightweight meta-skill for choosing and sequencing the lean Codex s
 
 Use this skill as a thin dispatcher. Do not solve the whole task inside the router. Select the smallest useful installed skill set, load only the needed skill bodies or references, then proceed with the work.
 
-This setup uses a lean profile from `config/lean-skills.txt`. If a formerly known niche skill is not installed, route to the closest installed representative skill. Suggest installing a niche skill only when the exact workflow is truly required.
+This setup uses a lean profile from `$CODEX_HOME/config/lean-skills.txt`, installed from this repo's `config/lean-skills.txt`. If a formerly known niche skill is not installed, route to the closest installed representative skill. Suggest installing a niche skill only when the exact workflow is truly required.
 
 ## Routing Loop
 

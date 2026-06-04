@@ -4,7 +4,11 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 CODEX_HOME="${CODEX_HOME:-$HOME/.codex}"
 SKILLS_DIR="$CODEX_HOME/skills"
-KEEP_FILE="${KEEP_FILE:-$ROOT_DIR/config/lean-skills.txt}"
+DEFAULT_KEEP_FILE="$CODEX_HOME/config/lean-skills.txt"
+if [ ! -f "$DEFAULT_KEEP_FILE" ]; then
+  DEFAULT_KEEP_FILE="$ROOT_DIR/config/lean-skills.txt"
+fi
+KEEP_FILE="${KEEP_FILE:-$DEFAULT_KEEP_FILE}"
 STAMP="$(date +%Y%m%d-%H%M%S)"
 APPLY=0
 
@@ -12,12 +16,12 @@ usage() {
   cat <<'USAGE'
 Usage: scripts/prune-skills.sh [--apply]
 
-Moves skills not listed in config/lean-skills.txt out of $CODEX_HOME/skills.
+Moves skills not listed in the lean skill profile out of $CODEX_HOME/skills.
 Without --apply, prints a dry-run plan.
 
 Environment:
   CODEX_HOME  Defaults to ~/.codex
-  KEEP_FILE   Defaults to config/lean-skills.txt
+  KEEP_FILE   Defaults to $CODEX_HOME/config/lean-skills.txt, falling back to repo config/lean-skills.txt
 USAGE
 }
 

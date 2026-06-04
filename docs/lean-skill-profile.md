@@ -24,7 +24,9 @@ Apply:
 scripts/prune-skills.sh --apply
 ```
 
-The script reads `config/lean-skills.txt` and moves every other local skill from `$CODEX_HOME/skills` into:
+The install script copies `config/lean-skills.txt` to `$CODEX_HOME/config/lean-skills.txt`.
+
+The prune script reads `$CODEX_HOME/config/lean-skills.txt` by default and moves every other local skill from `$CODEX_HOME/skills` into:
 
 ```text
 $CODEX_HOME/skills.pruned-YYYYMMDD-HHMMSS

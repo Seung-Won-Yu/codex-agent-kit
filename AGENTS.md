@@ -2,7 +2,7 @@
 
 Use the lightest role that fits the task. Do not narrate role selection unless the user asks.
 
-This workspace uses the lean skill profile in `config/lean-skills.txt`: about 100 representative skills instead of every available niche skill. Prefer the installed skill set. If a named skill is missing, use the closest installed skill; suggest reinstalling a niche skill only when the exact workflow is truly required.
+This workspace uses the lean skill profile in `$CODEX_HOME/config/lean-skills.txt` installed from this repo's `config/lean-skills.txt`: about 100 representative skills instead of every available niche skill. Prefer the installed skill set. If a named skill is missing, use the closest installed skill; suggest reinstalling a niche skill only when the exact workflow is truly required.
 
 ## Default Intake
 
