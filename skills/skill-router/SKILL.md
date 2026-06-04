@@ -7,16 +7,16 @@ description: Lightweight meta-skill for choosing and sequencing the lean Codex s
 
 Use this skill as a thin dispatcher. Do not solve the whole task inside the router. Select the smallest useful installed skill set, load only the needed skill bodies or references, then proceed with the work.
 
-This setup uses a lean profile from `config/lean-skills.txt`. If a formerly known niche skill is not installed, route to the closest installed representative skill instead of asking for it back.
+This setup uses a lean profile from `config/lean-skills.txt`. If a formerly known niche skill is not installed, route to the closest installed representative skill. Suggest installing a niche skill only when the exact workflow is truly required.
 
 ## Routing Loop
 
 1. If the request is vague, scattered, overloaded, or casual shorthand, use `$messy-request-interpreter` first.
 2. Classify the normalized goal into one or more work lanes.
 3. Assign the lightest responsible role.
-4. Choose one primary skill from `references/skill-catalog.md`.
+4. Choose one primary skill from the quick matrix below.
 5. Add at most two support skills when they clearly change the outcome.
-6. Use `references/activation-matrix.md` only as a tie-breaker.
+6. Use `references/activation-matrix.md` only as a tie-breaker, and `references/skill-catalog.md` only when you need a short description of a skill family.
 7. Load the selected skill instructions or references only when needed.
 8. Sequence work as planning, execution, verification, and delivery.
 9. If no installed skill fits, use general Codex ability and mention the gap.
@@ -39,6 +39,22 @@ This setup uses a lean profile from `config/lean-skills.txt`. If a formerly know
 | Debugging | `diagnose` | `debugging-and-error-recovery` | Reproduce then verify the fix |
 | API/data/backend | `api-and-interface-design`, `database-schema-designer`, or `system-design` | `supabase`, `supabase-postgres-best-practices` | Tests, queries, migrations, or schema diff |
 | Deployment/ops | Exact deploy/env/Docker/GitHub skill | `runbook-generator` when useful | Smoke test or deploy command output |
+
+## Fast Lanes
+
+- "대충 알아서", mixed Korean/English, many goals: `messy-request-interpreter` -> `skill-router`.
+- Working app/prototype/local preview: `product-frontend-engineer`.
+- Existing UI feels bad/confusing: `frontend-design-audit` or `ux-enhancer`.
+- Premium visual/frontend taste: `gpt-taste`.
+- Screenshot/reference to UI: `image-to-code`.
+- Actual image/poster/thumbnail/README visual: `media-image-director`.
+- Game idea/HUD/playtest/prototype: exact game skill.
+- PRD/spec/docs/report: `planning-document-writer` or `research-report-writer`.
+- Code change/refactor: `incremental-implementation`.
+- Bug/error: `diagnose`.
+- API/schema/backend architecture: `api-and-interface-design`, `database-schema-designer`, or `system-design`.
+- Supabase/Postgres: `supabase` and `supabase-postgres-best-practices`.
+- GitHub/CI/deploy: exact GitHub or deploy skill.
 
 ## Prototype Mode Counterproposal
 
@@ -103,7 +119,7 @@ If the recommended path is clearly best and low-risk, proceed.
 ## Orchestration Rules
 
 - Prefer one primary skill plus at most two supporting skills.
-- Avoid restoring or installing niche skills unless the user explicitly wants that workflow.
+- Avoid installing niche skills unless the user explicitly wants that workflow.
 - Do not run multi-agent delegation unless the user explicitly asks for subagents or parallel agent work.
 - For non-trivial, ambiguous, expensive, or direction-setting tasks, use a brief counterproposal gate before execution.
 - For complex build tasks, make a short plan, then execute.

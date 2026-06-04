@@ -1,6 +1,6 @@
 # Lean Skill Catalog
 
-This catalog mirrors the lean profile in `config/lean-skills.txt`. Route to these representative skills first. If a pruned niche skill would have fit, use the closest installed skill or suggest restoring it only when the task truly needs that exact workflow.
+This catalog mirrors the lean profile in `config/lean-skills.txt`. Route to these representative skills first. If a removed niche skill would have fit, use the closest installed skill or suggest reinstalling only when the task truly needs that exact workflow.
 
 ## Router And Intake
 

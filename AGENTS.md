@@ -2,7 +2,7 @@
 
 Use the lightest role that fits the task. Do not narrate role selection unless the user asks.
 
-This workspace uses the lean skill profile in `config/lean-skills.txt`: about 100 representative skills instead of every available niche skill. Prefer the installed skill set. If a named skill is missing, use the closest installed skill and mention that the old skill can be restored from the prune backup if it is genuinely needed.
+This workspace uses the lean skill profile in `config/lean-skills.txt`: about 100 representative skills instead of every available niche skill. Prefer the installed skill set. If a named skill is missing, use the closest installed skill; suggest reinstalling a niche skill only when the exact workflow is truly required.
 
 ## Default Intake
 
@@ -35,6 +35,7 @@ If multiple roles fit, choose the role that owns the final output. Use others as
 
 - Prefer one primary skill plus at most two supporting skills.
 - Choose the narrowest exact installed skill before a broad category skill.
+- Do not read the full catalog for obvious tasks. Use the quick routing table first, then consult `$skill-router` references only when multiple choices are plausible.
 - Prefer `od-*` skills only when their specialized artifact format is useful.
 - Use `$planning-document-writer` for planning/document requests such as PRD, GDD, requirements, feature spec, screen spec, API docs, DB docs, SOP, or runbook.
 - Use `$research-report-writer` or `$research-synthesizer` for research/report requests, benchmarking, market/technical research, trend reports, or decision memos.
@@ -43,7 +44,9 @@ If multiple roles fit, choose the role that owns the final output. Use others as
 - Apply `$karpathy-guidelines` as baseline discipline for coding work when no stronger project instruction already covers it.
 - Load only the skill bodies or references needed for the task.
 
-## Default Bundles
+## Quick Routing
+
+Use this table first. It is the normal path for most requests.
 
 - Rough mixed request: `$messy-request-interpreter` -> `$skill-router` -> exact specialist.
 - Product/frontend prototype: `$product-frontend-engineer`; add `$frontend-ui-engineering`, `$gpt-taste`, `$image-to-code`, or `$supabase` only when needed; verify with `$webapp-testing`, `$playwright`, or Browser.
@@ -57,6 +60,16 @@ If multiple roles fit, choose the role that owns the final output. Use others as
 - Implementation/refactor: `$incremental-implementation`; add `$test-driven-development` when behavior changes and `$diagnose` for unclear failures.
 - Docs: `$technical-writer`, `$api-documentation-writer`, `$runbook-generator`, `$sop-builder`, `$release-notes`, or `$handoff`.
 - Deploy/ops: `$vercel-deploy`, `$netlify-deploy`, `$cloudflare-deploy`, `$render-deploy`, `$env-setup-wizard`, `$docker-debugger`, or `$gh-fix-ci`.
+
+## Skill Efficiency Rules
+
+- Start with the user outcome, not the first keyword. For example, a screenshot can mean image generation, UI audit, frontend implementation, or documentation.
+- Prefer representative skills over niche frameworks. Example: use `$research-report-writer` instead of separate market/competitor/strategy skills unless the user names a specific analysis.
+- Prefer execution skills over planning skills when the user clearly wants a change made.
+- Pair frontend, game, and visual work with verification by default.
+- Pair backend and data changes with focused tests, queries, or migration checks.
+- For image requests, use `$media-image-director` and generate/edit the image when the image tool is available.
+- For missing niche skills, continue with the nearest installed representative skill.
 
 ## Prototype And Design Routing
 

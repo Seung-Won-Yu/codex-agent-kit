@@ -9,7 +9,7 @@ Use this as the final tie-breaker when several installed lean-profile skills cou
 3. Router stays thin: choose, then hand off.
 4. Broad skills are support, not default owners.
 5. Security/test skills need strong cues.
-6. If a pruned niche skill would have fit, use the nearest installed representative skill and mention restore only when it matters.
+6. If a removed niche skill would have fit, use the nearest installed representative skill. Mention reinstalling only when the exact workflow matters.
 
 ## Route Family Bundles
 
@@ -99,4 +99,4 @@ Use this as the final tie-breaker when several installed lean-profile skills cou
 
 - Do not use `@qa` or QA skills for ordinary coding unless review/testing/audit is the main request.
 - Do not stack multiple planning skills for small tasks. Use one planning skill, then execute.
-- Do not route to pruned connector-dependent or niche skills unless the user explicitly asks to restore/install them.
+- Do not route to removed connector-dependent or niche skills unless the user explicitly asks to install them again.

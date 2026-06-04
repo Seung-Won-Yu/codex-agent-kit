@@ -7,7 +7,7 @@ This profile keeps Codex useful without exposing every installed skill at once.
 - Keep about 100 skills available locally.
 - Preserve the custom Seung-Won-Yu skills in this kit.
 - Keep representative skills for design, frontend, games, image generation, GitHub, Supabase, docs, research, and normal implementation.
-- Move rarely used specialized skills into a timestamped backup instead of deleting them.
+- Keep the active skill set small enough to route quickly.
 
 ## How To Apply
 
@@ -31,10 +31,6 @@ $CODEX_HOME/skills.pruned-YYYYMMDD-HHMMSS
 
 ## Restore
 
-To restore a skill, move its folder back into `$CODEX_HOME/skills`.
-
-```bash
-mv "$CODEX_HOME/skills.pruned-YYYYMMDD-HHMMSS/<skill-name>" "$CODEX_HOME/skills/"
-```
+The previous prune backup was intentionally deleted after the lean profile was accepted. To bring a removed skill back, reinstall it from its source or copy it from a fresh skill bundle.
 
 Restart Codex after changing installed skills.
