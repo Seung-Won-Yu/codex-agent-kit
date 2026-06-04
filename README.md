@@ -1,111 +1,124 @@
 # Codex Agent Kit
 
-My personal Codex routing rules and reusable agent skills.
+Personal Codex setup for turning rough requests into cleaner product, design, frontend, backend, game, image, and documentation workflows.
 
-This repository is a clean, shareable version of the local setup I use for product planning, frontend design, UX review, Supabase work, and implementation handoff. It intentionally excludes local sessions, auth files, caches, generated images, browser state, SQLite databases, and app runtime files.
+This repo is not a raw backup of `~/.codex`. It keeps the portable parts only:
 
-## What This Is
+- global `AGENTS.md` routing rules
+- a lean skill profile
+- selected custom/shared skills
+- senior engineering lenses
+- install/prune scripts
+- safety docs
 
-This kit is my lightweight operating system for working with Codex. It helps rough ideas become the right kind of output: a product brief, design direction, frontend task list, UX review, Supabase plan, or implementation handoff.
+## Current Shape
 
-Instead of backing up my whole local Codex folder, this repo keeps only the parts that are useful to share:
+```text
+rough request
+-> messy-request-interpreter
+-> skill-router
+-> one primary skill
+-> optional support skills
+-> execution
+-> verification
+-> short handoff
+```
 
-- reusable skills
-- routing rules for choosing the right role
-- a safe config example
-- small docs that explain how the setup fits together
+The active local setup is intentionally lean: about 100 representative skills instead of every niche skill I have tried.
 
-## What's Inside
+## What This Helps With
+
+- Product ideas, specs, PRDs, and implementation handoff
+- Frontend/UI work with stronger taste and verification
+- Game concepts, HUDs, playable slices, and player-experience review
+- Codex-native image prompts, README visuals, posters, thumbnails, and mockups
+- Supabase, RLS, schema, API, and Postgres review
+- Technical docs, runbooks, changelogs, and project README cleanup
+- GitHub workflow, CI fixes, deploys, and focused verification
+
+## Repository Map
 
 ```text
 .
-├── AGENTS.md                         # Global role and skill-routing rules
+├── AGENTS.md                                  # Global lean routing rules
 ├── config/
-│   └── codex.config.sample.toml      # Redacted Codex config example
+│   ├── codex.config.sample.toml               # Redacted config example
+│   └── lean-skills.txt                        # Active keep-list for local skills
 ├── docs/
-│   ├── architecture.md               # How the kit is organized
-│   ├── media-generation-routing.md   # Codex image-generation routing
-│   ├── open-design-imports.md        # Imported Open Design skills and rationale
-│   ├── skill-catalog.md              # Included skills and when to use them
-│   └── security-checklist.md         # What must never be committed
+│   ├── architecture.md                        # How the kit is organized
+│   ├── lean-skill-profile.md                  # 102-skill profile notes
+│   ├── media-generation-routing.md            # Codex image-generation routing
+│   ├── open-design-imports.md                 # Open Design imports and rationale
+│   ├── security-checklist.md                  # What must never be committed
+│   └── skill-catalog.md                       # Included custom/managed skills
 ├── scripts/
-│   └── install.sh                    # Optional local install helper
-├── skills/                           # Personal/shared skills
-└── third_party/                      # Third-party license notices
+│   ├── install.sh                             # Copy kit into ~/.codex
+│   └── prune-skills.sh                        # Keep local skills aligned to lean profile
+├── skills/
+│   └── skill-router/
+│       └── references/
+│           └── senior-engineering-lenses.md   # Staff/backend/frontend/ship gates
+└── third_party/                               # Third-party notices
 ```
 
-## Core Workflow
+## Lean Profile
 
-The kit uses a lightweight routing model:
+The local Codex skill set is kept near 100 skills using:
 
 ```text
-messy request
--> routing brief
--> role assignment
--> smallest useful skill set
--> execution and verification
+config/lean-skills.txt
 ```
 
-The default entry point is `AGENTS.md`. It maps rough requests into roles such as `@product`, `@game`, `@dev`, `@arch`, `@doc`, and `@intel`, then selects the narrowest skill needed for the job.
+The goal is simple: keep enough power for real work, but avoid a noisy skill pile where every request has too many possible routes.
 
-## How I Use It
+Representative lanes:
 
-I use this setup when I want Codex to behave less like a single generic assistant and more like a small team with clear lanes.
-
-- Product ideas go through brief, structure, and task breakdown.
-- UI work gets design direction, tokens, critique, and implementation notes.
-- Existing screens can be audited for clarity and polish.
-- Supabase work gets separated into app logic, schema, RLS, and Postgres performance.
-- Messy requests are routed into the smallest useful workflow before execution.
-
-## Skill Groups
-
-| Group | What It Helps With | Skills |
-| --- | --- | --- |
-| Product/design planning | Turns vague product ideas into a brief, information architecture, and buildable tasks. | `design-brief`, `information-architecture`, `design-flow`, `brief-to-tasks` |
-| Routing/orchestration | Chooses the smallest useful skill bundle and prevents over-stacking. | `skill-router` |
-| Game design/prototyping | Shapes mobile game ideas into loops, UI direction, playable slices, playtest reviews, and QA passes. | `mobile-game-design`, `game-ui-art-direction`, `prototype-slice-planner`, `player-experience-review`, `mobile-game-qa`, `game-reference-research` |
-| Codex image generation | Directs prompts, edits, variations, posters, thumbnails, UI references, game visuals, and product mockup images through Codex image generation. | `media-image-director` |
-| Visual/UI quality | Improves visual direction, design tokens, screenshots, UI critique, and React usability. | `claude-design`, `design-tokens`, `design-review`, `frontend-design-audit`, `gpt-taste`, `image-to-code`, `ux-enhancer` |
-| Backend/data | Keeps Supabase, RLS, schema, and Postgres performance work grounded and reviewable. | `supabase`, `supabase-postgres-best-practices` |
-| Open Design imports | Adds artifact, dashboard, research, chart, diagram, and cross-platform design workflows inspired by Open Design. | `od-design-md`, `od-plan-design-review`, `od-research-decision-room`, `od-d3-visualization`, `od-data-report`, `od-hand-drawn-diagrams`, `od-motion-frames`, `od-live-dashboard`, `od-platform-design` |
-
-## Included Skills
-
-| Skill | Short Description |
+| Lane | Primary Skills |
 | --- | --- |
-| `brief-to-tasks` | Converts a design or product brief into a practical implementation checklist. |
-| `claude-design` | Creates high-fidelity HTML-style design artifacts and visual directions. |
-| `design-brief` | Captures audience, goals, constraints, tone, and product intent before building. |
-| `design-flow` | Runs a full design workflow from brief to IA, tokens, tasks, and review. |
-| `design-review` | Reviews a UI against a brief and points out polish, hierarchy, and usability issues. |
-| `design-tokens` | Defines reusable colors, spacing, typography, radius, shadow, and theme values. |
-| `frontend-design-audit` | Audits existing web screens for clarity, consistency, and visual quality. |
-| `game-reference-research` | Researches game design, UI, tooling, and reference material for reusable skill notes. |
-| `game-ui-art-direction` | Defines mobile game HUDs, reward UI, visual tokens, component states, and screen hierarchy. |
-| `gpt-taste` | Pushes frontend work toward a stronger, more distinctive visual result. |
-| `image-to-code` | Uses image references as the source for precise UI implementation. |
-| `information-architecture` | Organizes pages, navigation, content hierarchy, and user flows. |
-| `media-image-director` | Directs Codex image generation and editing with better prompts, visual guardrails, critique, and iteration. |
-| `mobile-game-design` | Turns rough mobile game ideas into core loops, first sessions, GDD outlines, and prototype briefs. |
-| `mobile-game-qa` | Checks mobile game prototypes for touch usability, HUD readability, feedback, layout, and performance basics. |
-| `od-d3-visualization` | Adds D3-oriented guidance for complex interactive charts and explanatory graphics. |
-| `od-data-report` | Turns CSV, Excel, or JSON data into a polished visual report page. |
-| `od-design-md` | Captures visual rules, tokens, and design direction in a `DESIGN.md` source of truth. |
-| `od-hand-drawn-diagrams` | Points agents toward Excalidraw-style hand-drawn architecture and flow diagrams. |
-| `od-live-dashboard` | Builds self-contained dashboard artifacts with KPIs, activity, and task tables. |
-| `od-motion-frames` | Produces looping CSS motion-composition artifacts for hero/video-style frames. |
-| `od-plan-design-review` | Runs a score-based senior design review and flags weak AI-looking UI patterns. |
-| `od-platform-design` | References cross-platform design guidance across Apple HIG, Material, and WCAG. |
-| `od-research-decision-room` | Synthesizes messy research evidence into an HTML decision-room artifact. |
-| `player-experience-review` | Reviews a game flow from the player's point of view to find confusion, friction, and churn risks. |
-| `prototype-slice-planner` | Chooses the smallest playable prototype slice and separates must-build from fakeable scope. |
-| `skill-router` | Chooses roles, lanes, and skill bundles, including the imported `od-*` workflows. |
-| `supabase` | Guides Supabase Auth, RLS, Storage, Realtime, CLI, MCP, and migrations. |
-| `supabase-postgres-best-practices` | Reviews Postgres schemas, indexes, RLS policies, and query performance. |
-| `ux-enhancer` | Refactors React screens for simpler decisions, better scanning, and cleaner flows. |
+| Intake/routing | `messy-request-interpreter`, `skill-router` |
+| Product/frontend | `product-frontend-engineer`, `frontend-ui-engineering`, `gpt-taste`, `image-to-code` |
+| Existing UI cleanup | `frontend-design-audit`, `ux-enhancer`, `accessibility`, `webapp-testing` |
+| Visual artifacts | `claude-design`, `media-image-director` |
+| Game work | `mobile-game-design`, `game-ui-art-direction`, `prototype-slice-planner`, `player-experience-review`, `mobile-game-qa` |
+| Open Design artifacts | `od-design-md`, `od-live-dashboard`, `od-data-report`, `od-d3-visualization`, `od-motion-frames` |
+| Backend/API/data | `system-design`, `api-and-interface-design`, `database-schema-designer` |
+| Supabase/Postgres | `supabase`, `supabase-postgres-best-practices` |
+| Implementation/debugging | `incremental-implementation`, `diagnose`, `test-driven-development`, `code-review-and-quality` |
+| Docs/research | `planning-document-writer`, `research-report-writer`, `research-synthesizer`, `technical-writer` |
+| GitHub/deploy | `gh-cli`, `gh-address-comments`, `gh-fix-ci`, `vercel-deploy`, `cloudflare-deploy` |
 
-## Quick Install
+## Senior Engineering Lenses
+
+Instead of installing separate "senior backend developer" or "senior frontend developer" persona skills, this kit folds the useful parts into:
+
+```text
+skills/skill-router/references/senior-engineering-lenses.md
+```
+
+It adds four quiet quality gates:
+
+- Staff review gate: correctness, readability, architecture, security, performance
+- Senior backend gate: contracts, validation, errors, auth/ownership, pagination, idempotency, indexes, migration safety
+- Senior frontend gate: user flow, semantic HTML, composition, states, accessibility, responsive stability, performance
+- Ship gate: scope, verification, UX states, security basics, handoff
+
+These are applied by the router when useful without adding more active skills.
+
+## Custom Skills In This Repo
+
+This repo only stores the custom/curated skills I actively maintain here. The full local profile also includes official and curated skills installed in `~/.codex/skills`.
+
+| Group | Skills |
+| --- | --- |
+| Routing | `skill-router` |
+| Design workflow | `design-brief`, `information-architecture`, `design-tokens`, `brief-to-tasks`, `design-review`, `design-flow` |
+| Frontend polish | `claude-design`, `frontend-design-audit`, `gpt-taste`, `image-to-code`, `ux-enhancer` |
+| Game design | `mobile-game-design`, `game-ui-art-direction`, `prototype-slice-planner`, `player-experience-review`, `mobile-game-qa`, `game-reference-research` |
+| Image generation | `media-image-director` |
+| Open Design imports | `od-design-md`, `od-plan-design-review`, `od-research-decision-room`, `od-live-dashboard`, `od-data-report`, `od-d3-visualization`, `od-hand-drawn-diagrams`, `od-motion-frames`, `od-platform-design` |
+| Supabase | `supabase`, `supabase-postgres-best-practices` |
+
+## Install
 
 Review the files first, then run:
 
@@ -114,6 +127,22 @@ Review the files first, then run:
 ```
 
 The installer copies `skills/` into `$CODEX_HOME/skills` and backs up an existing `$CODEX_HOME/AGENTS.md` before replacing it.
+
+## Keep Skills Lean
+
+Preview what would be moved out:
+
+```bash
+./scripts/prune-skills.sh
+```
+
+Apply the lean profile:
+
+```bash
+./scripts/prune-skills.sh --apply
+```
+
+The previous prune backup was intentionally deleted after the lean profile was accepted. Removed niche skills can be reinstalled later from their source if an exact workflow becomes necessary.
 
 ## Manual Install
 
@@ -142,4 +171,4 @@ Do not commit:
 - browser session files
 - project-specific secrets or `.env` files
 
-This repo is meant to be a portable method kit, not a raw dotfiles backup.
+This repo is a portable method kit, not a raw dotfiles backup.
