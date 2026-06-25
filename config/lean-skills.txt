@@ -8,6 +8,7 @@ api-documentation-writer
 ax-consulting-planner
 best-practices
 brief-to-tasks
+caveman
 changelog-generator
 claude-design
 cloudflare-deploy

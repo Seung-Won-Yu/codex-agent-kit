@@ -1,10 +1,11 @@
 # Codex Agent Kit
 
-Personal Codex setup for turning rough requests into cleaner product, design, frontend, backend, game, image, and documentation workflows.
+Personal Codex setup for turning rough requests into cleaner product, design, frontend, backend, game, image, automation, and documentation workflows.
 
 This repo is not a raw backup of `~/.codex`. It keeps the portable parts only:
 
 - global `AGENTS.md` routing rules
+- lightweight `agents/` routing references and playbooks
 - a lean skill profile
 - selected custom/shared skills
 - senior engineering lenses
@@ -14,17 +15,11 @@ This repo is not a raw backup of `~/.codex`. It keeps the portable parts only:
 ## Current Shape
 
 ```text
-rough request
--> messy-request-interpreter
--> skill-router
--> one primary skill
--> optional support skills
--> execution
--> verification
--> short handoff
+clear request -> direct execution -> focused verification -> concise handoff
+fuzzy request -> messy-request-interpreter -> skill-router -> execution
 ```
 
-The active local setup is intentionally lean: about 100 representative skills instead of every niche skill I have tried.
+The active local setup is intentionally lean: about 100 representative skills instead of every niche skill I have tried. `~/.codex` is the source of truth; this repo is the portable, sanitized kit derived from it.
 
 ## What This Helps With
 
@@ -35,18 +30,24 @@ The active local setup is intentionally lean: about 100 representative skills in
 - Supabase, RLS, schema, API, and Postgres review
 - Technical docs, runbooks, changelogs, and project README cleanup
 - GitHub workflow, CI fixes, deploys, and focused verification
+- Caveman-lite routine communication: concise status and final replies without compressing user-facing artifacts
 
 ## Repository Map
 
 ```text
 .
 ├── AGENTS.md                                  # Global lean routing rules
+├── agents/
+│   ├── routing.md                             # Thin routing reference
+│   └── playbooks/                             # Backend/frontend/design/docs playbooks
 ├── config/
 │   ├── codex.config.sample.toml               # Redacted config example
 │   └── lean-skills.txt                        # Source keep-list copied to ~/.codex/config
+├── index.html                                 # GitHub Pages documentation site
+├── assets/                                    # Site CSS/JS
 ├── docs/
 │   ├── architecture.md                        # How the kit is organized
-│   ├── lean-skill-profile.md                  # 102-skill profile notes
+│   ├── lean-skill-profile.md                  # Lean profile notes
 │   ├── media-generation-routing.md            # Codex image-generation routing
 │   ├── open-design-imports.md                 # Open Design imports and rationale
 │   ├── security-checklist.md                  # What must never be committed
@@ -54,10 +55,7 @@ The active local setup is intentionally lean: about 100 representative skills in
 ├── scripts/
 │   ├── install.sh                             # Copy kit into ~/.codex
 │   └── prune-skills.sh                        # Keep local skills aligned to lean profile
-├── skills/
-│   └── skill-router/
-│       └── references/
-│           └── senior-engineering-lenses.md   # Staff/backend/frontend/ship gates
+├── skills/                                    # Custom/curated skills stored in this kit
 └── third_party/                               # Third-party notices
 ```
 
@@ -78,6 +76,7 @@ Representative lanes:
 | Lane | Primary Skills |
 | --- | --- |
 | Intake/routing | `messy-request-interpreter`, `skill-router` |
+| Compression/style | `caveman` |
 | Product/frontend | `product-frontend-engineer`, `frontend-ui-engineering`, `gpt-taste`, `image-to-code` |
 | Existing UI cleanup | `frontend-design-audit`, `ux-enhancer`, `accessibility`, `webapp-testing` |
 | Visual artifacts | `claude-design`, `media-image-director` |
@@ -113,6 +112,7 @@ This repo only stores the custom/curated skills I actively maintain here. The fu
 | Group | Skills |
 | --- | --- |
 | Routing | `skill-router` |
+| Communication | `caveman` |
 | Design workflow | `design-brief`, `information-architecture`, `design-tokens`, `brief-to-tasks`, `design-review`, `design-flow` |
 | Frontend polish | `claude-design`, `frontend-design-audit`, `gpt-taste`, `image-to-code`, `ux-enhancer` |
 | Game design | `mobile-game-design`, `game-ui-art-direction`, `prototype-slice-planner`, `player-experience-review`, `mobile-game-qa`, `game-reference-research` |
@@ -129,6 +129,7 @@ Review the files first, then run:
 ```
 
 The installer copies `skills/` into `$CODEX_HOME/skills` and backs up an existing `$CODEX_HOME/AGENTS.md` before replacing it.
+It also copies `agents/` into `$CODEX_HOME/agents` so the global rules can resolve routing references.
 
 ## Keep Skills Lean
 
@@ -151,6 +152,7 @@ The previous prune backup was intentionally deleted after the lean profile was a
 ```bash
 mkdir -p "$HOME/.codex/skills"
 cp -R skills/* "$HOME/.codex/skills/"
+cp -R agents "$HOME/.codex/agents"
 cp AGENTS.md "$HOME/.codex/AGENTS.md"
 ```
 
@@ -174,3 +176,15 @@ Do not commit:
 - project-specific secrets or `.env` files
 
 This repo is a portable method kit, not a raw dotfiles backup.
+
+## Web Page
+
+The repo includes a static documentation page:
+
+```text
+index.html
+assets/app.css
+assets/app.js
+```
+
+Enable GitHub Pages from the `main` branch root to publish it.

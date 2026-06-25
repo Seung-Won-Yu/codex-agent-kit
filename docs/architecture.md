@@ -1,21 +1,34 @@
 # Architecture
 
-This kit separates three layers:
+This kit separates six layers:
 
 ## 1. Routing Layer
 
 `AGENTS.md` defines the operating model:
 
-- classify the user's final desired output
-- choose the lightest responsible role
-- select one primary skill plus at most two support skills
+- execute directly when the task is clear
+- use the fuzzy intake pipeline only when ambiguity changes the output
+- select one primary skill plus at most two support skills when skills matter
 - execute, verify, and summarize
 
 It is intentionally written as policy rather than code so it can be read and edited quickly.
 
-`skills/skill-router/` contains the reusable router skill. Its bundled `references/skill-catalog.md` and `references/activation-matrix.md` are the detailed lookup tables used when several skills could fit.
+`agents/` contains lightweight routing references and playbooks. `skills/skill-router/` remains the reusable router skill for broad or explicit routing tasks.
 
-## 2. Skill Layer
+## 2. Agent Reference Layer
+
+`agents/routing.md` is the compact routing map used only when direct execution is unreliable or several lanes fit.
+
+`agents/playbooks/` stores focused guidance for:
+
+- backend/API/schema/auth/data work
+- frontend/product UI work
+- design/prototype work
+- docs and research work
+
+These files are deliberately smaller than the older all-in-one registry.
+
+## 3. Skill Layer
 
 `skills/` contains reusable workflows. Each skill has a `SKILL.md` with:
 
@@ -26,13 +39,17 @@ It is intentionally written as policy rather than code so it can be read and edi
 
 Some skills include `references/`, `examples/`, or assets. Load those progressively instead of reading everything at once.
 
-## 3. Local Config Layer
+## 4. Local Config Layer
 
 `config/codex.config.sample.toml` shows feature flags and plugin shape without private paths, auth, browser state, or local runtime cache values.
 
 The real config on a machine may include absolute paths and local project trust entries. Keep those private unless they are intentionally sanitized.
 
-## 4. Third-Party Import Layer
+## 5. Documentation Site Layer
+
+`index.html` and `assets/` provide a GitHub Pages-friendly overview of the kit. The page is static and has no build step.
+
+## 6. Third-Party Import Layer
 
 `third_party/` stores license material for imported skill sources. Imported skills are kept in `skills/` with a clear prefix, such as `od-`, so they remain easy to identify and do not collide with local skill names.
 

@@ -7,6 +7,7 @@ This catalog explains the practical role of each skill included in this kit. The
 | Skill | Use When |
 | --- | --- |
 | `skill-router` | Route broad or ambiguous requests into the smallest useful skill bundle. |
+| `caveman` | Keep routine chat, progress updates, command summaries, and final status replies terse without compressing code or user-facing artifacts. |
 | `design-flow` | Run a full design process from brief to tasks. |
 | `design-brief` | Define the product/user/design intent before building. |
 | `information-architecture` | Plan navigation, page structure, content hierarchy, and flows. |
@@ -69,6 +70,7 @@ These skills are imported or adapted from the Open Design ecosystem and kept und
 | Skill | Description |
 | --- | --- |
 | `brief-to-tasks` | Breaks a product or design brief into ordered work items that can be implemented. |
+| `caveman` | Compresses routine assistant prose while preserving exact code, commands, artifact copy, and warnings. |
 | `claude-design` | Produces polished visual artifacts for exploring UI direction before coding. |
 | `design-brief` | Clarifies the audience, problem, tone, constraints, and intended outcome. |
 | `design-flow` | Connects the whole design process from brief to review in one guided lane. |
