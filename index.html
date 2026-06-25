@@ -8,7 +8,7 @@
       content="Seung-Won Yu가 실제로 사용하는 Codex workspace 설정, agent rules, lean skills, routing playbook, 안전 정책을 공유하기 위한 한국어 문서 사이트입니다."
     />
     <title>Codex Agent Kit | 현재 Codex 세팅 공유 문서</title>
-    <link rel="stylesheet" href="assets/app.css?v=docs-html" />
+    <link rel="stylesheet" href="assets/app.css?v=single-page-docs" />
   </head>
   <body>
     <header class="topbar">
@@ -22,6 +22,7 @@
         <a href="#workflow">흐름</a>
         <a href="#skills">스킬</a>
         <a href="#install">설치</a>
+        <a href="#docs">문서</a>
       </nav>
       <a class="repo-link" href="https://github.com/Seung-Won-Yu/codex-agent-kit">GitHub</a>
     </header>
@@ -40,7 +41,7 @@
             기본값으로 둡니다.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#install">설치 방법 보기</a>
+            <a class="button primary" href="#docs">문서 전체 보기</a>
             <a class="button secondary" href="#layers">설정 구조 보기</a>
           </div>
         </div>
@@ -521,60 +522,317 @@ cd codex-agent-kit
         </div>
       </section>
 
-      <section class="section-grid" aria-labelledby="docs-title">
-        <div class="section-heading">
+      <section id="docs" class="docs-section" aria-labelledby="docs-title">
+        <div class="docs-section-head">
           <p class="eyebrow">Docs</p>
-          <h2 id="docs-title">더 자세한 설명은 repo 문서로 이어집니다.</h2>
+          <h2 id="docs-title">문서까지 한 페이지에서 바로 읽습니다.</h2>
+          <p>
+            README, agent rules, architecture, lean profile, security, media routing까지 흩어진 Markdown을
+            랜딩 페이지 안에서 읽기 좋게 다시 구성했습니다.
+          </p>
         </div>
-        <div class="doc-index" aria-label="Repository documents">
-          <a class="doc-row" href="docs.html#readme">
-            <span class="doc-type">guide</span>
-            <strong>README</strong>
-            <span>한글 온보딩, 설치, 적용 전 확인 사항</span>
-            <code>README.md</code>
-          </a>
-          <a class="doc-row" href="docs.html#agent-rules">
-            <span class="doc-type">rules</span>
-            <strong>Agent Rules</strong>
-            <span>현재 workspace에서 Codex가 따르는 global behavior</span>
-            <code>AGENTS.md</code>
-          </a>
-          <a class="doc-row" href="docs.html#architecture">
-            <span class="doc-type">system</span>
-            <strong>Architecture</strong>
-            <span>routing, skills, config, documentation layer 구조</span>
-            <code>docs/architecture.md</code>
-          </a>
-          <a class="doc-row" href="docs.html#lean-profile">
-            <span class="doc-type">profile</span>
-            <strong>Lean Profile</strong>
-            <span>103개 대표 skill을 유지하는 기준과 적용 방법</span>
-            <code>docs/lean-skill-profile.md</code>
-          </a>
-          <a class="doc-row" href="docs.html#skill-catalog">
-            <span class="doc-type">catalog</span>
-            <strong>Skill Catalog</strong>
-            <span>repo에 포함된 custom/curated skill 설명</span>
-            <code>docs/skill-catalog.md</code>
-          </a>
-          <a class="doc-row" href="docs.html#security">
-            <span class="doc-type">safety</span>
-            <strong>Security Checklist</strong>
-            <span>공개 repo에 들어가면 안 되는 파일과 scan command</span>
-            <code>docs/security-checklist.md</code>
-          </a>
-          <a class="doc-row" href="docs.html#media-routing">
-            <span class="doc-type">media</span>
-            <strong>Media Routing</strong>
-            <span>이미지 생성/편집 요청을 어떤 도구로 보낼지 정리</span>
-            <code>docs/media-generation-routing.md</code>
-          </a>
-          <a class="doc-row" href="docs.html#open-design">
-            <span class="doc-type">imports</span>
-            <strong>Open Design</strong>
-            <span>od-* skill import 기준과 license boundary</span>
-            <code>docs/open-design-imports.md</code>
-          </a>
+
+        <div class="docs-layout embedded-docs">
+          <aside class="docs-toc" aria-label="Documents">
+            <a href="#readme">README</a>
+            <a href="#agent-rules">Agent Rules</a>
+            <a href="#architecture">Architecture</a>
+            <a href="#lean-profile">Lean Profile</a>
+            <a href="#skill-catalog">Skill Catalog</a>
+            <a href="#security">Security</a>
+            <a href="#media-routing">Media Routing</a>
+            <a href="#open-design">Open Design</a>
+          </aside>
+
+          <div class="doc-articles">
+            <article id="readme" class="doc-article">
+              <div class="article-label">README.md</div>
+              <h2>Codex Agent Kit</h2>
+              <p>
+                Seung-Won Yu가 현재 로컬 workspace에서 실제로 사용하는 Codex 설정을 공유 가능한 형태로 정리한
+                repository입니다. 이 repo는 <code>~/.codex</code> 전체 백업이 아니라, 인증값과 로컬 state를 제외한
+                portable layer만 남깁니다.
+              </p>
+
+              <div class="doc-callout">
+                <strong>공개 페이지</strong>
+                <a href="https://seung-won-yu.github.io/codex-agent-kit/">https://seung-won-yu.github.io/codex-agent-kit/</a>
+              </div>
+
+              <h3>이 세팅의 목적</h3>
+              <p>
+                Codex는 skills, plugins, MCP, browser automation, 문서/스프레드시트/PDF 도구까지 붙일 수 있어
+                강력합니다. 하지만 모든 것을 한 번에 켜두면 매 요청마다 어떤 역할과 workflow를 선택해야 하는지
+                분기가 많아집니다.
+              </p>
+              <ul>
+                <li>명확한 요청은 바로 실행합니다.</li>
+                <li>애매한 요청만 작게 해석하고 라우팅합니다.</li>
+                <li>스킬은 대표 workflow 중심으로 lean하게 유지합니다.</li>
+                <li>실제 작업은 파일 읽기, 수정, 검증, 짧은 handoff까지 끝냅니다.</li>
+                <li>공유 repo에는 규칙과 reusable skills만 남기고 민감한 로컬 상태는 제외합니다.</li>
+              </ul>
+
+              <h3>핵심 운영 흐름</h3>
+              <div class="flow-strip" aria-label="Core workflow">
+                <span>사용자 요청</span>
+                <span>명확하면 직접 실행</span>
+                <span>애매하면 해석/라우팅</span>
+                <span>검증 후 보고</span>
+              </div>
+
+              <h3>현재 구성 요약</h3>
+              <div class="metric-table">
+                <div><strong>103</strong><span>Lean profile skills</span></div>
+                <div><strong>31</strong><span>Curated repo skills</span></div>
+                <div><strong>5</strong><span>Routing/playbook files</span></div>
+                <div><strong>0</strong><span>Secrets stored here</span></div>
+              </div>
+
+              <h3>설치</h3>
+              <pre><code>git clone https://github.com/Seung-Won-Yu/codex-agent-kit.git
+cd codex-agent-kit
+./scripts/install.sh</code></pre>
+
+              <h3>Skill 정리</h3>
+              <pre><code># Preview
+./scripts/prune-skills.sh
+
+# Apply after reviewing
+./scripts/prune-skills.sh --apply</code></pre>
+
+              <h3>이 repo를 그대로 쓰기 전에</h3>
+              <ul>
+                <li><code>sandbox_mode</code>와 trusted project path를 본인 기준으로 조정하세요.</li>
+                <li>enabled plugins와 MCP command path가 내 환경에 맞는지 확인하세요.</li>
+                <li>한국어/영어 응답 선호와 security policy를 필요에 맞게 바꾸세요.</li>
+              </ul>
+            </article>
+
+            <article id="agent-rules" class="doc-article">
+              <div class="article-label">AGENTS.md</div>
+              <h2>Global Agent Rules</h2>
+              <p>
+                이 파일은 Codex가 현재 workspace에서 어떤 태도로 움직일지 정하는 최상위 규칙입니다. 핵심은
+                lightest workflow, direct execution, Korean-first communication, focused verification입니다.
+              </p>
+
+              <h3>Core Behavior</h3>
+              <ul>
+                <li>명확한 single-domain task는 바로 실행합니다.</li>
+                <li>role selection이나 <code>skill-router</code> ceremony는 ambiguity가 실제 결과에 영향을 줄 때만 씁니다.</li>
+                <li>classification보다 execution을 우선합니다.</li>
+                <li>사용자가 한국어를 쓰면 code나 artifact convention을 제외하고 한국어로 답합니다.</li>
+              </ul>
+
+              <h3>Fuzzy Intake</h3>
+              <pre><code>messy-request-interpreter -> skill-router -> execution</code></pre>
+              <p>
+                이 route는 원하는 산출물, owner role, implementation path가 불명확할 때만 사용합니다. 단순 작업에는 과한
+                routing을 넣지 않습니다.
+              </p>
+
+              <h3>Execution Discipline</h3>
+              <ul>
+                <li>guess보다 evidence를 우선합니다.</li>
+                <li>non-trivial change 전에는 관련 파일을 먼저 읽습니다.</li>
+                <li>사용자가 만든 변경은 되돌리지 않습니다.</li>
+                <li>가능하면 focused verification을 실행합니다.</li>
+                <li>routine reply는 짧게, user-facing artifact는 정상적인 전문 문체로 작성합니다.</li>
+              </ul>
+            </article>
+
+            <article id="architecture" class="doc-article">
+              <div class="article-label">docs/architecture.md</div>
+              <h2>Architecture</h2>
+              <p>이 kit는 raw dotfiles가 아니라 여섯 개의 공유 가능한 레이어로 나뉩니다.</p>
+
+              <div class="layer-cards">
+                <section>
+                  <span>01</span>
+                  <h3>Routing Layer</h3>
+                  <p><code>AGENTS.md</code>가 명확한 요청은 직접 실행하고, 애매한 요청만 fuzzy intake로 넘깁니다.</p>
+                </section>
+                <section>
+                  <span>02</span>
+                  <h3>Agent Reference Layer</h3>
+                  <p><code>agents/routing.md</code>와 playbooks가 frontend, backend, docs/research 기준을 제공합니다.</p>
+                </section>
+                <section>
+                  <span>03</span>
+                  <h3>Skill Layer</h3>
+                  <p><code>skills/</code>는 반복 가능한 workflow입니다. 각 skill은 trigger, process, guardrail을 담습니다.</p>
+                </section>
+                <section>
+                  <span>04</span>
+                  <h3>Local Config Layer</h3>
+                  <p><code>config/codex.config.sample.toml</code>은 feature/plugin/MCP 형태만 보여주고 민감값은 제외합니다.</p>
+                </section>
+                <section>
+                  <span>05</span>
+                  <h3>Documentation Site Layer</h3>
+                  <p><code>index.html</code>과 <code>assets/</code>가 GitHub Pages 공유 화면을 담당합니다.</p>
+                </section>
+                <section>
+                  <span>06</span>
+                  <h3>Third-Party Import Layer</h3>
+                  <p><code>third_party/</code>와 <code>od-</code> prefix로 imported skills와 license 경계를 분리합니다.</p>
+                </section>
+              </div>
+
+              <h3>공유하지 않는 것</h3>
+              <ul>
+                <li><code>auth.json</code>, sessions, logs, memories, state SQLite</li>
+                <li>browser sessions, plugin caches, runtime bundles</li>
+                <li>private attachments, generated images with private data</li>
+              </ul>
+            </article>
+
+            <article id="lean-profile" class="doc-article">
+              <div class="article-label">docs/lean-skill-profile.md</div>
+              <h2>Lean Skill Profile</h2>
+              <p>
+                이 profile은 Codex를 유용하게 유지하면서도 모든 installed skill을 한 번에 노출하지 않기 위한 기준입니다.
+              </p>
+
+              <h3>Goal</h3>
+              <ul>
+                <li>약 100개의 대표 skills를 유지합니다.</li>
+                <li>design, frontend, game, image generation, GitHub, Supabase, docs, research, implementation을 커버합니다.</li>
+                <li>active skill set을 작게 유지해 routing을 빠르게 만듭니다.</li>
+                <li>senior developer 기준은 별도 persona가 아니라 shared lens로 흡수합니다.</li>
+                <li><code>caveman</code>은 routine communication에만 쓰고 artifact 문체는 보존합니다.</li>
+              </ul>
+
+              <h3>How To Apply</h3>
+              <pre><code># Preview
+scripts/prune-skills.sh
+
+# Apply
+scripts/prune-skills.sh --apply</code></pre>
+
+              <p>
+                prune script는 keep-list에 없는 skill을 삭제하지 않고
+                <code>$CODEX_HOME/skills.pruned-YYYYMMDD-HHMMSS</code>로 이동합니다.
+              </p>
+            </article>
+
+            <article id="skill-catalog" class="doc-article">
+              <div class="article-label">docs/skill-catalog.md</div>
+              <h2>Skill Catalog</h2>
+              <p>
+                목표는 모든 skill을 한 번에 쓰는 것이 아니라, 결과 품질을 실제로 올리는 최소 skill set을 고르는 것입니다.
+              </p>
+
+              <div class="catalog-grid">
+                <section>
+                  <h3>Design And Product Flow</h3>
+                  <p><code>skill-router</code>, <code>design-flow</code>, <code>design-brief</code>, <code>information-architecture</code></p>
+                </section>
+                <section>
+                  <h3>Visual Quality And UX</h3>
+                  <p><code>claude-design</code>, <code>frontend-design-audit</code>, <code>gpt-taste</code>, <code>ux-enhancer</code></p>
+                </section>
+                <section>
+                  <h3>Game Design</h3>
+                  <p><code>mobile-game-design</code>, <code>game-ui-art-direction</code>, <code>prototype-slice-planner</code></p>
+                </section>
+                <section>
+                  <h3>Backend And Data</h3>
+                  <p><code>supabase</code>, <code>supabase-postgres-best-practices</code></p>
+                </section>
+                <section>
+                  <h3>Open Design Imports</h3>
+                  <p><code>od-design-md</code>, <code>od-live-dashboard</code>, <code>od-d3-visualization</code>, <code>od-data-report</code></p>
+                </section>
+                <section>
+                  <h3>Routing Notes</h3>
+                  <p>기본은 one primary skill입니다. support skill은 결과 품질이 실제로 달라질 때만 추가합니다.</p>
+                </section>
+              </div>
+            </article>
+
+            <article id="security" class="doc-article">
+              <div class="article-label">docs/security-checklist.md</div>
+              <h2>Security Checklist</h2>
+              <p>공개 repo로 올리기 전에 아래 항목을 확인합니다.</p>
+
+              <div class="check-grid">
+                <span>No <code>auth.json</code></span>
+                <span>No <code>.env</code> files</span>
+                <span>No API keys or OAuth tokens</span>
+                <span>No SQLite state or sessions</span>
+                <span>No browser session files</span>
+                <span>No private screenshots</span>
+                <span>No plugin runtime cache</span>
+                <span>No private customer data</span>
+              </div>
+
+              <h3>Suggested scan</h3>
+              <pre><code>rg -n "(api[_-]?key|secret|token|password|Bearer|sk-[A-Za-z0-9]|gho_|github_pat|refresh_token|PRIVATE KEY)" .</code></pre>
+              <p>문서 예시 때문에 일부 match가 나올 수 있으니 push 전에 직접 확인합니다.</p>
+            </article>
+
+            <article id="media-routing" class="doc-article">
+              <div class="article-label">docs/media-generation-routing.md</div>
+              <h2>Codex Image Generation Routing</h2>
+              <p>
+                이 kit의 media generation 기본 경로는 외부 provider workflow가 아니라
+                <code>media-image-director</code>를 통한 Codex-native image generation입니다.
+              </p>
+
+              <div class="routing-table">
+                <div><strong>General image generation</strong><span><code>media-image-director</code></span></div>
+                <div><strong>Image editing/restyling</strong><span>보존할 요소와 바꿀 요소를 명확히 지정</span></div>
+                <div><strong>Poster / thumbnail / social card</strong><span>짧은 텍스트 또는 텍스트 없음</span></div>
+                <div><strong>README or portfolio visual</strong><span>프로젝트/제품이 inspectable하게 보이도록 구성</span></div>
+                <div><strong>Prompt only</strong><span>이미지를 만들지 않고 prompt와 대안만 작성</span></div>
+              </div>
+
+              <h3>Default Safety</h3>
+              <ul>
+                <li>Sora, Fal, Replicate, Runway 등 외부 provider로 기본 routing하지 않습니다.</li>
+                <li>실제 image가 필요하고 Codex image generation이 가능하면 바로 생성합니다.</li>
+                <li>긴 텍스트는 이미지 안에서 깨질 수 있으므로 짧게 유지합니다.</li>
+                <li>편집 작업에서는 identity, composition, important details를 보존합니다.</li>
+              </ul>
+            </article>
+
+            <article id="open-design" class="doc-article">
+              <div class="article-label">docs/open-design-imports.md</div>
+              <h2>Open Design Imports</h2>
+              <p>
+                이 kit는 Open Design ecosystem 전체를 복제하지 않고, Codex workflow에 실제로 도움이 되는 일부 skill만
+                <code>od-</code> prefix로 가져옵니다. 이렇게 하면 local skill과 이름이 충돌하지 않고 출처도 구분됩니다.
+              </p>
+
+              <h3>왜 가져왔나</h3>
+              <ul>
+                <li>dashboard와 visual report 같은 artifact workflow를 보강합니다.</li>
+                <li>research synthesis를 decision artifact로 바꾸는 경로를 추가합니다.</li>
+                <li>score-based design review gate를 넣어 UI 품질을 점검합니다.</li>
+                <li>D3/data visualization, hand-drawn diagrams, motion frames를 커버합니다.</li>
+                <li><code>DESIGN.md</code>를 design-system source of truth로 다룰 수 있게 합니다.</li>
+              </ul>
+
+              <h3>대표 imports</h3>
+              <div class="catalog-grid">
+                <section><h3>od-design-md</h3><p>visual rules, tokens, product design direction을 <code>DESIGN.md</code>로 관리합니다.</p></section>
+                <section><h3>od-platform-design</h3><p>Apple HIG, Material, accessibility 기준을 cross-platform design에 반영합니다.</p></section>
+                <section><h3>od-plan-design-review</h3><p>shipping 전 senior design review gate로 사용합니다.</p></section>
+                <section><h3>od-d3-visualization</h3><p>D3 chart와 interactive visualization guidance를 제공합니다.</p></section>
+                <section><h3>od-data-report</h3><p>structured data를 polished visual report page로 바꿉니다.</p></section>
+                <section><h3>od-live-dashboard</h3><p>KPI, activity feed, tables를 포함한 dashboard artifact를 만듭니다.</p></section>
+              </div>
+
+              <h3>Import Policy</h3>
+              <ul>
+                <li>imported skill은 <code>od-</code> prefix를 유지합니다.</li>
+                <li>license는 <code>third_party/open-design/LICENSE</code>에 보관합니다.</li>
+                <li>필요한 skill만 추가하고, 전체 catalog를 기본 import하지 않습니다.</li>
+              </ul>
+            </article>
+          </div>
         </div>
       </section>
     </main>
@@ -584,6 +842,6 @@ cd codex-agent-kit
       <span>현재 로컬 세팅에서 공유 가능한 레이어만 정리한 문서입니다.</span>
     </footer>
 
-    <script src="assets/app.js?v=docs-html"></script>
+    <script src="assets/app.js?v=single-page-docs"></script>
   </body>
 </html>
