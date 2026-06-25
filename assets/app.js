@@ -1,5 +1,5 @@
 const skillSearch = document.querySelector("#skillSearch");
-const skillButtons = Array.from(document.querySelectorAll("#skillCloud button"));
+const skillButtons = Array.from(document.querySelectorAll("#skillCloud .skill-pill"));
 
 if (skillSearch) {
   skillSearch.addEventListener("input", () => {

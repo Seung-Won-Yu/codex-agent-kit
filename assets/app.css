@@ -1,15 +1,17 @@
 :root {
-  --paper: #f7f3ea;
-  --ink: #171717;
-  --muted: #62615d;
-  --line: #d9d1c2;
-  --panel: #fffaf0;
-  --panel-strong: #ece4d4;
-  --green: #1f7a5a;
-  --blue: #315e9f;
-  --amber: #b06b24;
+  --paper: #f5f7f2;
+  --ink: #15161a;
+  --muted: #5c6470;
+  --line: #d6dce2;
+  --panel: #ffffff;
+  --panel-strong: #eef4f0;
+  --wash: #e9f0f4;
+  --green: #14785f;
+  --blue: #285c9c;
+  --amber: #b36b1f;
   --red: #a33b2f;
-  --shadow: 0 18px 50px rgba(45, 37, 23, 0.12);
+  --shadow: 0 18px 48px rgba(24, 35, 44, 0.12);
+  --radius: 8px;
 }
 
 * {
@@ -22,7 +24,9 @@ html {
 
 body {
   margin: 0;
-  background: var(--paper);
+  background:
+    linear-gradient(180deg, rgba(233, 240, 244, 0.72), rgba(245, 247, 242, 0) 420px),
+    var(--paper);
   color: var(--ink);
   font-family: ui-monospace, "SFMono-Regular", "Cascadia Code", "Liberation Mono", Menlo, monospace;
   line-height: 1.5;
@@ -56,7 +60,8 @@ code {
 }
 
 .brand,
-.topnav,
+.brand *,
+.topnav a,
 .repo-link,
 .button,
 .doc-link {
@@ -101,7 +106,7 @@ code {
 
 .repo-link {
   border: 1px solid var(--ink);
-  border-radius: 6px;
+  border-radius: var(--radius);
   padding: 8px 12px;
   font-weight: 700;
 }
@@ -112,12 +117,12 @@ main {
 }
 
 .hero {
-  min-height: calc(100vh - 64px);
+  min-height: 680px;
   display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
+  grid-template-columns: minmax(0, 1fr) minmax(390px, 0.78fr);
   gap: 48px;
   align-items: center;
-  padding: 72px 0 42px;
+  padding: 76px 0 40px;
 }
 
 .eyebrow {
@@ -137,19 +142,19 @@ p {
 }
 
 h1 {
-  max-width: 820px;
+  max-width: 760px;
   margin: 0;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(3rem, 7vw, 6.8rem);
-  line-height: 0.94;
+  font-size: clamp(4rem, 8vw, 7.4rem);
+  line-height: 0.92;
   font-weight: 900;
 }
 
 h2 {
   margin: 0;
   font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(2rem, 4vw, 4rem);
-  line-height: 1;
+  font-size: clamp(1.9rem, 3.4vw, 3.35rem);
+  line-height: 1.04;
 }
 
 h3 {
@@ -157,11 +162,18 @@ h3 {
   font-size: 1rem;
 }
 
-.lede {
+.hero-line {
   max-width: 720px;
-  margin: 28px 0 0;
+  margin: 22px 0 0;
+  font-size: clamp(1.24rem, 2vw, 1.72rem);
+  font-weight: 800;
+}
+
+.lede {
+  max-width: 680px;
+  margin: 18px 0 0;
   color: var(--muted);
-  font-size: 1.08rem;
+  font-size: 1rem;
 }
 
 .hero-actions {
@@ -176,9 +188,10 @@ h3 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
+  border-radius: var(--radius);
   padding: 0 18px;
   font-weight: 800;
+  transition: transform 160ms ease, background 160ms ease, border-color 160ms ease;
 }
 
 .button.primary {
@@ -188,6 +201,22 @@ h3 {
 
 .button.secondary {
   border: 1px solid var(--ink);
+  background: rgba(255, 255, 255, 0.68);
+}
+
+.button:hover,
+.repo-link:hover,
+.doc-link:hover {
+  transform: translateY(-1px);
+}
+
+.button:focus-visible,
+.repo-link:focus-visible,
+.topnav a:focus-visible,
+.doc-link:focus-visible,
+.toolbar input:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--blue), transparent 70%);
+  outline-offset: 3px;
 }
 
 .system-board {
@@ -195,11 +224,19 @@ h3 {
   background:
     linear-gradient(90deg, rgba(23, 23, 23, 0.06) 1px, transparent 1px),
     linear-gradient(rgba(23, 23, 23, 0.06) 1px, transparent 1px),
-    var(--panel);
+    color-mix(in srgb, var(--panel), var(--wash) 28%);
   background-size: 26px 26px;
-  border-radius: 8px;
+  border-radius: var(--radius);
   padding: 22px;
   box-shadow: var(--shadow);
+}
+
+.board-label {
+  margin: 0 0 14px;
+  color: var(--muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+  text-transform: uppercase;
 }
 
 .board-row {
@@ -260,11 +297,11 @@ h3 {
   gap: 1px;
   border: 1px solid var(--ink);
   background: var(--ink);
-  margin-bottom: 76px;
+  margin: 0 0 64px;
 }
 
 .stats-band div {
-  min-height: 116px;
+  min-height: 104px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -287,7 +324,7 @@ h3 {
   display: grid;
   grid-template-columns: 0.62fr 1fr;
   gap: 46px;
-  padding: 72px 0;
+  padding: 64px 0;
   border-top: 1px solid var(--line);
 }
 
@@ -314,7 +351,7 @@ h3 {
 
 .card {
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: var(--radius);
   background: var(--panel);
   padding: 22px;
 }
@@ -349,7 +386,7 @@ h3 {
   width: 100%;
   min-height: 46px;
   border: 1px solid var(--ink);
-  border-radius: 6px;
+  border-radius: var(--radius);
   background: var(--panel);
   color: var(--ink);
   padding: 0 14px;
@@ -362,24 +399,25 @@ h3 {
   gap: 10px;
 }
 
-.skill-cloud button {
+.skill-pill {
   min-height: 36px;
+  display: inline-flex;
+  align-items: center;
   border: 1px solid var(--line);
   border-radius: 6px;
   background: var(--panel);
   color: var(--ink);
   padding: 0 10px;
   font: inherit;
-  cursor: default;
 }
 
-.skill-cloud button.is-hidden {
+.skill-pill.is-hidden {
   display: none;
 }
 
 .terminal {
   border: 1px solid var(--ink);
-  border-radius: 8px;
+  border-radius: var(--radius);
   background: #111;
   color: #f3ead8;
   overflow: hidden;
@@ -430,7 +468,7 @@ pre code {
   align-items: center;
   min-height: 72px;
   border: 1px solid var(--line);
-  border-radius: 8px;
+  border-radius: var(--radius);
   background: var(--panel);
   padding: 18px;
   font-weight: 800;
@@ -467,22 +505,21 @@ pre code {
 
   .hero {
     min-height: auto;
-    padding-top: 52px;
+    padding-top: 48px;
   }
 
   .section-heading {
     position: static;
   }
 
-  .stats-band,
   .cards.two,
   .inventory,
   .cards.docs {
     grid-template-columns: 1fr;
   }
 
-  .board-row {
-    grid-template-columns: 1fr;
+  .stats-band {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .footer {
@@ -496,7 +533,33 @@ pre code {
   }
 
   h1 {
-    font-size: 2.72rem;
+    font-size: 4rem;
+    line-height: 0.94;
+  }
+
+  .hero-line {
+    font-size: 1.18rem;
+  }
+
+  .system-board {
+    padding: 18px;
+  }
+
+  .board-row {
+    grid-template-columns: minmax(138px, 0.9fr) minmax(0, 1fr);
+    gap: 8px;
+  }
+
+  .node,
+  .flow,
+  .board-footer {
+    min-height: 40px;
+    padding: 8px 10px;
+    font-size: 0.78rem;
+  }
+
+  .board-footer {
+    margin-top: 14px;
   }
 
   .repo-link {
@@ -505,5 +568,10 @@ pre code {
 
   .section-grid {
     padding: 52px 0;
+  }
+
+  .stats-band div {
+    min-height: 96px;
+    padding: 16px;
   }
 }
