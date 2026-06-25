@@ -45,22 +45,34 @@
           </div>
         </div>
 
-        <div class="setup-visual" aria-label="Codex setup flow">
-          <p class="visual-label">운영 구조</p>
-          <div class="rail rail-left">사용자 요청</div>
-          <div class="flow-stack">
-            <span class="flow-chip chip-dark">AGENTS.md</span>
-            <span class="flow-chip chip-green">routing.md</span>
-            <span class="flow-chip chip-blue">lean-skills.txt</span>
-            <span class="flow-chip chip-amber">curated skills</span>
-            <span class="flow-chip chip-red">verification</span>
+        <aside class="setup-panel" aria-label="Codex setup summary">
+          <div class="panel-head">
+            <span>Current setup</span>
+            <strong>active</strong>
           </div>
-          <div class="rail rail-right">작업 결과</div>
-          <div class="visual-note">
-            clear request -&gt; execute directly<br />
-            fuzzy request -&gt; interpret -&gt; route -&gt; execute
+          <div class="summary-list">
+            <div>
+              <span>Source of truth</span>
+              <strong><code>~/.codex</code> + project <code>AGENTS.md</code></strong>
+            </div>
+            <div>
+              <span>Default mode</span>
+              <strong>clear request = direct execution</strong>
+            </div>
+            <div>
+              <span>Fallback route</span>
+              <strong><code>messy-request-interpreter</code> -&gt; <code>skill-router</code></strong>
+            </div>
+            <div>
+              <span>Shared layer</span>
+              <strong>rules, routing refs, lean skills, curated skills, docs</strong>
+            </div>
           </div>
-        </div>
+          <div class="route-note">
+            <span>운영 원칙</span>
+            <p>작게 해석하고, 바로 실행하고, 검증 가능한 결과만 짧게 공유합니다.</p>
+          </div>
+        </aside>
       </section>
 
       <section class="stats-band" aria-label="Current setup facts">
@@ -514,30 +526,42 @@ cd codex-agent-kit
           <p class="eyebrow">Docs</p>
           <h2 id="docs-title">더 자세한 설명은 repo 문서로 이어집니다.</h2>
         </div>
-        <div class="cards docs">
-          <a class="doc-link" href="README.md">
-            <span>README</span>
-            <small>한글 온보딩과 설치 가이드</small>
+        <div class="doc-index" aria-label="Repository documents">
+          <a class="doc-row" href="README.md">
+            <span class="doc-type">guide</span>
+            <strong>README</strong>
+            <span>한글 온보딩, 설치, 적용 전 확인 사항</span>
+            <code>README.md</code>
           </a>
-          <a class="doc-link" href="docs/architecture.md">
-            <span>Architecture</span>
-            <small>레이어 구조</small>
+          <a class="doc-row" href="docs/architecture.md">
+            <span class="doc-type">system</span>
+            <strong>Architecture</strong>
+            <span>routing, skills, config, documentation layer 구조</span>
+            <code>docs/architecture.md</code>
           </a>
-          <a class="doc-link" href="docs/lean-skill-profile.md">
-            <span>Lean Profile</span>
-            <small>스킬 축소 기준</small>
+          <a class="doc-row" href="docs/lean-skill-profile.md">
+            <span class="doc-type">profile</span>
+            <strong>Lean Profile</strong>
+            <span>103개 대표 skill을 유지하는 기준과 적용 방법</span>
+            <code>docs/lean-skill-profile.md</code>
           </a>
-          <a class="doc-link" href="docs/skill-catalog.md">
-            <span>Skill Catalog</span>
-            <small>포함된 스킬 설명</small>
+          <a class="doc-row" href="docs/skill-catalog.md">
+            <span class="doc-type">catalog</span>
+            <strong>Skill Catalog</strong>
+            <span>repo에 포함된 custom/curated skill 설명</span>
+            <code>docs/skill-catalog.md</code>
           </a>
-          <a class="doc-link" href="docs/security-checklist.md">
-            <span>Security Checklist</span>
-            <small>공개 전 점검</small>
+          <a class="doc-row" href="docs/security-checklist.md">
+            <span class="doc-type">safety</span>
+            <strong>Security Checklist</strong>
+            <span>공개 repo에 들어가면 안 되는 파일과 scan command</span>
+            <code>docs/security-checklist.md</code>
           </a>
-          <a class="doc-link" href="docs/media-generation-routing.md">
-            <span>Media Routing</span>
-            <small>이미지 생성 기준</small>
+          <a class="doc-row" href="docs/media-generation-routing.md">
+            <span class="doc-type">media</span>
+            <strong>Media Routing</strong>
+            <span>이미지 생성/편집 요청을 어떤 도구로 보낼지 정리</span>
+            <code>docs/media-generation-routing.md</code>
           </a>
         </div>
       </section>
