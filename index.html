@@ -1,13 +1,13 @@
 <!doctype html>
-<html lang="en">
+<html lang="ko">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="A portable Codex setup kit: global agent rules, lean skills, routing playbooks, selected skills, and safety docs."
+      content="Seung-Won Yu가 실제로 사용하는 Codex workspace 설정, agent rules, lean skills, routing playbook, 안전 정책을 공유하기 위한 한국어 문서 사이트입니다."
     />
-    <title>Codex Agent Kit</title>
+    <title>Codex Agent Kit | 현재 Codex 세팅 공유 문서</title>
     <link rel="stylesheet" href="assets/app.css" />
   </head>
   <body>
@@ -17,10 +17,11 @@
         <span>Codex Agent Kit</span>
       </a>
       <nav class="topnav" aria-label="Primary">
-        <a href="#shape">Shape</a>
-        <a href="#profile">Profile</a>
-        <a href="#map">Map</a>
-        <a href="#install">Install</a>
+        <a href="#why">왜</a>
+        <a href="#layers">구성</a>
+        <a href="#workflow">흐름</a>
+        <a href="#skills">스킬</a>
+        <a href="#install">설치</a>
       </nav>
       <a class="repo-link" href="https://github.com/Seung-Won-Yu/codex-agent-kit">GitHub</a>
     </header>
@@ -28,44 +29,48 @@
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow">Portable method kit, not a raw dotfiles dump</p>
+          <p class="eyebrow">Current Codex Workspace Setup</p>
           <h1 id="hero-title">Codex Agent Kit</h1>
-          <p class="hero-line">A portable snapshot of the Codex setup I actually use.</p>
+          <p class="hero-line">
+            현재 workspace와 프로젝트에 적용한 Codex 설정값을 공유용 문서로 정리했습니다.
+          </p>
           <p class="lede">
-            The active local <code>~/.codex</code> setup is the source of truth. This repository stores the clean,
-            reusable layer: global rules, routing references, a lean skill profile, curated skills, and safety docs.
+            기준은 현재 로컬 <code>~/.codex</code>와 이 프로젝트에 적용된 <code>AGENTS.md</code>입니다.
+            명확한 요청은 바로 실행하고, 애매한 요청만 가볍게 라우팅하며, 결과는 검증 후 짧게 넘기는 흐름을
+            기본값으로 둡니다.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#install">Install</a>
-            <a class="button secondary" href="#inventory">View Inventory</a>
+            <a class="button primary" href="#install">설치 방법 보기</a>
+            <a class="button secondary" href="#layers">설정 구조 보기</a>
           </div>
         </div>
-        <div class="system-board" aria-label="Codex Agent Kit system map">
-          <p class="board-label">Current operating loop</p>
-          <div class="board-row">
-            <span class="node node-dark">AGENTS.md</span>
-            <span class="flow">direct when clear</span>
+
+        <div class="setup-visual" aria-label="Codex setup flow">
+          <p class="visual-label">운영 구조</p>
+          <div class="rail rail-left">사용자 요청</div>
+          <div class="flow-stack">
+            <span class="flow-chip chip-dark">AGENTS.md</span>
+            <span class="flow-chip chip-green">routing.md</span>
+            <span class="flow-chip chip-blue">lean-skills.txt</span>
+            <span class="flow-chip chip-amber">curated skills</span>
+            <span class="flow-chip chip-red">verification</span>
           </div>
-          <div class="board-row">
-            <span class="node node-green">agents/routing.md</span>
-            <span class="flow">only when ambiguous</span>
+          <div class="rail rail-right">작업 결과</div>
+          <div class="visual-note">
+            clear request -&gt; execute directly<br />
+            fuzzy request -&gt; interpret -&gt; route -&gt; execute
           </div>
-          <div class="board-row">
-            <span class="node node-blue">lean-skills.txt</span>
-            <span class="flow">about 100 skills</span>
-          </div>
-          <div class="board-row">
-            <span class="node node-amber">skills/</span>
-            <span class="flow">curated workflows</span>
-          </div>
-          <div class="board-footer">clear request -> execution -> verification -> concise handoff</div>
         </div>
       </section>
 
       <section class="stats-band" aria-label="Current setup facts">
         <div>
           <strong>103</strong>
-          <span>lean-profile skills</span>
+          <span>lean profile skills</span>
+        </div>
+        <div>
+          <strong>31</strong>
+          <span>curated repo skills</span>
         </div>
         <div>
           <strong>5</strong>
@@ -75,112 +80,414 @@
           <strong>0</strong>
           <span>secrets stored here</span>
         </div>
+      </section>
+
+      <section id="why" class="section-grid" aria-labelledby="why-title">
+        <div class="section-heading">
+          <p class="eyebrow">Why This Exists</p>
+          <h2 id="why-title">많은 기능보다 중요한 것은, 매번 덜 헤매는 기본값입니다.</h2>
+        </div>
+        <div class="content-stack">
+          <article class="text-panel">
+            <p>
+              Codex는 스킬, 플러그인, MCP, project rule, browser automation, 문서 생성 도구까지 붙일 수
+              있어서 강력합니다. 하지만 그대로 늘려두면 매 요청마다 "어떤 역할을 써야 하지?"라는 분기가
+              많아집니다. 이 kit는 그 분기를 줄이기 위해 만들었습니다.
+            </p>
+            <p>
+              현재 세팅의 핵심은 "작게 라우팅하고 빨리 실행한다"입니다. 명확한 구현, 문서, 리서치, UI 수정은
+              바로 관련 파일을 읽고 작업합니다. 요청이 애매하거나 여러 분야가 섞였을 때만
+              <code>messy-request-interpreter</code>와 <code>skill-router</code>를 거칩니다.
+            </p>
+          </article>
+
+          <div class="principle-grid">
+            <article class="card accent-green">
+              <h3>작업 속도</h3>
+              <p>역할 놀이와 과한 분류를 줄여 실제 편집, 검증, 배포에 더 빨리 들어갑니다.</p>
+            </article>
+            <article class="card accent-blue">
+              <h3>결과 일관성</h3>
+              <p>요청이 짧아도 항상 파일 읽기, 근거 확인, 집중 검증, 짧은 handoff 순서를 유지합니다.</p>
+            </article>
+            <article class="card accent-amber">
+              <h3>공유 가능성</h3>
+              <p>인증값과 로컬 상태를 제외하고, 규칙과 reusable skills만 repo에 남겨 다른 사람이 참고할 수 있습니다.</p>
+            </article>
+            <article class="card accent-red">
+              <h3>안전한 경계</h3>
+              <p>세션, SQLite state, auth, plugin cache, private path는 의도적으로 공유 대상에서 제외합니다.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="layers" class="section-grid" aria-labelledby="layers-title">
+        <div class="section-heading">
+          <p class="eyebrow">Setup Layers</p>
+          <h2 id="layers-title">현재 Codex 설정은 여섯 개 레이어로 나눠 관리합니다.</h2>
+        </div>
+        <div class="layer-list">
+          <article class="layer-item">
+            <span class="layer-index">01</span>
+            <div>
+              <h3>Global Agent Rules</h3>
+              <p>
+                <code>AGENTS.md</code>는 모든 작업의 기본 태도입니다. 명확하면 바로 실행하고, 애매하면
+                최소한으로 해석하고, 검증 가능한 형태로 마무리하라는 규칙을 둡니다.
+              </p>
+              <dl>
+                <dt>왜 씀</dt>
+                <dd>매번 새로 지시하지 않아도 Codex가 같은 기준으로 움직이게 하기 위해서입니다.</dd>
+                <dt>장점</dt>
+                <dd>요청이 짧아도 실행 방식, 언어, 검증, 커뮤니케이션 톤이 흔들리지 않습니다.</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="layer-item">
+            <span class="layer-index">02</span>
+            <div>
+              <h3>Routing Reference And Playbooks</h3>
+              <p>
+                <code>agents/routing.md</code>와 <code>agents/playbooks/</code>는 프론트엔드, 백엔드,
+                디자인, 문서/리서치처럼 큰 갈래가 헷갈릴 때만 참조하는 얇은 지도입니다.
+              </p>
+              <dl>
+                <dt>왜 씀</dt>
+                <dd>모든 요청에 무거운 워크플로를 태우지 않고, 필요한 순간에만 판단 근거를 꺼내기 위해서입니다.</dd>
+                <dt>장점</dt>
+                <dd>작은 수정은 빠르게, 복합 작업은 놓치는 영역 없이 처리할 수 있습니다.</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="layer-item">
+            <span class="layer-index">03</span>
+            <div>
+              <h3>Lean Skill Profile</h3>
+              <p>
+                <code>config/lean-skills.txt</code>에는 현재 로컬에서 유지할 대표 스킬 103개가 들어 있습니다.
+                모든 스킬을 다 켜두는 대신, 자주 쓰는 작업군별 대표 스킬만 남깁니다.
+              </p>
+              <dl>
+                <dt>왜 씀</dt>
+                <dd>스킬이 너무 많으면 선택지가 늘어 응답이 무거워지고 라우팅이 산만해집니다.</dd>
+                <dt>장점</dt>
+                <dd>디자인, 구현, Supabase, GitHub, 문서, 리서치, 배포를 커버하면서도 운영 부담을 낮춥니다.</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="layer-item">
+            <span class="layer-index">04</span>
+            <div>
+              <h3>Curated Skills</h3>
+              <p>
+                이 repo의 <code>skills/</code>에는 직접 쓰는 커스텀/큐레이션 스킬 31개를 저장합니다.
+                전체 로컬 스킬셋은 더 넓지만, 공유 가능한 핵심만 남깁니다.
+              </p>
+              <dl>
+                <dt>왜 씀</dt>
+                <dd>개인 workflow를 재사용 가능한 단위로 고정하고, 다른 환경에도 쉽게 옮기기 위해서입니다.</dd>
+                <dt>장점</dt>
+                <dd>프론트엔드 품질, 게임 기획, 이미지 생성, Supabase, Open Design artifact 작업이 반복 가능해집니다.</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="layer-item">
+            <span class="layer-index">05</span>
+            <div>
+              <h3>Redacted Config Sample</h3>
+              <p>
+                <code>config/codex.config.sample.toml</code>은 실제 설정의 형태만 보여줍니다. model, reasoning,
+                feature flag, plugin, MCP 구조는 남기고, 개인 경로와 인증 상태는 제거합니다.
+              </p>
+              <dl>
+                <dt>왜 씀</dt>
+                <dd>다른 사람이 구조를 이해하되, 로컬 경로나 인증값을 따라 복사하지 않게 하기 위해서입니다.</dd>
+                <dt>장점</dt>
+                <dd>세팅 철학은 공유하고, 민감한 실행 환경은 보호할 수 있습니다.</dd>
+              </dl>
+            </div>
+          </article>
+
+          <article class="layer-item">
+            <span class="layer-index">06</span>
+            <div>
+              <h3>Safety Boundary</h3>
+              <p>
+                이 kit는 <code>auth.json</code>, SQLite state, sessions, logs, browser session, plugin runtime
+                cache, private attachments를 저장하지 않습니다.
+              </p>
+              <dl>
+                <dt>왜 씀</dt>
+                <dd>Codex home은 그대로 공유하면 민감한 상태와 인증 흔적이 섞일 수 있습니다.</dd>
+                <dt>장점</dt>
+                <dd>공개 repo로 운영해도 설정 철학과 재사용 가능한 파일만 남습니다.</dd>
+              </dl>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="workflow" class="section-grid" aria-labelledby="workflow-title">
+        <div class="section-heading">
+          <p class="eyebrow">Operating Flow</p>
+          <h2 id="workflow-title">요청의 선명도에 따라 다른 길을 탑니다.</h2>
+        </div>
+        <div class="workflow-grid">
+          <article class="workflow-card">
+            <h3>명확한 단일 작업</h3>
+            <p>예: "이 버그 고쳐줘", "README 정리해줘", "이 페이지 모바일 깨져".</p>
+            <code>read files -&gt; edit -&gt; verify -&gt; concise final</code>
+            <strong>효과</strong>
+            <p>불필요한 역할 선택 없이 바로 실제 작업으로 들어갑니다.</p>
+          </article>
+          <article class="workflow-card">
+            <h3>애매한 혼합 요청</h3>
+            <p>예: "대충 알아서 멋있게", "내 세팅 좀 정리해서 공유하고 싶어".</p>
+            <code>messy-request-interpreter -&gt; skill-router -&gt; execution</code>
+            <strong>효과</strong>
+            <p>사용자의 의도를 작게 해석한 뒤, 산만한 작업을 실행 가능한 순서로 바꿉니다.</p>
+          </article>
+          <article class="workflow-card">
+            <h3>프론트엔드/디자인</h3>
+            <p>기존 UI면 먼저 구조와 화면을 보고, 새 페이지면 목적과 독자를 기준으로 구성합니다.</p>
+            <code>frontend-design -&gt; implementation -&gt; Playwright check</code>
+            <strong>효과</strong>
+            <p>시각적 완성도와 실제 반응형 안정성을 함께 봅니다.</p>
+          </article>
+          <article class="workflow-card">
+            <h3>백엔드/Supabase</h3>
+            <p>Auth, RLS, schema, query, migration처럼 위험도가 높은 작업은 보안과 데이터 경계를 같이 봅니다.</p>
+            <code>supabase -&gt; postgres best practices -&gt; focused verification</code>
+            <strong>효과</strong>
+            <p>권한, 소유권, 인덱스, migration safety를 놓칠 가능성을 줄입니다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="config" class="section-grid" aria-labelledby="config-title">
+        <div class="section-heading">
+          <p class="eyebrow">Current Config Shape</p>
+          <h2 id="config-title">설정값은 빠른 실행과 넓은 도구 접근을 기준으로 둡니다.</h2>
+        </div>
+        <div class="config-table" role="table" aria-label="Codex config values and rationale">
+          <div class="config-row header" role="row">
+            <span role="columnheader">설정</span>
+            <span role="columnheader">현재 공유 형태</span>
+            <span role="columnheader">왜 쓰는지 / 장점</span>
+          </div>
+          <div class="config-row" role="row">
+            <span role="cell"><code>model_reasoning_effort</code></span>
+            <span role="cell"><code>xhigh</code></span>
+            <span role="cell">복잡한 코드 변경, 디자인 판단, 문서 구조화에서 더 깊게 추론하도록 둡니다.</span>
+          </div>
+          <div class="config-row" role="row">
+            <span role="cell"><code>sandbox_mode</code></span>
+            <span role="cell"><code>danger-full-access</code> sample</span>
+            <span role="cell">신뢰한 workspace에서 파일 탐색, 빌드, 배포 검증을 막힘 없이 하기 위한 값입니다. 공개 복제 시에는 본인 환경에 맞게 낮추는 것을 권장합니다.</span>
+          </div>
+          <div class="config-row" role="row">
+            <span role="cell"><code>features.goals</code>, <code>unified_exec</code></span>
+            <span role="cell">enabled</span>
+            <span role="cell">긴 작업을 추적하고, 셸 실행 결과를 일관된 방식으로 확인하기 위해 켭니다.</span>
+          </div>
+          <div class="config-row" role="row">
+            <span role="cell">Plugins</span>
+            <span role="cell">documents, spreadsheets, presentations, notion, pdf, browser, template-creator</span>
+            <span role="cell">코드뿐 아니라 문서, PDF, Notion, 브라우저 검증까지 한 workflow 안에서 처리하기 위해 둡니다.</span>
+          </div>
+          <div class="config-row" role="row">
+            <span role="cell"><code>node_repl</code> MCP</span>
+            <span role="cell">enabled in sample shape</span>
+            <span role="cell">Playwright와 JS 기반 검증을 빠르게 돌릴 수 있어 UI 작업 확인에 특히 유용합니다.</span>
+          </div>
+          <div class="config-row" role="row">
+            <span role="cell">Trusted project</span>
+            <span role="cell"><code>/path/to/your/workspace</code></span>
+            <span role="cell">실제 개인 경로는 redaction하고, 구조만 보여줍니다. 공유 repo에는 machine-specific path를 넣지 않습니다.</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="skills" class="section-grid" aria-labelledby="skills-title">
+        <div class="section-heading">
+          <p class="eyebrow">Lean Skills</p>
+          <h2 id="skills-title">많이 설치하는 대신, 자주 쓰는 대표 스킬만 남깁니다.</h2>
+          <p class="section-note">
+            아래 목록은 <code>config/lean-skills.txt</code> 기준입니다. 검색해서 어떤 영역을 커버하는지 확인할 수 있습니다.
+          </p>
+        </div>
         <div>
-          <strong>2026-06-25</strong>
-          <span>synced from active local setup</span>
+          <div class="toolbar">
+            <label for="skillSearch">스킬 검색</label>
+            <input id="skillSearch" type="search" placeholder="예: supabase, frontend, research, deploy, caveman" />
+          </div>
+          <div class="skill-meta" id="skillMeta">103개 중 103개 표시</div>
+          <div class="skill-cloud" id="skillCloud" aria-live="polite">
+            <span class="skill-pill">accessibility</span>
+            <span class="skill-pill">api-and-interface-design</span>
+            <span class="skill-pill">api-documentation-writer</span>
+            <span class="skill-pill">ax-consulting-planner</span>
+            <span class="skill-pill">best-practices</span>
+            <span class="skill-pill">brief-to-tasks</span>
+            <span class="skill-pill">caveman</span>
+            <span class="skill-pill">changelog-generator</span>
+            <span class="skill-pill">claude-design</span>
+            <span class="skill-pill">cloudflare-deploy</span>
+            <span class="skill-pill">code-review-and-quality</span>
+            <span class="skill-pill">code-simplification</span>
+            <span class="skill-pill">core-web-vitals</span>
+            <span class="skill-pill">create-prd</span>
+            <span class="skill-pill">database-schema-designer</span>
+            <span class="skill-pill">debugging-and-error-recovery</span>
+            <span class="skill-pill">dependency-auditor</span>
+            <span class="skill-pill">design-brief</span>
+            <span class="skill-pill">design-flow</span>
+            <span class="skill-pill">design-review</span>
+            <span class="skill-pill">design-tokens</span>
+            <span class="skill-pill">diagnose</span>
+            <span class="skill-pill">docker-debugger</span>
+            <span class="skill-pill">documentation-and-adrs</span>
+            <span class="skill-pill">env-setup-wizard</span>
+            <span class="skill-pill">feature-spec</span>
+            <span class="skill-pill">frontend-design</span>
+            <span class="skill-pill">frontend-design-audit</span>
+            <span class="skill-pill">frontend-ui-engineering</span>
+            <span class="skill-pill">game-reference-research</span>
+            <span class="skill-pill">game-ui-art-direction</span>
+            <span class="skill-pill">gh-address-comments</span>
+            <span class="skill-pill">gh-cli</span>
+            <span class="skill-pill">gh-fix-ci</span>
+            <span class="skill-pill">git-workflow-and-versioning</span>
+            <span class="skill-pill">gpt-taste</span>
+            <span class="skill-pill">handoff</span>
+            <span class="skill-pill">image-to-code</span>
+            <span class="skill-pill">incremental-implementation</span>
+            <span class="skill-pill">information-architecture</span>
+            <span class="skill-pill">insecure-defaults</span>
+            <span class="skill-pill">karpathy-guidelines</span>
+            <span class="skill-pill">knowledge-synthesis</span>
+            <span class="skill-pill">media-image-director</span>
+            <span class="skill-pill">messy-request-interpreter</span>
+            <span class="skill-pill">metrics-dashboard</span>
+            <span class="skill-pill">mobile-game-design</span>
+            <span class="skill-pill">mobile-game-qa</span>
+            <span class="skill-pill">netlify-deploy</span>
+            <span class="skill-pill">notion-knowledge-capture</span>
+            <span class="skill-pill">notion-research-documentation</span>
+            <span class="skill-pill">notion-spec-to-implementation</span>
+            <span class="skill-pill">od-d3-visualization</span>
+            <span class="skill-pill">od-data-report</span>
+            <span class="skill-pill">od-design-md</span>
+            <span class="skill-pill">od-hand-drawn-diagrams</span>
+            <span class="skill-pill">od-live-dashboard</span>
+            <span class="skill-pill">od-motion-frames</span>
+            <span class="skill-pill">od-plan-design-review</span>
+            <span class="skill-pill">od-platform-design</span>
+            <span class="skill-pill">od-research-decision-room</span>
+            <span class="skill-pill">pdf</span>
+            <span class="skill-pill">performance</span>
+            <span class="skill-pill">planning-document-writer</span>
+            <span class="skill-pill">player-experience-review</span>
+            <span class="skill-pill">playwright</span>
+            <span class="skill-pill">playwright-interactive</span>
+            <span class="skill-pill">prioritize-features</span>
+            <span class="skill-pill">product-frontend-engineer</span>
+            <span class="skill-pill">product-strategy</span>
+            <span class="skill-pill">project-status-report</span>
+            <span class="skill-pill">prototype-slice-planner</span>
+            <span class="skill-pill">react-best-practices</span>
+            <span class="skill-pill">release-notes</span>
+            <span class="skill-pill">render-deploy</span>
+            <span class="skill-pill">research-report-writer</span>
+            <span class="skill-pill">research-synthesizer</span>
+            <span class="skill-pill">risk-assessment</span>
+            <span class="skill-pill">runbook-generator</span>
+            <span class="skill-pill">screenshot</span>
+            <span class="skill-pill">search-strategy</span>
+            <span class="skill-pill">security-and-hardening</span>
+            <span class="skill-pill">security-best-practices</span>
+            <span class="skill-pill">senior-dev-lead</span>
+            <span class="skill-pill">seo</span>
+            <span class="skill-pill">sharp-edges</span>
+            <span class="skill-pill">skill-router</span>
+            <span class="skill-pill">sop-builder</span>
+            <span class="skill-pill">sprint-plan</span>
+            <span class="skill-pill">summarize-meeting</span>
+            <span class="skill-pill">supabase</span>
+            <span class="skill-pill">supabase-postgres-best-practices</span>
+            <span class="skill-pill">swot-analysis</span>
+            <span class="skill-pill">system-design</span>
+            <span class="skill-pill">technical-writer</span>
+            <span class="skill-pill">test-driven-development</span>
+            <span class="skill-pill">test-scenarios</span>
+            <span class="skill-pill">user-research-synthesizer</span>
+            <span class="skill-pill">user-stories</span>
+            <span class="skill-pill">ux-enhancer</span>
+            <span class="skill-pill">vercel-deploy</span>
+            <span class="skill-pill">web-quality-audit</span>
+            <span class="skill-pill">webapp-testing</span>
+          </div>
         </div>
       </section>
 
-      <section id="shape" class="section-grid" aria-labelledby="shape-title">
+      <section id="repository" class="section-grid" aria-labelledby="repository-title">
         <div class="section-heading">
-          <p class="eyebrow">Operating Shape</p>
-          <h2 id="shape-title">The current rule set prefers action over ceremony.</h2>
+          <p class="eyebrow">Repository Boundary</p>
+          <h2 id="repository-title">공개 repo에는 portable definition만 남깁니다.</h2>
         </div>
-        <div class="cards two">
+        <div class="inventory">
           <article class="card">
-            <h3>Clear Request</h3>
-            <p>Inspect the relevant files, make the change, run focused verification, and report the useful result.</p>
-            <code>direct execution -> verification -> handoff</code>
-          </article>
-          <article class="card">
-            <h3>Fuzzy Request</h3>
-            <p>Use the smallest routing path only when ambiguity changes the output, owner role, or implementation path.</p>
-            <code>messy-request-interpreter -> skill-router -> execution</code>
-          </article>
-        </div>
-      </section>
-
-      <section id="profile" class="section-grid" aria-labelledby="profile-title">
-        <div class="section-heading">
-          <p class="eyebrow">Lean Profile</p>
-          <h2 id="profile-title">Representative skills stay available. Niche noise stays out.</h2>
-        </div>
-        <div class="toolbar">
-          <label for="skillSearch">Search skills</label>
-          <input id="skillSearch" type="search" placeholder="Try supabase, design, deploy, caveman" />
-        </div>
-        <div class="skill-cloud" id="skillCloud" aria-live="polite">
-          <span class="skill-pill">messy-request-interpreter</span>
-          <span class="skill-pill">skill-router</span>
-          <span class="skill-pill">caveman</span>
-          <span class="skill-pill">product-frontend-engineer</span>
-          <span class="skill-pill">frontend-ui-engineering</span>
-          <span class="skill-pill">gpt-taste</span>
-          <span class="skill-pill">image-to-code</span>
-          <span class="skill-pill">media-image-director</span>
-          <span class="skill-pill">supabase</span>
-          <span class="skill-pill">supabase-postgres-best-practices</span>
-          <span class="skill-pill">incremental-implementation</span>
-          <span class="skill-pill">diagnose</span>
-          <span class="skill-pill">test-driven-development</span>
-          <span class="skill-pill">research-report-writer</span>
-          <span class="skill-pill">planning-document-writer</span>
-          <span class="skill-pill">webapp-testing</span>
-          <span class="skill-pill">playwright</span>
-          <span class="skill-pill">gh-cli</span>
-          <span class="skill-pill">vercel-deploy</span>
-          <span class="skill-pill">cloudflare-deploy</span>
-        </div>
-      </section>
-
-      <section id="map" class="section-grid" aria-labelledby="map-title">
-        <div class="section-heading">
-          <p class="eyebrow">Repository Map</p>
-          <h2 id="map-title">Only portable definitions live here.</h2>
-        </div>
-        <div class="inventory" id="inventory">
-          <article class="card" data-kind="include">
-            <h3>Included</h3>
+            <h3>포함</h3>
             <ul>
               <li><code>AGENTS.md</code> global rules</li>
-              <li><code>agents/</code> routing references and playbooks</li>
+              <li><code>agents/</code> routing reference and playbooks</li>
               <li><code>config/lean-skills.txt</code></li>
-              <li>custom and curated <code>skills/</code></li>
-              <li>docs, install scripts, and this static page</li>
+              <li><code>config/codex.config.sample.toml</code></li>
+              <li><code>skills/</code> curated workflows</li>
+              <li><code>docs/</code>, install scripts, GitHub Pages site</li>
             </ul>
           </article>
-          <article class="card" data-kind="exclude">
-            <h3>Excluded</h3>
+          <article class="card">
+            <h3>제외</h3>
             <ul>
               <li><code>auth.json</code> and credentials</li>
-              <li>SQLite state, logs, sessions, and memories</li>
+              <li><code>.env</code>, API keys, OAuth tokens</li>
+              <li>SQLite state, memories, logs, sessions</li>
               <li>browser sessions and plugin runtime caches</li>
-              <li>private project paths and environment files</li>
+              <li>private project paths and customer data</li>
               <li>generated images with private content</li>
             </ul>
           </article>
-          <article class="card" data-kind="portable">
-            <h3>Installed Into Codex</h3>
+          <article class="card">
+            <h3>설치 대상</h3>
             <ul>
               <li><code>~/.codex/AGENTS.md</code></li>
               <li><code>~/.codex/agents/</code></li>
               <li><code>~/.codex/config/lean-skills.txt</code></li>
               <li><code>~/.codex/skills/</code></li>
             </ul>
+            <p>개인 환경에서는 먼저 내용을 읽고 필요한 파일만 적용하는 방식을 권장합니다.</p>
           </article>
         </div>
       </section>
 
       <section id="install" class="section-grid" aria-labelledby="install-title">
         <div class="section-heading">
-          <p class="eyebrow">Install</p>
-          <h2 id="install-title">Review first, then copy the portable layer into <code>~/.codex</code>.</h2>
+          <p class="eyebrow">Install And Adapt</p>
+          <h2 id="install-title">그대로 복사하기보다, 구조를 이해하고 자기 환경에 맞게 적용하세요.</h2>
         </div>
-        <div class="terminal">
-          <div class="terminal-bar">
-            <span></span><span></span><span></span>
-          </div>
-          <pre><code>git clone https://github.com/Seung-Won-Yu/codex-agent-kit.git
+        <div class="content-stack">
+          <div class="terminal">
+            <div class="terminal-bar">
+              <span></span><span></span><span></span>
+              <button class="copy-button" type="button" data-copy-target="installCode">복사</button>
+            </div>
+            <pre><code id="installCode">git clone https://github.com/Seung-Won-Yu/codex-agent-kit.git
 cd codex-agent-kit
 ./scripts/install.sh
 
@@ -189,28 +496,56 @@ cd codex-agent-kit
 
 # Apply only after reviewing the dry run
 ./scripts/prune-skills.sh --apply</code></pre>
+          </div>
+
+          <div class="callout">
+            <h3>적용 전 체크</h3>
+            <p>
+              이 repo는 제 현재 workflow에 맞춘 세팅입니다. 특히 <code>danger-full-access</code>는 신뢰한
+              workspace에서만 편합니다. 다른 사람이 사용할 때는 sandbox, trusted project, plugin, MCP 경로를
+              본인 환경에 맞춰 낮추거나 바꾸는 것이 좋습니다.
+            </p>
+          </div>
         </div>
       </section>
 
       <section class="section-grid" aria-labelledby="docs-title">
         <div class="section-heading">
           <p class="eyebrow">Docs</p>
-          <h2 id="docs-title">The detailed notes stay close to the files they explain.</h2>
+          <h2 id="docs-title">더 자세한 설명은 repo 문서로 이어집니다.</h2>
         </div>
         <div class="cards docs">
-          <a class="doc-link" href="README.md">README</a>
-          <a class="doc-link" href="docs/architecture.md">Architecture</a>
-          <a class="doc-link" href="docs/lean-skill-profile.md">Lean Profile</a>
-          <a class="doc-link" href="docs/skill-catalog.md">Skill Catalog</a>
-          <a class="doc-link" href="docs/security-checklist.md">Security Checklist</a>
-          <a class="doc-link" href="docs/media-generation-routing.md">Media Routing</a>
+          <a class="doc-link" href="README.md">
+            <span>README</span>
+            <small>한글 온보딩과 설치 가이드</small>
+          </a>
+          <a class="doc-link" href="docs/architecture.md">
+            <span>Architecture</span>
+            <small>레이어 구조</small>
+          </a>
+          <a class="doc-link" href="docs/lean-skill-profile.md">
+            <span>Lean Profile</span>
+            <small>스킬 축소 기준</small>
+          </a>
+          <a class="doc-link" href="docs/skill-catalog.md">
+            <span>Skill Catalog</span>
+            <small>포함된 스킬 설명</small>
+          </a>
+          <a class="doc-link" href="docs/security-checklist.md">
+            <span>Security Checklist</span>
+            <small>공개 전 점검</small>
+          </a>
+          <a class="doc-link" href="docs/media-generation-routing.md">
+            <span>Media Routing</span>
+            <small>이미지 생성 기준</small>
+          </a>
         </div>
       </section>
     </main>
 
     <footer class="footer">
       <span>Codex Agent Kit</span>
-      <span>Portable definitions only. Runtime state stays local.</span>
+      <span>현재 로컬 세팅에서 공유 가능한 레이어만 정리한 문서입니다.</span>
     </footer>
 
     <script src="assets/app.js"></script>
