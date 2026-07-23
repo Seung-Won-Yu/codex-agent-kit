@@ -150,7 +150,7 @@ if (themeToggle) {
 
 const demoScenarios = {
   build: {
-    prompt: "“이 랜딩 좀 개고퀄로 만들어줘”",
+    prompt: "“내 Codex 설정을 더 효율적으로 다듬어줘”",
     permission: "workspace-write",
     title: ["의도를 다듬고.", "구현은 끝까지."],
     summary: "제품 방향을 정리하고, 가장 좁은 스킬로 구현한 뒤 실제 화면까지 검증합니다.",
@@ -162,7 +162,7 @@ const demoScenarios = {
     },
   },
   inspect: {
-    prompt: "“이 설정 왜 이상한지만 봐줘”",
+    prompt: "“이 설정에서 문제인 부분만 확인해줘”",
     permission: "read-only",
     title: ["원인만 찾고.", "파일은 그대로."],
     summary: "확인 요청의 권한을 보존해 근거와 원인만 정리하고, 사용자가 고쳐 달라고 하기 전에는 수정하지 않습니다.",
@@ -174,7 +174,7 @@ const demoScenarios = {
     },
   },
   secure: {
-    prompt: "“결제 webhook 안전하게 고쳐줘”",
+    prompt: "“결제 webhook을 안전하게 수정하고 검증해줘”",
     permission: "workspace-write · sensitive",
     title: ["보안 경계를 세우고.", "변경은 검증까지."],
     summary: "인증·권한·결제처럼 민감한 경계에서는 안전성 검토를 추가하고 회귀 검증까지 마친 뒤 결과를 전달합니다.",
@@ -527,6 +527,12 @@ searchDialog?.addEventListener("close", () => {
 });
 
 document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && searchDialog?.open) {
+    event.preventDefault();
+    searchDialog.close();
+    return;
+  }
+
   if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
     event.preventDefault();
     if (searchDialog?.open) {

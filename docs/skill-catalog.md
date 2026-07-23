@@ -28,7 +28,7 @@
 | `media-image-director` | 이미지 생성·편집·variation의 prompt와 critique-regenerate 지휘 |
 | `planning-document-writer` | 기획서, 요구사항, 기능·화면 명세, IA, QA/UAT 문서 선택·작성 |
 | `playwright` | 실제 브라우저 탐색, 입력, 캡처, 추출과 UI 문제 재현 |
-| `product-frontend-engineer` | 거친 제품 의도를 기획·디자인·프론트 구현·검증까지 통합 소유 |
+| `product-frontend-engineer` | 초기 제품 의도를 기획·디자인·프론트 구현·검증까지 통합 소유 |
 | `product-strategy` | 비전, 고객, 가치, 지표, 성장, 역량과 방어력 중심 제품 전략 |
 | `release-notes` | 커밋·PR·티켓을 사용자 관점의 출시 노트로 변환 |
 | `research-report-writer` | 출처 기반 시장·기술 분석, 벤치마크와 정식 의사결정 보고서 |

@@ -135,7 +135,7 @@ window.CODEX_SKILL_CATALOG = [
     name: "product-frontend-engineer",
     scope: "global",
     category: "제품·UI",
-    description: "거친 제품 아이디어를 요구사항·디자인·프론트엔드 구현·브라우저 검증까지 통합 소유합니다.",
+    description: "초기 제품 아이디어를 요구사항·디자인·프론트엔드 구현·브라우저 검증까지 통합 소유합니다.",
   },
   {
     name: "product-strategy",

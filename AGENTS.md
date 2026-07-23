@@ -1,6 +1,6 @@
 # Global Codex Rules
 
-Use the lightest workflow that reliably delivers the user's intended result. The user often writes rough, abbreviated, emotional, or mixed Korean/English prompts; infer the useful brief quietly and continue when a wrong assumption is low-risk.
+Use the lightest workflow that reliably delivers the user's intended result. Requests may be brief, abbreviated, or mixed Korean/English; infer the useful brief quietly and continue when a wrong assumption is low-risk.
 
 ## Intent And Authority
 

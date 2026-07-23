@@ -11,7 +11,8 @@ The landing page now behaves like a product demonstration of the Codex setup ins
 - Added a visible Interpret → Permission → Route → Verify processing timeline to the scenario demo.
 - Consolidated the repeated setup and routing card grids into one scroll-led orchestration story.
 - Converted agent cards into an editorial responsibility ledger.
-- Added compact capability marks to the plugin directory.
+- Added indexed capability marks and a denser mobile directory to the plugin section.
+- Added a four-part installation contract for command, backup, path handling, and validation.
 - Kept light and dark themes visually distinct but behaviorally identical.
 
 Reference direction:
@@ -35,6 +36,18 @@ Reference direction:
 4. **Screen-reader duplication**
    - The visual orchestration map repeated information already supplied by the narrative chapters.
    - Marked the map as decorative while keeping the full chapter content semantic.
+5. **Public-copy framing**
+   - Earlier examples could read as commentary on the requester instead of demonstrating the system.
+   - Replaced them with neutral, task-focused language across the landing, README, architecture docs, skill catalogue, and saved evidence.
+6. **First-viewport clipping**
+   - The product demonstration intentionally peeked into the first viewport, but read as an unfinished crop at common browser heights.
+   - Made the hero a complete viewport scene and moved the full demonstration to the next scroll position.
+7. **Mobile node truncation**
+   - Compact orchestration labels used ellipsis at narrow widths.
+   - Allowed multiline labels and increased the node floor so every label remains readable.
+8. **Search escape handling**
+   - Native dialog cancellation was not reliable in every automated browser path.
+   - Added an explicit Escape handler and verified focus returns without leaving an interaction-blocking overlay.
 
 ## Verification
 
@@ -51,7 +64,9 @@ Reference direction:
   - no duplicate IDs
   - no unlabelled buttons
 - Responsive overflow:
-  - 0 px at 320, 768, 1024, and 1440 px
+  - 0 px at 320×568, 360×800, 390×844, 768×1024, 1024×768, 1440×900, and 1920×1080
+  - no product-stage peek or crop in the first viewport
+  - no orchestration node or compact metadata truncation
 - Motion:
   - light and dark both run hero route, product-stage ambient, and orchestration orbit animations
   - reduced-motion mode exposes all reveal content and resolves looping animations to 0.01 ms
@@ -62,4 +77,9 @@ Reference direction:
   - light: primary 16.83, muted 5.07, story muted 4.67, stage muted 5.73
   - dark: primary 18.71, muted 7.92, story muted 6.02, stage muted 8.60
 - Browser console errors: none
-
+- Interaction regression:
+  - all three demo scenarios update permission and skill slots correctly
+  - Command-K opens and focuses search; Escape closes it
+  - `supabase` filters the 47-skill catalogue to the two matching skills
+  - theme state and accessible labels update in both directions
+  - install navigation lands below the sticky header and command copy reaches the clipboard

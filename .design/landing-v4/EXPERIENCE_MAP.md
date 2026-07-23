@@ -6,7 +6,7 @@
    - Brand statement, install CTA, skill catalogue CTA
    - Precise animated route lines establish the system metaphor
 2. **Try the system**
-   - Choose a rough-request scenario
+   - Choose a starting-request scenario
    - Watch Interpret → Permission → Route → Verify advance
    - Inspect the normalized result and selected responsibility slots
 3. **Understand the contract**
@@ -35,4 +35,3 @@
 - Tablet: reduced visual scale with the same chapter progression
 - Mobile: orchestration visual stays in normal flow; chapter controls become a compact horizontal selector
 - Reduced motion: all content is immediately visible and state changes happen without travel or looping animation
-

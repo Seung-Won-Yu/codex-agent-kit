@@ -5,20 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="거친 요청 보정, 자동 skill routing, 제한된 병렬 에이전트와 project pack을 한 번에 설치하는 개인 Codex 설정."
+      content="짧은 요청의 의도 정리, 자동 skill routing, 제한된 병렬 에이전트와 project pack을 한 번에 설치하는 개인 Codex 설정."
     />
     <meta id="themeColor" name="theme-color" content="#ffffff" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Codex Agent Kit" />
     <meta property="og:locale" content="ko_KR" />
-    <meta property="og:title" content="Codex Agent Kit | 말은 대충. 결과는 정확하게." />
+    <meta property="og:title" content="Codex Agent Kit | 요청은 간단하게. 결과는 정확하게." />
     <meta
       property="og:description"
       content="프롬프트 보정, 정확한 스킬 라우팅, 제한된 에이전트 위임을 한 번에 설치하는 개인 Codex 운영 체계."
     />
     <meta property="og:url" content="https://seung-won-yu.github.io/codex-agent-kit/" />
     <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Codex Agent Kit | 말은 대충. 결과는 정확하게." />
+    <meta name="twitter:title" content="Codex Agent Kit | 요청은 간단하게. 결과는 정확하게." />
     <meta
       name="twitter:description"
       content="프롬프트 보정, 정확한 스킬 라우팅, 제한된 에이전트 위임을 한 번에 설치하는 개인 Codex 운영 체계."
@@ -134,9 +134,9 @@
           <p class="eyebrow hero-kicker" data-reveal>
             <span aria-hidden="true"></span> A personal operating layer for Codex
           </p>
-          <h1 id="hero-title" data-reveal>말은 대충.<br /><span>결과는 정확하게.</span></h1>
+          <h1 id="hero-title" data-reveal>요청은 간단하게.<br /><span>결과는 정확하게.</span></h1>
           <p class="hero-line" data-reveal>
-            거친 요청을 이해하고, 필요한 스킬만 연결하고,<br class="desktop-break" />
+            짧은 요청의 의도를 이해하고, 필요한 스킬만 연결하고,<br class="desktop-break" />
             끝까지 검증하는 개인 Codex 세팅.
           </p>
           <p class="lede" data-reveal>
@@ -187,15 +187,15 @@
         <p class="visually-hidden" id="demoStatus" aria-live="polite">요청 처리 준비됨</p>
         <div class="stage-body">
           <div class="stage-prompt">
-            <span class="stage-label">Your rough prompt</span>
-            <p id="demoPrompt">“이 랜딩 좀 개고퀄로 만들어줘”</p>
+            <span class="stage-label">Starting request</span>
+            <p id="demoPrompt">“내 Codex 설정을 더 효율적으로 다듬어줘”</p>
             <span class="stage-permission" id="demoPermission">workspace-write</span>
           </div>
           <div class="stage-arrow" aria-hidden="true">
             <span></span>
           </div>
           <div class="stage-result" id="demoResult" aria-live="polite">
-            <span class="stage-label">Quietly corrected · ready to run</span>
+            <span class="stage-label">Intent structured · ready to run</span>
             <h2 id="demoTitle">의도를 다듬고.<br />구현은 끝까지.</h2>
             <p id="demoSummary">제품 방향을 정리하고, 가장 좁은 스킬로 구현한 뒤 실제 화면까지 검증합니다.</p>
           </div>
@@ -226,7 +226,7 @@
       <section id="setup" class="system-story" aria-labelledby="story-title">
         <div class="story-intro">
           <p class="eyebrow">The operating contract</p>
-          <h2 id="story-title">알아서 하되.<br />함부로 하지는 않게.</h2>
+          <h2 id="story-title">알아서 하되.<br />권한은 지키게.</h2>
           <p>
             자동화의 핵심은 더 많은 것을 시키는 게 아니라, 매 순간 무엇을 해도 되는지와
             누가 책임질지를 선명하게 만드는 것입니다.
@@ -265,7 +265,7 @@
                 <span>04</span><b>Verify</b><em>evidence attached</em>
               </div>
               <div class="story-log" aria-hidden="true">
-                <span data-story-log="intent"><i></i> rough prompt normalized</span>
+                <span data-story-log="intent"><i></i> request intent normalized</span>
                 <span data-story-log="permission"><i></i> effect ceiling preserved</span>
                 <span data-story-log="route"><i></i> narrowest responsibility matched</span>
                 <span data-story-log="verify"><i></i> focused checks passed</span>
@@ -277,8 +277,8 @@
               <button type="button" data-story-trigger aria-pressed="true">
                 <span>01</span><strong>Interpret</strong>
               </button>
-              <h3>말투가 아니라<br />해야 할 일을 읽습니다.</h3>
-              <p>짧고 거칠거나 한국어·영어가 섞여도 목표, 맥락, 산출물과 완료 조건만 조용히 정리합니다.</p>
+              <h3>표현보다<br />해야 할 일을 읽습니다.</h3>
+              <p>짧거나 맥락이 생략된 요청도 목표, 맥락, 산출물과 완료 조건을 기준으로 정리합니다.</p>
             </article>
             <article class="story-chapter" data-story-key="permission">
               <button type="button" data-story-trigger aria-pressed="false">
@@ -308,7 +308,7 @@
       <section id="agents" class="section-grid" aria-labelledby="agents-title">
         <div class="section-heading">
           <p class="eyebrow">Agent Orchestration</p>
-          <h2 id="agents-title">세 역할만 두고 책임을 선명하게</h2>
+          <h2 id="agents-title">세 역할만 두고<br />책임은 선명하게</h2>
           <p class="section-note">최대 child 3개, 깊이 1, writing lane 1개.</p>
         </div>
         <div class="layer-list">
@@ -383,7 +383,8 @@
       <section id="plugins" class="section-grid" aria-labelledby="plugins-title">
         <div class="section-heading">
           <p class="eyebrow">10 Connected Plugins</p>
-          <h2 id="plugins-title">스킬이 실제 도구와 파일 작업으로 이어지게</h2>
+          <h2 id="plugins-title">스킬에서 실제 작업까지<br />끊김 없이</h2>
+          <p class="section-note">문서, 브라우저, 데스크톱과 배포 도구를 필요한 순간에만 연결합니다.</p>
         </div>
         <div class="catalog-grid">
           <section><span class="plugin-mark" aria-hidden="true">DOC</span><h3>Documents</h3><p>Word·DOCX 문서를 생성, 편집, redline하고 렌더링까지 검증합니다.</p></section>
@@ -402,10 +403,16 @@
       <section id="install" class="section-grid section-tint" aria-labelledby="install-title">
         <div class="section-heading">
           <p class="eyebrow">One-command Setup</p>
-          <h2 id="install-title">저장소의 현재 상태를 그대로 설치</h2>
+          <h2 id="install-title">현재 세팅을<br />그대로 설치</h2>
           <p class="section-note">Codex desktop app과 CLI가 설치되고 로그인된 macOS 환경을 기준으로 합니다.</p>
         </div>
         <div class="content-stack">
+          <div class="install-meta" aria-label="설치 흐름 특징">
+            <span><i>01</i><strong>One command</strong><em>한 번에 적용</em></span>
+            <span><i>02</i><strong>Exact backup</strong><em>기존 설정 보존</em></span>
+            <span><i>03</i><strong>Path aware</strong><em>프로젝트 경로 맞춤</em></span>
+            <span><i>04</i><strong>Validated</strong><em>설치 뒤 검증</em></span>
+          </div>
           <div class="terminal">
             <div class="terminal-bar">
               <span></span><span></span><span></span>
@@ -451,7 +458,7 @@ codex --profile xhigh</code></pre>
 
     <footer class="footer">
       <div>
-        <strong>말은 대충. 결과는 정확하게.</strong>
+        <strong>요청은 간단하게. 결과는 정확하게.</strong>
         <span>Codex Agent Kit · installable personal source of truth</span>
       </div>
       <nav aria-label="푸터 링크">
