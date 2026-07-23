@@ -4,7 +4,7 @@
 
 1. `inspect`, `research`, `diagnose`, and `propose` remain read-only unless a separate change clause is explicit.
 2. “봐줘”, “원인만”, “제안만”, “수정 금지”, and “보내지는 마” never grant write authority.
-3. `primary`, `adapter`, and `verifier` each have cardinality 0..1. `safety` is a separate overlay: use security guidance for security-sensitive boundaries and risk guidance only when operational risk is an explicit deliverable.
+3. `primary`, `adapter`, and `verifier` each have cardinality 0..1. `safety` is a separate overlay: use security guidance for security-sensitive boundaries and risk guidance only when operational risk is an explicit deliverable. When implementation and security validation coexist, implementation or diagnosis remains `primary`, security remains `safety`, and requested independent validation remains `verifier`.
 4. Use an adapter only when the requested output names a file format or delivery surface.
 5. Use parallel delegation only for two or more independent substantial axes. Use sequential delegation for a valuable post-change review or verification.
 6. Simple tasks use no subagent.

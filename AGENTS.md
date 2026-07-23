@@ -19,6 +19,7 @@ Use the lightest workflow that reliably delivers the user's intended result. Req
 - For a clear request, use native skill-description matching and go directly to the narrowest exact skill. Do not invoke a meta-router first.
 - Compose at most one of each: `primary` (content or decision owner), `adapter` (required file format or platform), and `verifier` (independent check). Prefer a command or tool over a verifier skill when sufficient.
 - Add a `safety` overlay for auth, permissions, secrets, tenant isolation, payments, webhooks, untrusted input, production data, or other security-sensitive boundaries.
+- When implementation and security validation appear together, keep the implementation or diagnosis skill as `primary`, put `security-and-hardening` in `safety`, and use an independent `verifier` when requested. Promote security to `primary` only when security review or hardening is itself the main deliverable.
 - Use `risk-assessment` as the safety overlay only when operational risk, a risk register, or “what could go wrong” is an explicit deliverable.
 - An explicitly named applicable skill wins. If no skill materially improves the result, work directly.
 - Use playbooks only for substantial or ambiguous work: `frontend.md`, `backend.md`, `design-prototype.md`, or `docs-research.md` under `$CODEX_HOME/agents/playbooks/`.
