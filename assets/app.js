@@ -11,6 +11,15 @@ const searchClose = document.querySelector("#siteSearchClose");
 const siteSearchInput = document.querySelector("#siteSearchInput");
 const siteSearchHint = document.querySelector("#siteSearchHint");
 const siteSearchResults = document.querySelector("#siteSearchResults");
+const themeColor = document.querySelector("#themeColor");
+const productStage = document.querySelector(".product-stage");
+const demoButtons = Array.from(document.querySelectorAll("[data-demo]"));
+const demoPrompt = document.querySelector("#demoPrompt");
+const demoPermission = document.querySelector("#demoPermission");
+const demoTitle = document.querySelector("#demoTitle");
+const demoSummary = document.querySelector("#demoSummary");
+const demoSlots = Array.from(document.querySelectorAll("[data-slot]"));
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const skillCatalog = Array.isArray(window.CODEX_SKILL_CATALOG) ? window.CODEX_SKILL_CATALOG : [];
 const previewLimit = 12;
 let isSkillCatalogExpanded = false;
@@ -95,18 +104,127 @@ function updateThemeControl() {
   const isDark = root.dataset.theme === "dark";
   themeToggle.setAttribute("aria-pressed", String(isDark));
   themeToggle.setAttribute("aria-label", isDark ? "라이트 모드로 전환" : "다크 모드로 전환");
+  if (themeColor) themeColor.setAttribute("content", isDark ? "#050506" : "#ffffff");
 }
 
 updateThemeControl();
 if (themeToggle) {
   themeToggle.addEventListener("click", () => {
-    root.dataset.theme = root.dataset.theme === "dark" ? "light" : "dark";
-    try {
-      localStorage.setItem("cak-theme", root.dataset.theme);
-    } catch {
-      // The selected theme still applies for the current page.
+    if (root.classList.contains("theme-changing")) return;
+    const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
+    const applyTheme = () => {
+      root.dataset.theme = nextTheme;
+      try {
+        localStorage.setItem("cak-theme", nextTheme);
+      } catch {
+        // The selected theme still applies for the current page.
+      }
+      updateThemeControl();
+    };
+
+    root.classList.add("theme-changing");
+    themeToggle.disabled = true;
+    if (!reduceMotion && document.startViewTransition) {
+      document.startViewTransition(applyTheme);
+    } else {
+      applyTheme();
     }
-    updateThemeControl();
+    window.setTimeout(() => {
+      root.classList.remove("theme-changing");
+      themeToggle.disabled = false;
+    }, reduceMotion ? 0 : 920);
+  });
+}
+
+const demoScenarios = {
+  build: {
+    prompt: "“이 랜딩 좀 개고퀄로 만들어줘”",
+    permission: "workspace-write",
+    title: ["의도를 다듬고.", "구현은 끝까지."],
+    summary: "제품 방향을 정리하고, 가장 좁은 스킬로 구현한 뒤 실제 화면까지 검증합니다.",
+    slots: {
+      primary: ["frontend-ui-engineering", true],
+      adapter: ["Browser", true],
+      verifier: ["webapp-testing", true],
+      safety: ["Not required", false],
+    },
+  },
+  inspect: {
+    prompt: "“이 설정 왜 이상한지만 봐줘”",
+    permission: "read-only",
+    title: ["원인만 찾고.", "파일은 그대로."],
+    summary: "확인 요청의 권한을 보존해 근거와 원인만 정리하고, 사용자가 고쳐 달라고 하기 전에는 수정하지 않습니다.",
+    slots: {
+      primary: ["diagnose", true],
+      adapter: ["Not required", false],
+      verifier: ["Focused checks", true],
+      safety: ["Not required", false],
+    },
+  },
+  secure: {
+    prompt: "“결제 webhook 안전하게 고쳐줘”",
+    permission: "workspace-write · sensitive",
+    title: ["보안 경계를 세우고.", "변경은 검증까지."],
+    summary: "인증·권한·결제처럼 민감한 경계에서는 안전성 검토를 추가하고 회귀 검증까지 마친 뒤 결과를 전달합니다.",
+    slots: {
+      primary: ["security-and-hardening", true],
+      adapter: ["Existing stack", true],
+      verifier: ["reviewer-deep", true],
+      safety: ["Sensitive boundary", true],
+    },
+  },
+};
+
+function setDemoTitle(lines) {
+  if (!demoTitle) return;
+  demoTitle.replaceChildren();
+  lines.forEach((line, index) => {
+    if (index) demoTitle.append(document.createElement("br"));
+    demoTitle.append(document.createTextNode(line));
+  });
+}
+
+let demoSwitchTimer;
+function activateDemo(key) {
+  const scenario = demoScenarios[key];
+  if (!scenario || !productStage) return;
+
+  window.clearTimeout(demoSwitchTimer);
+  productStage.classList.add("is-switching");
+  demoButtons.forEach((button) => {
+    button.setAttribute("aria-pressed", String(button.dataset.demo === key));
+  });
+
+  demoSwitchTimer = window.setTimeout(() => {
+    if (demoPrompt) demoPrompt.textContent = scenario.prompt;
+    if (demoPermission) demoPermission.textContent = scenario.permission;
+    setDemoTitle(scenario.title);
+    if (demoSummary) demoSummary.textContent = scenario.summary;
+    demoSlots.forEach((slot) => {
+      const [value, isActive] = scenario.slots[slot.dataset.slot];
+      const valueNode = slot.querySelector("em");
+      if (valueNode) valueNode.textContent = value;
+      slot.classList.toggle("is-active", isActive);
+    });
+    requestAnimationFrame(() => productStage.classList.remove("is-switching"));
+  }, reduceMotion ? 0 : 180);
+}
+
+demoButtons.forEach((button) => {
+  button.addEventListener("click", () => activateDemo(button.dataset.demo));
+});
+
+if (productStage && !reduceMotion) {
+  productStage.addEventListener("pointermove", (event) => {
+    const rect = productStage.getBoundingClientRect();
+    const x = ((event.clientX - rect.left) / rect.width - 0.5) * 18;
+    const y = ((event.clientY - rect.top) / rect.height - 0.5) * 14;
+    productStage.style.setProperty("--stage-shift-x", `${x}px`);
+    productStage.style.setProperty("--stage-shift-y", `${y}px`);
+  });
+  productStage.addEventListener("pointerleave", () => {
+    productStage.style.setProperty("--stage-shift-x", "0px");
+    productStage.style.setProperty("--stage-shift-y", "0px");
   });
 }
 
@@ -307,14 +425,17 @@ const revealTargets = [];
 revealGroups.forEach((selector) => {
   document.querySelectorAll(selector).forEach((element, index) => {
     element.dataset.reveal = "";
-    element.style.setProperty("--reveal-delay", `${Math.min(index, 4) * 70}ms`);
+    element.style.setProperty("--reveal-delay", `${Math.min(index, 4) * 85}ms`);
     revealTargets.push(element);
   });
 });
 
 root.classList.add("motion-ready");
+if (window.__cakMotionFallback) {
+  window.clearTimeout(window.__cakMotionFallback);
+  window.__cakMotionFallback = null;
+}
 
-const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 if (reduceMotion || !("IntersectionObserver" in window)) {
   revealTargets.forEach((element) => element.classList.add("is-visible"));
 } else {
@@ -326,9 +447,58 @@ if (reduceMotion || !("IntersectionObserver" in window)) {
         revealObserver.unobserve(entry.target);
       });
     },
-    { rootMargin: "0px 0px -8% 0px", threshold: 0.12 },
+    { rootMargin: "0px 0px 14% 0px", threshold: 0.08 },
   );
-  revealTargets.forEach((element) => revealObserver.observe(element));
+
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      revealTargets.forEach((element) => {
+        const rect = element.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.94 && rect.bottom > 0) {
+          element.classList.add("is-visible");
+        } else {
+          revealObserver.observe(element);
+        }
+      });
+    });
+  });
+}
+
+const statCounters = Array.from(document.querySelectorAll("[data-count]"));
+function animateCounter(element) {
+  if (element.dataset.counted === "true") return;
+  element.dataset.counted = "true";
+  const target = Number(element.dataset.count);
+  if (reduceMotion || !Number.isFinite(target)) {
+    element.textContent = String(target);
+    return;
+  }
+
+  const startedAt = performance.now();
+  const duration = 860;
+  const step = (now) => {
+    const progress = Math.min(1, (now - startedAt) / duration);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    element.textContent = String(Math.round(target * eased));
+    if (progress < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+if ("IntersectionObserver" in window && !reduceMotion) {
+  const counterObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        animateCounter(entry.target);
+        counterObserver.unobserve(entry.target);
+      });
+    },
+    { threshold: 0.7 },
+  );
+  statCounters.forEach((counter) => counterObserver.observe(counter));
+} else {
+  statCounters.forEach(animateCounter);
 }
 
 document.querySelectorAll("[data-copy-target]").forEach((button) => {

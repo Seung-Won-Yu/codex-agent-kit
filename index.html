@@ -7,6 +7,15 @@
       name="description"
       content="거친 요청 보정, 자동 skill routing, 제한된 병렬 에이전트와 project pack을 한 번에 설치하는 개인 Codex 설정."
     />
+    <meta id="themeColor" name="theme-color" content="#ffffff" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Codex Agent Kit | 말은 대충. 결과는 정확하게." />
+    <meta
+      property="og:description"
+      content="프롬프트 보정, 정확한 스킬 라우팅, 제한된 에이전트 위임을 한 번에 설치하는 개인 Codex 운영 체계."
+    />
+    <meta property="og:url" content="https://seung-won-yu.github.io/codex-agent-kit/" />
+    <link rel="canonical" href="https://seung-won-yu.github.io/codex-agent-kit/" />
     <title>Codex Agent Kit | Installable Personal Setup</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <script>
@@ -15,12 +24,17 @@
           const savedTheme = localStorage.getItem("cak-theme");
           const systemTheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
           document.documentElement.dataset.theme = savedTheme || systemTheme;
+          document.documentElement.classList.add("motion-capable");
         } catch {
           document.documentElement.dataset.theme = "light";
+          document.documentElement.classList.add("motion-capable");
         }
+        window.__cakMotionFallback = window.setTimeout(() => {
+          document.documentElement.classList.add("motion-fallback");
+        }, 2500);
       })();
     </script>
-    <link rel="stylesheet" href="assets/app.css?v=contrast-motion" />
+    <link rel="stylesheet" href="assets/app.css?v=landing-v3" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
@@ -90,56 +104,85 @@
     <main id="main-content">
       <div id="top" aria-hidden="true"></div>
       <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-aura" aria-hidden="true">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
         <div class="hero-copy">
-          <p class="eyebrow">Codex, tuned for how I work.</p>
-          <h1 id="hero-title">말은 대충.<br /><span>결과는 정확하게.</span></h1>
-          <p class="hero-line">
+          <p class="eyebrow hero-kicker" data-reveal>
+            <span aria-hidden="true"></span> Codex, tuned for how I work.
+          </p>
+          <h1 id="hero-title" data-reveal>말은 대충.<br /><span>결과는 정확하게.</span></h1>
+          <p class="hero-line" data-reveal>
             거친 요청을 이해하고, 필요한 스킬만 연결하고,<br class="desktop-break" />
             끝까지 검증하는 개인 Codex 세팅.
           </p>
-          <p class="lede">
+          <p class="lede" data-reveal>
             GPT-5.6 Sol high를 중심으로 전역 규칙, 3개 전문 에이전트,
             47개 personal skill과 10개 plugin을 하나의 흐름으로 정리했습니다.
           </p>
-          <div class="hero-actions">
+          <div class="hero-actions" data-reveal>
             <a class="button primary" href="#install">내 세팅 설치하기</a>
             <a class="button secondary" href="#skills">47개 스킬 살펴보기 <span aria-hidden="true">›</span></a>
           </div>
-          <p class="hero-meta">Quality-first · Native routing · One writing lane</p>
+          <div class="hero-signals" aria-label="핵심 운영 원칙" data-reveal>
+            <span>Quality-first</span>
+            <span>Native routing</span>
+            <span>One writing lane</span>
+          </div>
         </div>
       </section>
 
-      <section class="product-stage" aria-label="Codex 요청 처리 예시">
+      <section class="product-stage" aria-label="Codex 요청 처리 예시" data-reveal>
+        <div class="stage-ambient" aria-hidden="true"></div>
         <div class="stage-chrome">
           <span class="stage-dot"></span>
           <span>Codex Agent Kit</span>
-          <strong>Ready</strong>
+          <span class="stage-version">Personal OS · v3</span>
+          <strong><span aria-hidden="true"></span> Ready</strong>
+        </div>
+        <div class="stage-presets" role="group" aria-label="데모 요청 선택">
+          <button type="button" data-demo="build" aria-pressed="true">구현하기</button>
+          <button type="button" data-demo="inspect" aria-pressed="false">원인만 보기</button>
+          <button type="button" data-demo="secure" aria-pressed="false">민감 작업</button>
         </div>
         <div class="stage-body">
           <div class="stage-prompt">
-            <span class="stage-label">Your prompt</span>
-            <p>“이거 좀 제대로 좋게 해줘”</p>
+            <span class="stage-label">Your rough prompt</span>
+            <p id="demoPrompt">“이 랜딩 좀 개고퀄로 만들어줘”</p>
+            <span class="stage-permission" id="demoPermission">workspace-write</span>
           </div>
-          <div class="stage-arrow" aria-hidden="true">↓</div>
-          <div class="stage-result">
-            <span class="stage-label">Quietly corrected</span>
-            <h2>의도는 선명하게.<br />권한은 넘지 않게.</h2>
-            <p>목표와 산출물을 보정하고 가장 좁은 스킬을 선택합니다.</p>
+          <div class="stage-arrow" aria-hidden="true">
+            <span></span>
+          </div>
+          <div class="stage-result" id="demoResult" aria-live="polite">
+            <span class="stage-label">Quietly corrected · ready to run</span>
+            <h2 id="demoTitle">의도를 다듬고.<br />구현은 끝까지.</h2>
+            <p id="demoSummary">제품 방향을 정리하고, 가장 좁은 스킬로 구현한 뒤 실제 화면까지 검증합니다.</p>
           </div>
           <div class="stage-slots" aria-label="스킬 조합 슬롯">
-            <span><small>Primary</small>정확한 작업 소유자</span>
-            <span><small>Adapter</small>필요한 산출물 형식</span>
-            <span><small>Verifier</small>독립적인 결과 검증</span>
-            <span><small>Safety</small>민감 경계에서만</span>
+            <span data-slot="primary" class="is-active">
+              <small>Primary</small><em>frontend-ui-engineering</em>
+            </span>
+            <span data-slot="adapter" class="is-active">
+              <small>Adapter</small><em>Browser</em>
+            </span>
+            <span data-slot="verifier" class="is-active">
+              <small>Verifier</small><em>webapp-testing</em>
+            </span>
+            <span data-slot="safety">
+              <small>Safety</small><em>Not required</em>
+            </span>
           </div>
         </div>
       </section>
 
       <section class="stats-band" aria-label="현재 구성 수치">
-        <div><strong>36</strong><span>global personal skills</span></div>
-        <div><strong>11</strong><span>project-packed skills</span></div>
-        <div><strong>3</strong><span>custom agent roles</span></div>
-        <div><strong>10</strong><span>connected plugins</span></div>
+        <div><strong data-count="36">36</strong><span>global personal skills</span></div>
+        <div><strong data-count="11">11</strong><span>project-packed skills</span></div>
+        <div><strong data-count="3">3</strong><span>custom agent roles</span></div>
+        <div><strong data-count="10">10</strong><span>connected plugins</span></div>
       </section>
 
       <section id="quickstart" class="quick-path" aria-labelledby="quickstart-title">
@@ -371,10 +414,16 @@ codex --profile xhigh</code></pre>
     </main>
 
     <footer class="footer">
-      <span>Codex Agent Kit · installable personal source of truth</span>
-      <a href="https://github.com/Seung-Won-Yu/codex-agent-kit">Source on GitHub</a>
+      <div>
+        <strong>말은 대충. 결과는 정확하게.</strong>
+        <span>Codex Agent Kit · installable personal source of truth</span>
+      </div>
+      <nav aria-label="푸터 링크">
+        <a href="#top">맨 위로</a>
+        <a href="https://github.com/Seung-Won-Yu/codex-agent-kit">Source on GitHub</a>
+      </nav>
     </footer>
     <script src="assets/skills.js?v=docs-navigation"></script>
-    <script src="assets/app.js?v=contrast-motion"></script>
+    <script src="assets/app.js?v=landing-v3"></script>
   </body>
 </html>
