@@ -9,7 +9,7 @@
     />
     <title>Codex Agent Kit | Installable Personal Setup</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="assets/app.css?v=installable-setup" />
+    <link rel="stylesheet" href="assets/app.css?v=apple-clean" />
   </head>
   <body>
     <header class="topbar">
@@ -30,54 +30,48 @@
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow">My Installable Codex Setup</p>
-          <h1 id="hero-title">말은 대충.<br />결과는 정확히.</h1>
+          <p class="eyebrow">Codex, tuned for how I work.</p>
+          <h1 id="hero-title">말은 대충.<br /><span>결과는 정확하게.</span></h1>
           <p class="hero-line">
-            거친 요청을 조용히 보정하고, 필요한 스킬과 에이전트만 연결해 끝까지 검증하는 개인 Codex 세팅입니다.
+            거친 요청을 이해하고, 필요한 스킬만 연결하고,<br class="desktop-break" />
+            끝까지 검증하는 개인 Codex 세팅.
           </p>
           <p class="lede">
-            이 저장소는 소개용 스킬 모음이 아니라 현재 사용하는 personal layer의 source of truth입니다.
-            전역 규칙, quality-first config, custom agents, 47개 personal skill, 프로젝트 pack과 플러그인 구성을
-            한 번의 설치 흐름으로 재현합니다.
+            GPT-5.6 Sol high를 중심으로 전역 규칙, 3개 전문 에이전트,
+            47개 personal skill과 10개 plugin을 하나의 흐름으로 정리했습니다.
           </p>
           <div class="hero-actions">
             <a class="button primary" href="#install">내 세팅 설치하기</a>
-            <a class="button secondary" href="#skills">스킬 역할 보기</a>
+            <a class="button secondary" href="#skills">47개 스킬 살펴보기 <span aria-hidden="true">›</span></a>
+          </div>
+          <p class="hero-meta">Quality-first · Native routing · One writing lane</p>
+        </div>
+      </section>
+
+      <section class="product-stage" aria-label="Codex 요청 처리 예시">
+        <div class="stage-chrome">
+          <span class="stage-dot"></span>
+          <span>Codex Agent Kit</span>
+          <strong>Ready</strong>
+        </div>
+        <div class="stage-body">
+          <div class="stage-prompt">
+            <span class="stage-label">Your prompt</span>
+            <p>“이거 좀 제대로 좋게 해줘”</p>
+          </div>
+          <div class="stage-arrow" aria-hidden="true">↓</div>
+          <div class="stage-result">
+            <span class="stage-label">Quietly corrected</span>
+            <h2>의도는 선명하게.<br />권한은 넘지 않게.</h2>
+            <p>목표와 산출물을 보정하고 가장 좁은 스킬을 선택합니다.</p>
+          </div>
+          <div class="stage-slots" aria-label="스킬 조합 슬롯">
+            <span><small>Primary</small>정확한 작업 소유자</span>
+            <span><small>Adapter</small>필요한 산출물 형식</span>
+            <span><small>Verifier</small>독립적인 결과 검증</span>
+            <span><small>Safety</small>민감 경계에서만</span>
           </div>
         </div>
-
-        <aside class="setup-panel" aria-label="현재 설정 요약">
-          <div class="panel-head">
-            <span>Current setup</span>
-            <strong>source of truth</strong>
-          </div>
-          <div class="summary-list">
-            <div>
-              <span>Default</span>
-              <strong><code>gpt-5.6-sol</code> · high</strong>
-            </div>
-            <div>
-              <span>Quality max</span>
-              <strong><code>codex --profile xhigh</code></strong>
-            </div>
-            <div>
-              <span>Prompt routing</span>
-              <strong>native matching · 4 slots</strong>
-            </div>
-            <div>
-              <span>Delegation</span>
-              <strong>3 roles · depth 1 · one writer</strong>
-            </div>
-            <div>
-              <span>Install</span>
-              <strong>rules + config + skills + plugins</strong>
-            </div>
-          </div>
-          <div class="route-note">
-            <span>Prompt correction</span>
-            <p>목표·맥락·산출물·권한 상한만 보정하고, 불필요한 질문 없이 진행합니다.</p>
-          </div>
-        </aside>
       </section>
 
       <section class="stats-band" aria-label="현재 구성 수치">
@@ -89,8 +83,9 @@
 
       <section id="setup" class="section-grid" aria-labelledby="setup-title">
         <div class="section-heading">
-          <p class="eyebrow">What This Setup Does</p>
+          <p class="eyebrow">Designed around intent</p>
           <h2 id="setup-title">요청 해석부터 검증까지 하나의 운영 체계</h2>
+          <p class="section-note">더 많은 스킬을 켜는 대신, 매 순간 필요한 책임만 정확하게 연결합니다.</p>
         </div>
         <div class="principle-grid">
           <article class="card accent-green">
@@ -112,7 +107,7 @@
         </div>
       </section>
 
-      <section class="section-grid" aria-labelledby="routing-title">
+      <section class="section-grid section-tint" aria-labelledby="routing-title">
         <div class="section-heading">
           <p class="eyebrow">Routing Contract</p>
           <h2 id="routing-title">필요한 역할만 최대 네 슬롯</h2>
@@ -187,7 +182,7 @@
         </div>
       </section>
 
-      <section id="skills" class="section-grid" aria-labelledby="skills-title">
+      <section id="skills" class="section-grid section-tint" aria-labelledby="skills-title">
         <div class="section-heading">
           <p class="eyebrow">47 Personal Skills</p>
           <h2 id="skills-title">각 스킬이 맡는 일을 한눈에</h2>
@@ -202,6 +197,11 @@
           </div>
           <div class="skill-meta" id="skillMeta">47개 중 47개 표시</div>
           <div class="skill-cloud" id="skillCloud" aria-live="polite"></div>
+          <div class="skill-toggle-wrap">
+            <button class="skill-toggle" id="skillToggle" type="button" aria-expanded="false">
+              전체 47개 보기 <span aria-hidden="true">＋</span>
+            </button>
+          </div>
           <noscript>
             <p><a href="docs/skill-catalog.md">전체 스킬 설명은 Skill Catalog에서 확인할 수 있습니다.</a></p>
           </noscript>
@@ -227,7 +227,7 @@
         </div>
       </section>
 
-      <section id="install" class="section-grid" aria-labelledby="install-title">
+      <section id="install" class="section-grid section-tint" aria-labelledby="install-title">
         <div class="section-heading">
           <p class="eyebrow">One-command Setup</p>
           <h2 id="install-title">저장소의 현재 상태를 그대로 설치</h2>
@@ -281,7 +281,7 @@ codex --profile xhigh</code></pre>
       <span>Codex Agent Kit · installable personal source of truth</span>
       <a href="https://github.com/Seung-Won-Yu/codex-agent-kit">Source on GitHub</a>
     </footer>
-    <script src="assets/skills.js?v=installable-setup"></script>
-    <script src="assets/app.js?v=installable-setup"></script>
+    <script src="assets/skills.js?v=apple-clean"></script>
+    <script src="assets/app.js?v=apple-clean"></script>
   </body>
 </html>

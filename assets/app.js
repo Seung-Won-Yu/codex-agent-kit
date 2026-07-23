@@ -1,7 +1,10 @@
 const skillCloud = document.querySelector("#skillCloud");
 const skillSearch = document.querySelector("#skillSearch");
 const skillMeta = document.querySelector("#skillMeta");
+const skillToggle = document.querySelector("#skillToggle");
 const skillCatalog = Array.isArray(window.CODEX_SKILL_CATALOG) ? window.CODEX_SKILL_CATALOG : [];
+const previewLimit = 12;
+let isSkillCatalogExpanded = false;
 
 if (skillCloud) {
   skillCatalog.forEach((skill) => {
@@ -35,22 +38,38 @@ const skillCards = Array.from(document.querySelectorAll("#skillCloud .skill-card
 
 function updateSkillFilter() {
   const query = skillSearch ? skillSearch.value.trim().toLowerCase() : "";
-  let visibleCount = 0;
+  const matchingCards = skillCards.filter((card) => !query || card.textContent.toLowerCase().includes(query));
+  const shownCards = query || isSkillCatalogExpanded ? matchingCards : matchingCards.slice(0, previewLimit);
 
   skillCards.forEach((card) => {
-    const isMatch = !query || card.textContent.toLowerCase().includes(query);
-    card.classList.toggle("is-hidden", !isMatch);
-    if (isMatch) visibleCount += 1;
+    card.classList.toggle("is-hidden", !shownCards.includes(card));
   });
 
   if (skillMeta) {
-    skillMeta.textContent = `${skillCards.length}개 중 ${visibleCount}개 표시`;
+    skillMeta.textContent =
+      !query && !isSkillCatalogExpanded
+        ? `${skillCards.length}개 중 ${shownCards.length}개 미리보기`
+        : `${skillCards.length}개 중 ${matchingCards.length}개 표시`;
+  }
+
+  if (skillToggle) {
+    skillToggle.hidden = Boolean(query);
+    skillToggle.setAttribute("aria-expanded", String(isSkillCatalogExpanded));
+    skillToggle.innerHTML = isSkillCatalogExpanded
+      ? '간략히 보기 <span aria-hidden="true">−</span>'
+      : `전체 ${skillCards.length}개 보기 <span aria-hidden="true">＋</span>`;
   }
 }
 
 updateSkillFilter();
 if (skillSearch) {
   skillSearch.addEventListener("input", updateSkillFilter);
+}
+if (skillToggle) {
+  skillToggle.addEventListener("click", () => {
+    isSkillCatalogExpanded = !isSkillCatalogExpanded;
+    updateSkillFilter();
+  });
 }
 
 document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
