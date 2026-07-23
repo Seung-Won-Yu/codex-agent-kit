@@ -48,6 +48,9 @@ Reference direction:
 8. **Search escape handling**
    - Native dialog cancellation was not reliable in every automated browser path.
    - Added an explicit Escape handler and verified focus returns without leaving an interaction-blocking overlay.
+9. **Gradient punctuation overhang**
+   - Tight negative tracking let the final punctuation overhang the inline gradient paint box in some Chromium sizes.
+   - Separated the final stop from the gradient span so its full glyph renders independently.
 
 ## Verification
 

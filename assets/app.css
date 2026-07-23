@@ -635,13 +635,17 @@ h1 {
   letter-spacing: -0.072em;
 }
 
-h1 span {
+h1 .hero-gradient {
   background: linear-gradient(94deg, var(--muted) 0%, var(--ink) 46%, var(--muted) 100%);
   background-size: 220% 100%;
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
   animation: hero-type-sheen 8s ease-in-out infinite;
+}
+
+h1 .hero-stop {
+  color: var(--muted);
 }
 
 .hero-line {
