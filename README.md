@@ -4,15 +4,17 @@
 
 공개 페이지: <https://seung-won-yu.github.io/codex-agent-kit/>
 
-## 이 세팅이 만드는 동작
+## 한눈에 보기
 
-- 짧고 거친 한국어·영어 혼합 요청에서도 목표, 맥락, 산출물과 완료 조건을 내부적으로 정리
-- 확인·분석·진단·제안 요청을 수정 권한으로 확대하지 않는 effect ceiling
-- 별도 runtime router 없이 skill description을 이용한 native matching
-- `primary + adapter + verifier + safety` 네 슬롯으로 스킬 조합 제한
-- 서로 기다리지 않는 큰 작업축이 두 개 이상일 때만 병렬 에이전트 사용
-- 루트 에이전트가 단일 writing lane, 통합, 최종 검증과 사용자 응답 소유
-- 범용 스킬과 project pack을 분리해 일반 작업의 prompt noise 감소
+> **대충 말해도 → 의도를 정리하고 → 필요한 스킬만 연결하고 → 필요할 때만 에이전트를 쓰고 → 루트가 끝까지 검증합니다.**
+
+| 단계 | 실제 동작 |
+| --- | --- |
+| 요청 이해 | 목표, 필요한 산출물과 수정 권한의 상한을 내부적으로 정리 |
+| 스킬 선택 | 가장 좁은 `primary` 1개와 필요한 `adapter / verifier / safety`만 연결 |
+| 에이전트 위임 | 서로 기다리지 않는 큰 작업축이 2개 이상일 때만 최대 3개 사용 |
+| 통합과 검증 | 루트가 단일 writing lane, 결과 통합, 최종 검증과 사용자 응답을 소유 |
+| 프로젝트 분리 | 범용 36개는 전역, 전문 11개는 연결된 프로젝트에서만 노출 |
 
 ## 현재 구성
 
@@ -75,20 +77,15 @@ Codex의 최신 profile 방식은 기본 `~/.codex/config.toml` 위에 `~/.codex
 ## 요청 처리 흐름
 
 ```mermaid
-flowchart LR
-  A["사용자 요청"] --> B["목표·산출물·권한 상한 보정"]
-  B --> C{"정확한 스킬이 필요한가?"}
-  C -- "아니오" --> D["루트가 직접 실행"]
-  C -- "예" --> E["가장 좁은 primary"]
-  E --> F["필요한 adapter / verifier / safety만 추가"]
-  D --> G{"독립적인 큰 축이 2개 이상인가?"}
-  F --> G
-  G -- "예" --> H["bounded child agents"]
-  G -- "아니오" --> I["root sequential work"]
-  H --> J["root integration + verification"]
-  I --> J
-  J --> K["짧은 결과 보고"]
+flowchart TD
+  A["1. 거친 사용자 요청"] --> B["2. 목표 · 산출물 · 권한 보정"]
+  B --> C["3. Primary 1개 + 필요한 보조만"]
+  C --> D["4. 필요할 때만 최대 3개 에이전트"]
+  D --> E["5. Root 통합 · 검증 · 짧은 보고"]
 ```
+
+- 정확한 스킬이 필요 없으면 루트가 바로 실행합니다.
+- 에이전트는 독립적인 큰 작업축이 2개 이상일 때만 사용합니다.
 
 ## Custom agents
 
