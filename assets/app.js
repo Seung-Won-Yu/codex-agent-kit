@@ -1,24 +1,55 @@
+const skillCloud = document.querySelector("#skillCloud");
 const skillSearch = document.querySelector("#skillSearch");
-const skillPills = Array.from(document.querySelectorAll("#skillCloud .skill-pill"));
 const skillMeta = document.querySelector("#skillMeta");
+const skillCatalog = Array.isArray(window.CODEX_SKILL_CATALOG) ? window.CODEX_SKILL_CATALOG : [];
+
+if (skillCloud) {
+  skillCatalog.forEach((skill) => {
+    const card = document.createElement("article");
+    card.className = "skill-card";
+
+    const header = document.createElement("div");
+    header.className = "skill-card-head";
+
+    const name = document.createElement("h3");
+    name.textContent = skill.name;
+
+    const scope = document.createElement("span");
+    scope.className = "skill-scope";
+    scope.textContent = skill.scope;
+
+    const category = document.createElement("span");
+    category.className = "skill-category";
+    category.textContent = skill.category;
+
+    const description = document.createElement("p");
+    description.textContent = skill.description;
+
+    header.append(name, scope);
+    card.append(header, category, description);
+    skillCloud.append(card);
+  });
+}
+
+const skillCards = Array.from(document.querySelectorAll("#skillCloud .skill-card"));
 
 function updateSkillFilter() {
-  const query = skillSearch.value.trim().toLowerCase();
+  const query = skillSearch ? skillSearch.value.trim().toLowerCase() : "";
   let visibleCount = 0;
 
-  skillPills.forEach((pill) => {
-    const isMatch = !query || pill.textContent.toLowerCase().includes(query);
-    pill.classList.toggle("is-hidden", !isMatch);
+  skillCards.forEach((card) => {
+    const isMatch = !query || card.textContent.toLowerCase().includes(query);
+    card.classList.toggle("is-hidden", !isMatch);
     if (isMatch) visibleCount += 1;
   });
 
   if (skillMeta) {
-    skillMeta.textContent = `${skillPills.length}개 중 ${visibleCount}개 표시`;
+    skillMeta.textContent = `${skillCards.length}개 중 ${visibleCount}개 표시`;
   }
 }
 
+updateSkillFilter();
 if (skillSearch) {
-  updateSkillFilter();
   skillSearch.addEventListener("input", updateSkillFilter);
 }
 

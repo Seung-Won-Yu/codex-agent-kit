@@ -1,6 +1,6 @@
 # Architecture
 
-이 저장소는 현재 사용하는 개인 Codex 설정을 실행 책임과 노출 범위에 따라 분리합니다.
+이 저장소는 현재 사용하는 개인 Codex 설정을 실행 책임과 프로젝트 범위에 따라 분리합니다.
 
 ## 1. Global policy
 
@@ -43,7 +43,7 @@
 
 ## 5. Local configuration
 
-`config/codex.config.sample.toml`은 현재 모델, reasoning, feature, agent, plugin 구조를 인증정보와 개인 trust 경로 없이 보여줍니다. 실제 `config.toml`은 installer가 덮어쓰지 않습니다.
+`config/codex.config.sample.toml`은 모델, reasoning, feature, agent, plugin과 desktop 기본값을 담은 portable base입니다. `--with-config` 설치에서 실제 `config.toml`로 적용됩니다.
 
 `config/xhigh.config.sample.toml`은 가장 어려운 작업에만 쓰는 선택형 profile입니다.
 
@@ -61,16 +61,12 @@
 
 `skills/routing-doctor/references/routing-cases.yaml`에는 한국어 실사용형 요청 40개가 들어 있습니다.
 
-## 7. Public repository boundary
+## 7. Installation
 
-이 저장소는 재사용 가능한 policy와 workflow만 보관합니다. 다음 runtime state는 제외합니다.
+`scripts/install.sh`은 현재 personal layer를 `$CODEX_HOME`에 설치합니다.
 
-- `auth.json`
-- sessions, archived sessions, JSONL history
-- log, memory, state SQLite
-- browser sessions
-- plugin caches와 설치 bundle
-- generated media와 attachment
-- API key, OAuth token, service-role key
+- `--exact`: 기존 personal agents, global skills와 packs를 timestamp backup으로 이동
+- `--with-config`: quality-first portable `config.toml` 적용
+- `--plugins`: 현재 사용하는 10개 plugin 설치·활성화
 
-프로젝트 pack 경로는 사용자명 없는 `~/...` 형식으로 저장하며 다른 머신에서는 manifest를 조정합니다.
+Codex가 제공하는 `skills/.system`은 유지합니다. 프로젝트 pack 경로는 사용자명 없는 `~/...` 형식으로 저장하며 다른 머신에서는 manifest만 조정합니다.

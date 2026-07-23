@@ -1,6 +1,7 @@
 #:schema https://developers.openai.com/codex/config-schema.json
 
-# Quality-first default. Use xhigh.config.sample.toml only for the hardest work.
+# Portable quality-first base. Machine paths and project trust are added by Codex
+# on the target computer, while this file owns the shared operating defaults.
 model = "gpt-5.6-sol"
 model_reasoning_effort = "high"
 sandbox_mode = "danger-full-access"
@@ -46,27 +47,12 @@ enabled = true
 [plugins."visualize@openai-bundled"]
 enabled = true
 
-[projects."/path/to/your/workspace"]
-trust_level = "trusted"
-
 [desktop]
 ambient-suggestions-enabled = true
-conversationDetailMode = "STEPS_PROSE"
+conversationDetailMode = "STEPS_COMMANDS"
 followUpQueueMode = "queue"
+dock-icon-preference = "codex-system"
 enabled-reasoning-efforts = ["low", "medium", "high", "xhigh", "ultra"]
 
 [mcp_servers.openaiDeveloperDocs]
 url = "https://developers.openai.com/mcp"
-
-[mcp_servers.node_repl]
-args = []
-command = "/path/to/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"
-startup_timeout_sec = 120
-
-[mcp_servers.node_repl.env]
-CODEX_HOME = "/path/to/.codex"
-NODE_REPL_NODE_MODULE_DIRS = "/path/to/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
-NODE_REPL_NODE_PATH = "/path/to/ChatGPT.app/Contents/Resources/cua_node/bin/node"
-NODE_REPL_TRUSTED_CODE_PATHS = "/path/to/.codex"
-BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
-CODEX_CLI_PATH = "/path/to/ChatGPT.app/Contents/Resources/codex"

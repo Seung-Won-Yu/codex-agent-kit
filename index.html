@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="거친 요청 보정, native skill routing, 제한된 병렬 에이전트, project skill packs를 적용한 개인 Codex 설정."
+      content="거친 요청 보정, 자동 skill routing, 제한된 병렬 에이전트와 project pack을 한 번에 설치하는 개인 Codex 설정."
     />
-    <title>Codex Agent Kit | Current Personal Setup</title>
-    <link rel="stylesheet" href="assets/app.css?v=current-setup" />
+    <title>Codex Agent Kit | Installable Personal Setup</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="assets/app.css?v=installable-setup" />
   </head>
   <body>
     <header class="topbar">
@@ -17,9 +18,10 @@
         <span>Codex Agent Kit</span>
       </a>
       <nav class="topnav" aria-label="주요 섹션">
-        <a href="#principles">원칙</a>
+        <a href="#setup">구성</a>
         <a href="#agents">에이전트</a>
         <a href="#skills">스킬</a>
+        <a href="#plugins">플러그인</a>
         <a href="#install">설치</a>
       </nav>
       <a class="repo-link" href="https://github.com/Seung-Won-Yu/codex-agent-kit">GitHub</a>
@@ -28,28 +30,26 @@
     <main id="top">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
-          <p class="eyebrow">Current Personal Codex Setup</p>
-          <h1 id="hero-title">Less noise.<br />Better work.</h1>
+          <p class="eyebrow">My Installable Codex Setup</p>
+          <h1 id="hero-title">말은 대충.<br />결과는 정확히.</h1>
           <p class="hero-line">
-            대충 말해도 의도와 권한은 정확히 잡고, 필요한 스킬과 에이전트만 연결하는 실사용 설정입니다.
+            거친 요청을 조용히 보정하고, 필요한 스킬과 에이전트만 연결해 끝까지 검증하는 개인 Codex 세팅입니다.
           </p>
           <p class="lede">
-            초기 스킬 모음에서 출발해 현재 <code>~/.codex</code>에서 쓰는 구조로 디벨롭했습니다.
-            별도 meta-router를 없애고 native skill-description matching, 네 개의 조합 슬롯,
-            프로젝트 전용 pack으로 prompt noise를 줄였습니다.
+            이 저장소는 소개용 스킬 모음이 아니라 현재 사용하는 personal layer의 source of truth입니다.
+            전역 규칙, quality-first config, custom agents, 47개 personal skill, 프로젝트 pack과 플러그인 구성을
+            한 번의 설치 흐름으로 재현합니다.
           </p>
           <div class="hero-actions">
-            <a class="button primary" href="#install">설치 방식 보기</a>
-            <a class="button secondary" href="https://github.com/Seung-Won-Yu/codex-agent-kit/blob/main/AGENTS.md">
-              AGENTS.md 보기
-            </a>
+            <a class="button primary" href="#install">내 세팅 설치하기</a>
+            <a class="button secondary" href="#skills">스킬 역할 보기</a>
           </div>
         </div>
 
         <aside class="setup-panel" aria-label="현재 설정 요약">
           <div class="panel-head">
             <span>Current setup</span>
-            <strong>active</strong>
+            <strong>source of truth</strong>
           </div>
           <div class="summary-list">
             <div>
@@ -57,57 +57,83 @@
               <strong><code>gpt-5.6-sol</code> · high</strong>
             </div>
             <div>
-              <span>Quality mode</span>
-              <strong><code>xhigh</code> profile</strong>
+              <span>Quality max</span>
+              <strong><code>codex --profile xhigh</code></strong>
             </div>
             <div>
-              <span>Routing</span>
+              <span>Prompt routing</span>
               <strong>native matching · 4 slots</strong>
             </div>
             <div>
               <span>Delegation</span>
-              <strong>2+ independent axes only</strong>
+              <strong>3 roles · depth 1 · one writer</strong>
             </div>
             <div>
-              <span>Skill scope</span>
-              <strong>36 global · 11 packed</strong>
+              <span>Install</span>
+              <strong>rules + config + skills + plugins</strong>
             </div>
           </div>
           <div class="route-note">
-            <span>Effect ceiling</span>
-            <p>“확인·분석·제안만”은 수정 권한으로 확대하지 않습니다.</p>
+            <span>Prompt correction</span>
+            <p>목표·맥락·산출물·권한 상한만 보정하고, 불필요한 질문 없이 진행합니다.</p>
           </div>
         </aside>
       </section>
 
       <section class="stats-band" aria-label="현재 구성 수치">
-        <div><strong>36</strong><span>global skills</span></div>
-        <div><strong>11</strong><span>packed skills</span></div>
-        <div><strong>3</strong><span>custom agents</span></div>
-        <div><strong>0</strong><span>runtime meta-routers</span></div>
+        <div><strong>36</strong><span>global personal skills</span></div>
+        <div><strong>11</strong><span>project-packed skills</span></div>
+        <div><strong>3</strong><span>custom agent roles</span></div>
+        <div><strong>10</strong><span>connected plugins</span></div>
       </section>
 
-      <section id="principles" class="section-grid" aria-labelledby="principles-title">
+      <section id="setup" class="section-grid" aria-labelledby="setup-title">
         <div class="section-heading">
-          <p class="eyebrow">Operating Principles</p>
-          <h2 id="principles-title">결과 품질과 효율을 같이 지키는 기본값</h2>
+          <p class="eyebrow">What This Setup Does</p>
+          <h2 id="setup-title">요청 해석부터 검증까지 하나의 운영 체계</h2>
         </div>
         <div class="principle-grid">
           <article class="card accent-green">
-            <h3>조용한 프롬프트 보정</h3>
-            <p>거친 한국어, 축약, 감정 섞인 요청에서도 목표·맥락·산출물·완료 조건만 정리해 바로 진행합니다.</p>
+            <h3>프롬프트 자동 보정</h3>
+            <p>짧고 거칠거나 한국어·영어가 섞여도 목표, 필요한 맥락, 산출물과 완료 조건을 내부적으로 정리합니다.</p>
           </article>
           <article class="card accent-blue">
-            <h3>권한 상한 보존</h3>
-            <p>답변, 점검, 리서치, 진단, 제안은 기본 read-only입니다. 수정이나 외부 쓰기로 임의 확대하지 않습니다.</p>
+            <h3>권한을 넘지 않는 실행</h3>
+            <p>확인·분석·제안은 read-only로 유지하고, 고쳐줘·적용해줘처럼 명확한 표현이 있을 때만 파일을 바꿉니다.</p>
           </article>
           <article class="card accent-amber">
-            <h3>최소 스킬 조합</h3>
-            <p>가장 좁은 primary 하나에서 시작하고 필요한 adapter, verifier, safety만 각각 하나씩 더합니다.</p>
+            <h3>정확한 스킬 자동 연결</h3>
+            <p>별도 router ceremony 없이 description matching으로 가장 좁은 primary를 고르고 필요한 도구만 조합합니다.</p>
           </article>
           <article class="card accent-red">
-            <h3>조건부 병렬화</h3>
-            <p>서로 기다리지 않는 큰 작업축이 두 개 이상일 때만 병렬화합니다. 루트가 쓰기와 통합을 소유합니다.</p>
+            <h3>품질 중심 에이전트 사용</h3>
+            <p>큰 독립 작업축만 병렬화하고, 루트가 쓰기·통합·최종 판단을 소유해 결과가 흩어지지 않게 합니다.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section-grid" aria-labelledby="routing-title">
+        <div class="section-heading">
+          <p class="eyebrow">Routing Contract</p>
+          <h2 id="routing-title">필요한 역할만 최대 네 슬롯</h2>
+          <p class="section-note">스킬을 많이 켜는 것이 아니라 책임을 정확히 나누는 방식입니다.</p>
+        </div>
+        <div class="workflow-grid">
+          <article class="workflow-card">
+            <h3>Primary</h3>
+            <p><strong>내용과 결정을 소유합니다.</strong> 구현, 진단, 리서치, 설계 중 가장 정확한 스킬 하나를 선택합니다.</p>
+          </article>
+          <article class="workflow-card">
+            <h3>Adapter</h3>
+            <p><strong>산출물 형식을 담당합니다.</strong> DOCX, PDF, PPTX, spreadsheet처럼 파일 형식이 필요할 때만 추가합니다.</p>
+          </article>
+          <article class="workflow-card">
+            <h3>Verifier</h3>
+            <p><strong>결과를 독립 검증합니다.</strong> 테스트, 빌드, 브라우저 흐름이나 고위험 변경 리뷰가 필요할 때 붙입니다.</p>
+          </article>
+          <article class="workflow-card">
+            <h3>Safety</h3>
+            <p><strong>민감 경계를 보호합니다.</strong> 인증, 권한, 결제, webhook, production data 작업에만 조건부로 추가합니다.</p>
           </article>
         </div>
       </section>
@@ -115,7 +141,7 @@
       <section id="agents" class="section-grid" aria-labelledby="agents-title">
         <div class="section-heading">
           <p class="eyebrow">Agent Orchestration</p>
-          <h2 id="agents-title">역할은 세 개만, 책임은 선명하게</h2>
+          <h2 id="agents-title">세 역할만 두고 책임을 선명하게</h2>
           <p class="section-note">최대 child 3개, 깊이 1, writing lane 1개.</p>
         </div>
         <div class="layer-list">
@@ -125,10 +151,10 @@
               <h3>explorer-fast</h3>
               <p>GPT-5.6 Terra medium · read-only</p>
               <dl>
-                <dt>사용</dt>
+                <dt>역할</dt>
                 <dd>독립적인 코드 탐색, 현재 자료 리서치, 근거 수집</dd>
-                <dt>제외</dt>
-                <dd>간단한 한 축 탐색과 순차 작업</dd>
+                <dt>원칙</dt>
+                <dd>한정된 질문만 조사하고 두 번의 탐색으로 새 근거가 없으면 멈춤</dd>
               </dl>
             </div>
           </article>
@@ -138,10 +164,10 @@
               <h3>reviewer-deep</h3>
               <p>GPT-5.6 Sol high · read-only</p>
               <dl>
-                <dt>사용</dt>
-                <dd>중요 변경의 correctness, regression, security 독립 리뷰</dd>
-                <dt>시점</dt>
-                <dd>구현 뒤 결론을 바꿀 수 있을 때 순차 실행</dd>
+                <dt>역할</dt>
+                <dd>중요 변경의 정확성, 회귀, 보안, 구조와 테스트 누락 리뷰</dd>
+                <dt>원칙</dt>
+                <dd>구현 뒤 독립 검토가 실제 결론을 바꿀 수 있을 때 사용</dd>
               </dl>
             </div>
           </article>
@@ -151,10 +177,10 @@
               <h3>verifier</h3>
               <p>GPT-5.6 Terra medium · workspace-write</p>
               <dl>
-                <dt>사용</dt>
-                <dd>테스트, lint, type check, build, browser flow 검증</dd>
-                <dt>책임</dt>
-                <dd>검증과 실패 triage에 집중하고 제품 구현은 소유하지 않음</dd>
+                <dt>역할</dt>
+                <dd>테스트, lint, type check, build, 실제 브라우저 흐름 검증</dd>
+                <dt>원칙</dt>
+                <dd>제품 코드는 만들지 않고 검증과 실패 원인 분리에 집중</dd>
               </dl>
             </div>
           </article>
@@ -163,72 +189,49 @@
 
       <section id="skills" class="section-grid" aria-labelledby="skills-title">
         <div class="section-heading">
-          <p class="eyebrow">Skill Inventory</p>
-          <h2 id="skills-title">전역은 범용만, 전문 스킬은 프로젝트에만</h2>
-          <p class="section-note">아래 검색은 36개 global + 11개 packed personal skill 전체를 표시합니다.</p>
+          <p class="eyebrow">47 Personal Skills</p>
+          <h2 id="skills-title">각 스킬이 맡는 일을 한눈에</h2>
+          <p class="section-note">
+            36개 범용 스킬은 전역에서, game·visual·supabase 11개는 연결된 프로젝트에서만 자동 노출됩니다.
+          </p>
         </div>
         <div>
           <div class="toolbar">
-            <label for="skillSearch">스킬 검색</label>
-            <input id="skillSearch" type="search" placeholder="예: frontend, research, supabase" />
+            <label for="skillSearch">이름·영역·설명 검색</label>
+            <input id="skillSearch" type="search" placeholder="예: 프론트엔드, 리서치, Supabase, 검증" />
           </div>
           <div class="skill-meta" id="skillMeta">47개 중 47개 표시</div>
-          <div class="skill-cloud" id="skillCloud">
-            <span class="skill-pill">accessibility</span>
-            <span class="skill-pill">api-and-interface-design</span>
-            <span class="skill-pill">ax-consulting-planner</span>
-            <span class="skill-pill">caveman</span>
-            <span class="skill-pill">code-review-and-quality</span>
-            <span class="skill-pill">create-prd</span>
-            <span class="skill-pill">database-schema-designer</span>
-            <span class="skill-pill">dependency-auditor</span>
-            <span class="skill-pill">design-flow</span>
-            <span class="skill-pill">diagnose</span>
-            <span class="skill-pill">docker-debugger</span>
-            <span class="skill-pill">documentation-and-adrs</span>
-            <span class="skill-pill">env-setup-wizard</span>
-            <span class="skill-pill">frontend-design-audit</span>
-            <span class="skill-pill">frontend-ui-engineering</span>
-            <span class="skill-pill">gh-cli</span>
-            <span class="skill-pill">gh-fix-ci</span>
-            <span class="skill-pill">handoff</span>
-            <span class="skill-pill">incremental-implementation</span>
-            <span class="skill-pill">media-image-director</span>
-            <span class="skill-pill">planning-document-writer</span>
-            <span class="skill-pill">playwright</span>
-            <span class="skill-pill">product-frontend-engineer</span>
-            <span class="skill-pill">product-strategy</span>
-            <span class="skill-pill">release-notes</span>
-            <span class="skill-pill">research-report-writer</span>
-            <span class="skill-pill">research-synthesizer</span>
-            <span class="skill-pill">risk-assessment</span>
-            <span class="skill-pill">routing-doctor</span>
-            <span class="skill-pill">runbook-generator</span>
-            <span class="skill-pill">security-and-hardening</span>
-            <span class="skill-pill">system-design</span>
-            <span class="skill-pill">technical-writer</span>
-            <span class="skill-pill">vercel-deploy</span>
-            <span class="skill-pill">web-quality-audit</span>
-            <span class="skill-pill">webapp-testing</span>
-            <span class="skill-pill">claude-design · visual pack</span>
-            <span class="skill-pill">game-reference-research · game pack</span>
-            <span class="skill-pill">game-ui-art-direction · game pack</span>
-            <span class="skill-pill">gpt-taste · visual pack</span>
-            <span class="skill-pill">image-to-code · visual pack</span>
-            <span class="skill-pill">mobile-game-design · game pack</span>
-            <span class="skill-pill">mobile-game-qa · game pack</span>
-            <span class="skill-pill">player-experience-review · game pack</span>
-            <span class="skill-pill">prototype-slice-planner · game pack</span>
-            <span class="skill-pill">supabase · supabase pack</span>
-            <span class="skill-pill">supabase-postgres-best-practices · supabase pack</span>
-          </div>
+          <div class="skill-cloud" id="skillCloud" aria-live="polite"></div>
+          <noscript>
+            <p><a href="docs/skill-catalog.md">전체 스킬 설명은 Skill Catalog에서 확인할 수 있습니다.</a></p>
+          </noscript>
+        </div>
+      </section>
+
+      <section id="plugins" class="section-grid" aria-labelledby="plugins-title">
+        <div class="section-heading">
+          <p class="eyebrow">10 Connected Plugins</p>
+          <h2 id="plugins-title">스킬이 실제 도구와 파일 작업으로 이어지게</h2>
+        </div>
+        <div class="catalog-grid">
+          <section><h3>Documents</h3><p>Word·DOCX 문서를 생성, 편집, redline하고 렌더링까지 검증합니다.</p></section>
+          <section><h3>Spreadsheets</h3><p>XLSX·CSV 분석과 workbook 생성을 담당합니다.</p></section>
+          <section><h3>Presentations</h3><p>PowerPoint·Google Slides용 발표 자료를 만들고 편집합니다.</p></section>
+          <section><h3>PDF</h3><p>PDF를 읽고 생성하며 페이지 렌더링으로 레이아웃을 확인합니다.</p></section>
+          <section><h3>Template Creator</h3><p>기존 문서를 재사용 가능한 Codex artifact template로 변환합니다.</p></section>
+          <section><h3>Sites</h3><p>웹사이트 source, version, production deployment와 access control을 관리합니다.</p></section>
+          <section><h3>Browser</h3><p>Codex 안의 독립 브라우저로 페이지 탐색, 입력과 화면 검증을 수행합니다.</p></section>
+          <section><h3>Chrome</h3><p>로그인 상태와 기존 탭이 필요한 작업을 사용자의 Chrome에서 처리합니다.</p></section>
+          <section><h3>Computer Use</h3><p>전용 API가 없는 macOS 앱과 데스크톱 UI를 직접 조작합니다.</p></section>
+          <section><h3>Visualize</h3><p>차트, 비교 도구, 시뮬레이터와 interactive visualization을 대화 안에서 만듭니다.</p></section>
         </div>
       </section>
 
       <section id="install" class="section-grid" aria-labelledby="install-title">
         <div class="section-heading">
-          <p class="eyebrow">Install And Adapt</p>
-          <h2 id="install-title">규칙과 스킬은 복사하고, 실행 권한은 직접 검토</h2>
+          <p class="eyebrow">One-command Setup</p>
+          <h2 id="install-title">저장소의 현재 상태를 그대로 설치</h2>
+          <p class="section-note">Codex desktop app과 CLI가 설치되고 로그인된 macOS 환경을 기준으로 합니다.</p>
         </div>
         <div class="content-stack">
           <div class="terminal">
@@ -238,43 +241,47 @@
             </div>
             <pre><code id="installCommand">git clone https://github.com/Seung-Won-Yu/codex-agent-kit.git
 cd codex-agent-kit
-./scripts/install.sh</code></pre>
+./scripts/install.sh --exact --with-config --plugins</code></pre>
           </div>
-          <article class="callout">
-            <h3>설치 스크립트의 경계</h3>
-            <p>
-              기존 <code>AGENTS.md</code>를 백업한 뒤 rules, agents, skills, packs, validator를 복사합니다.
-              실제 <code>config.toml</code>과 인증정보는 덮어쓰지 않습니다.
-            </p>
-          </article>
+
           <div class="principle-grid">
             <article class="card accent-green">
-              <h3>포함</h3>
+              <h3>한 번에 적용되는 구성</h3>
               <ul>
-                <li>Global AGENTS.md</li>
-                <li>3 custom agents + 4 playbooks</li>
-                <li>36 global + 11 packed skills</li>
-                <li>routing corpus와 validator</li>
+                <li>Global AGENTS.md와 quality-first config</li>
+                <li>3 custom agents와 4 domain playbooks</li>
+                <li>36 global + 11 packed personal skills</li>
+                <li>xhigh profile, validator, 10 plugins</li>
               </ul>
             </article>
-            <article class="card accent-red">
-              <h3>제외</h3>
+            <article class="card accent-blue">
+              <h3>기존 세팅도 되돌릴 수 있게</h3>
               <ul>
-                <li>auth, token, session, logs</li>
-                <li>SQLite runtime state</li>
-                <li>browser와 plugin caches</li>
-                <li>개인 생성물과 attachments</li>
+                <li><code>--exact</code>는 기존 personal layer를 timestamp 백업</li>
+                <li>Codex 기본 <code>.system</code> skills는 그대로 유지</li>
+                <li>프로젝트 경로만 manifest에서 맞춤</li>
+                <li>설치 뒤 validator로 skill graph 확인</li>
               </ul>
             </article>
+          </div>
+
+          <div class="terminal">
+            <div class="terminal-bar">
+              <span></span><span></span><span></span>
+              <button class="copy-button" type="button" data-copy-target="verifyCommand">복사</button>
+            </div>
+            <pre><code id="verifyCommand">python3 "$HOME/.codex/scripts/validate-skills.py"
+codex --profile xhigh</code></pre>
           </div>
         </div>
       </section>
     </main>
 
     <footer class="footer">
-      <span>Codex Agent Kit · current personal setup</span>
+      <span>Codex Agent Kit · installable personal source of truth</span>
       <a href="https://github.com/Seung-Won-Yu/codex-agent-kit">Source on GitHub</a>
     </footer>
-    <script src="assets/app.js?v=current-setup"></script>
+    <script src="assets/skills.js?v=installable-setup"></script>
+    <script src="assets/app.js?v=installable-setup"></script>
   </body>
 </html>

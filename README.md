@@ -1,161 +1,183 @@
 # Codex Agent Kit
 
-현재 실제로 사용하는 `~/.codex` 설정을 인증값과 런타임 상태를 제외하고 공유 가능한 형태로 정리한 저장소입니다.
+현재 실제로 사용하는 개인 Codex 운영 레이어의 source of truth입니다. 거친 요청을 조용히 보정하고, 가장 정확한 스킬과 필요한 에이전트만 연결해 품질 높은 결과를 내도록 구성했습니다.
 
-이 저장소는 초기 skill 모음에서 출발했지만, 지금은 다음 원칙으로 운영되는 개인 Codex 설정 스냅샷입니다.
+공개 페이지: <https://seung-won-yu.github.io/codex-agent-kit/>
 
-- 거친 한국어·축약 요청은 목표와 산출물만 조용히 보정합니다.
-- 확인·분석·제안 요청을 임의로 수정 작업으로 확대하지 않습니다.
-- 별도 meta-router 없이 Codex의 native skill-description matching을 사용합니다.
-- 스킬 조합은 `primary`, `adapter`, `verifier`, 조건부 `safety`로 제한합니다.
-- 독립적인 큰 작업축이 두 개 이상일 때만 병렬 에이전트를 사용합니다.
-- 전역 스킬과 프로젝트 전용 pack을 분리해 일반 작업의 prompt noise를 줄입니다.
+## 이 세팅이 만드는 동작
 
-공개 페이지:
-
-```text
-https://seung-won-yu.github.io/codex-agent-kit/
-```
+- 짧고 거친 한국어·영어 혼합 요청에서도 목표, 맥락, 산출물과 완료 조건을 내부적으로 정리
+- 확인·분석·진단·제안 요청을 수정 권한으로 확대하지 않는 effect ceiling
+- 별도 runtime router 없이 skill description을 이용한 native matching
+- `primary + adapter + verifier + safety` 네 슬롯으로 스킬 조합 제한
+- 서로 기다리지 않는 큰 작업축이 두 개 이상일 때만 병렬 에이전트 사용
+- 루트 에이전트가 단일 writing lane, 통합, 최종 검증과 사용자 응답 소유
+- 범용 스킬과 project pack을 분리해 일반 작업의 prompt noise 감소
 
 ## 현재 구성
 
-| 영역 | 현재 값 |
-| --- | ---: |
+| 영역 | 설정 |
+| --- | --- |
 | 기본 모델 | `gpt-5.6-sol` + `high` |
-| 선택형 최고품질 profile | `xhigh` |
+| 최고품질 profile | `codex --profile xhigh` |
 | Custom agents | 3 |
 | Global personal skills | 36 |
-| Packed specialist skills | 11 |
-| Project skill packs | 3 |
+| Project-packed skills | 11 |
+| Project packs | `game`, `visual`, `supabase` |
 | Domain playbooks | 4 |
-| Runtime meta-routers | 0 |
-| Secrets stored here | 0 |
+| Connected plugins | 10 |
+| Routing regression cases | 40 |
 
-### Custom agents
+## 설치
 
-| Agent | Model | 권한 | 역할 |
-| --- | --- | --- | --- |
-| `explorer-fast` | GPT-5.6 Terra medium | read-only | 독립적인 탐색·리서치 축 |
-| `reviewer-deep` | GPT-5.6 Sol high | read-only | 고위험 변경의 독립 리뷰 |
-| `verifier` | GPT-5.6 Terra medium | workspace-write | 테스트·빌드·브라우저 검증 |
+Codex desktop app과 CLI가 설치되고 로그인된 macOS 환경에서:
 
-루트 에이전트는 의도, 권한, 계획, 단일 writing lane, 통합과 최종 검증을 소유합니다. 하위 에이전트는 최대 3개, 깊이 1로 제한합니다.
+```bash
+git clone https://github.com/Seung-Won-Yu/codex-agent-kit.git
+cd codex-agent-kit
+./scripts/install.sh --exact --with-config --plugins
+```
+
+이 명령은 다음 personal layer를 설치합니다.
+
+- Global `AGENTS.md`
+- quality-first `config.toml`
+- `xhigh.config.toml`
+- 3 custom agents와 4 playbooks
+- 36 global skills
+- 11 packed skills와 project manifest
+- validator와 routing corpus
+- 현재 사용하는 10개 Codex plugin
+
+`--exact`는 기존 personal agents, global skills와 packs를 `$CODEX_HOME/backups/codex-agent-kit-<timestamp>/`로 옮긴 뒤 현재 구성을 설치합니다. Codex가 제공하는 `skills/.system`은 유지합니다.
+
+기존 구성에 병합만 하려면:
+
+```bash
+./scripts/install.sh
+```
+
+config와 plugin까지 적용하되 기존 개인 스킬을 유지하려면:
+
+```bash
+./scripts/install.sh --with-config --plugins
+```
+
+설치 후 프로젝트 위치가 다르면 `~/.codex/skill-packs/manifest.yaml`의 `scan_roots`와 `projects`만 맞춘 뒤 Codex를 다시 시작합니다.
+
+```bash
+python3 "$HOME/.codex/scripts/validate-skills.py"
+codex --profile xhigh
+```
+
+Codex의 최신 profile 방식은 기본 `~/.codex/config.toml` 위에 `~/.codex/xhigh.config.toml`을 overlay합니다.
 
 ## 요청 처리 흐름
 
 ```mermaid
 flowchart LR
-  A["사용자 요청"] --> B["의도·산출물·권한 상한 보정"]
+  A["사용자 요청"] --> B["목표·산출물·권한 상한 보정"]
   B --> C{"정확한 스킬이 필요한가?"}
-  C -- "아니오" --> D["직접 실행"]
-  C -- "예" --> E["가장 좁은 primary skill"]
+  C -- "아니오" --> D["루트가 직접 실행"]
+  C -- "예" --> E["가장 좁은 primary"]
   E --> F["필요한 adapter / verifier / safety만 추가"]
-  D --> G["집중 검증"]
+  D --> G{"독립적인 큰 축이 2개 이상인가?"}
   F --> G
-  G --> H["짧은 결과 보고"]
+  G -- "예" --> H["bounded child agents"]
+  G -- "아니오" --> I["root sequential work"]
+  H --> J["root integration + verification"]
+  I --> J
+  J --> K["짧은 결과 보고"]
 ```
 
-## 스킬 구조
+## Custom agents
 
-### Global skills
+| Agent | 모델·권한 | 역할 |
+| --- | --- | --- |
+| `explorer-fast` | GPT-5.6 Terra medium · read-only | 독립적인 코드 탐색과 현재 자료 리서치 |
+| `reviewer-deep` | GPT-5.6 Sol high · read-only | 중요한 변경의 정확성·회귀·보안 독립 리뷰 |
+| `verifier` | GPT-5.6 Terra medium · workspace-write | 테스트·lint·type check·build·browser flow 검증 |
 
-`skills/`에는 대부분의 저장소에서 유용한 36개 personal skill이 있습니다. 명확한 단일 작업은 해당 스킬을 바로 사용하고, 스킬이 필요하지 않으면 직접 처리합니다.
+하위 에이전트는 최대 3개, 깊이 1이며 루트 에이전트가 항상 쓰기와 통합을 소유합니다.
 
-### Project packs
+## Personal skills
 
-`skill-packs/`에는 관련 프로젝트에서만 노출하는 specialist skill이 있습니다.
+36개 global skill은 여러 프로젝트에서 반복되는 범용 작업을 담당합니다.
 
-| Pack | Skills |
+| 영역 | Skills |
 | --- | --- |
-| `game` | 모바일 게임 기획·UI·플레이어 리뷰·prototype QA 6개 |
-| `visual` | `claude-design`, `gpt-taste`, `image-to-code` |
-| `supabase` | Supabase workflow, Postgres best practices |
+| 구현·검증 | `incremental-implementation`, `diagnose`, `frontend-ui-engineering`, `product-frontend-engineer`, `code-review-and-quality`, `playwright`, `webapp-testing` |
+| 제품·품질 | `design-flow`, `frontend-design-audit`, `accessibility`, `web-quality-audit` |
+| 설계·보안 | `system-design`, `api-and-interface-design`, `database-schema-designer`, `security-and-hardening` |
+| 기획·전략 | `create-prd`, `product-strategy`, `planning-document-writer`, `ax-consulting-planner`, `risk-assessment` |
+| 리서치·문서 | `research-synthesizer`, `research-report-writer`, `technical-writer`, `documentation-and-adrs`, `runbook-generator`, `release-notes`, `handoff` |
+| 개발 운영 | `gh-cli`, `gh-fix-ci`, `dependency-auditor`, `docker-debugger`, `env-setup-wizard`, `vercel-deploy` |
+| 미디어·모드·설정 | `media-image-director`, `caveman`, `routing-doctor` |
 
-`skill-packs/manifest.yaml`은 현재 개인 프로젝트 연결 상태의 스냅샷입니다. 다른 환경에서 사용할 때는 `scan_roots`와 `projects` 경로를 반드시 수정해야 합니다.
+11개 specialist skill은 필요한 프로젝트의 `.agents/skills/`에서만 보입니다.
+
+| Pack | Skills | 담당 |
+| --- | --- | --- |
+| `game` | `mobile-game-design`, `mobile-game-qa`, `game-reference-research`, `game-ui-art-direction`, `player-experience-review`, `prototype-slice-planner` | 모바일 게임 기획, UI, 플레이 경험, prototype과 QA |
+| `visual` | `claude-design`, `gpt-taste`, `image-to-code` | 고밀도 visual concept, motion-rich web, image-first 구현 |
+| `supabase` | `supabase`, `supabase-postgres-best-practices` | Supabase workflow, Postgres query·schema·RLS 최적화 |
+
+각 스킬이 언제 선택되고 무엇을 담당하는지는 [Skill Catalog](docs/skill-catalog.md)에 정리했습니다.
+
+## Connected plugins
+
+| Plugin | 역할 |
+| --- | --- |
+| Documents | DOCX 생성·편집·redline·렌더 검증 |
+| Spreadsheets | XLSX·CSV 분석과 workbook 생성 |
+| Presentations | PPTX·Google Slides용 발표 자료 |
+| PDF | PDF 읽기·생성·페이지 렌더 검증 |
+| Template Creator | 문서를 재사용 가능한 artifact template로 변환 |
+| Sites | 웹사이트 source, version, production deployment 관리 |
+| Browser | Codex 내 독립 브라우저 자동화 |
+| Chrome | 기존 로그인과 탭을 사용하는 Chrome 자동화 |
+| Computer Use | macOS 앱과 데스크톱 UI 제어 |
+| Visualize | 차트, 비교 도구와 interactive visualization |
+
+Plugin만 설치하려면:
+
+```bash
+./scripts/install-plugins.sh
+```
 
 ## Repository 구조
 
 ```text
 .
-├── AGENTS.md                         # 현재 전역 행동 규칙
+├── AGENTS.md
 ├── agents/
-│   ├── explorer-fast.toml            # 빠른 read-only 탐색
-│   ├── reviewer-deep.toml            # 깊은 독립 리뷰
-│   ├── verifier.toml                 # 테스트·빌드·브라우저 검증
-│   └── playbooks/                    # backend/frontend/design/docs
+│   ├── explorer-fast.toml
+│   ├── reviewer-deep.toml
+│   ├── verifier.toml
+│   └── playbooks/
 ├── config/
-│   ├── codex.config.sample.toml      # 민감정보를 제거한 기본 config
-│   └── xhigh.config.sample.toml      # 선택형 최고품질 profile
-├── skills/                           # 전역 personal skills 36개
-├── skill-packs/
-│   ├── game/
-│   ├── visual/
-│   ├── supabase/
-│   └── manifest.yaml
+│   ├── codex.config.sample.toml
+│   └── xhigh.config.sample.toml
+├── skills/                    # 36 global personal skills
+├── skill-packs/               # 11 project-packed skills
 ├── scripts/
 │   ├── install.sh
+│   ├── install-plugins.sh
 │   └── validate-skills.py
 ├── docs/
 ├── index.html
 └── assets/
 ```
 
-## 설치
-
-먼저 내용을 검토하세요. 설치 스크립트는 기존 `AGENTS.md`를 백업하고, 규칙·agents·skills·packs·validator를 `$CODEX_HOME`에 복사합니다. 실제 `config.toml`은 자동으로 덮어쓰지 않습니다.
+## 검증
 
 ```bash
-git clone https://github.com/Seung-Won-Yu/codex-agent-kit.git
-cd codex-agent-kit
-./scripts/install.sh
-```
-
-설치 후:
-
-```bash
-# 기본 config 예시를 읽고 필요한 값만 반영
-less config/codex.config.sample.toml
-
-# CLI 최고품질 profile 예시
-cp config/xhigh.config.sample.toml "$HOME/.codex/xhigh.config.toml"
-codex --profile xhigh
-
-# 현재 머신의 skill graph 검증
 python3 "$HOME/.codex/scripts/validate-skills.py"
+python3 "$HOME/.codex/skills/routing-doctor/scripts/audit_routing.py"
 ```
 
-다른 머신에서는 다음을 반드시 조정해야 합니다.
+Validator는 skill metadata, 내부 링크, canonical name 중복, project pack symlink, visible skill graph, legacy routing 잔존과 40개 한국어 routing case를 함께 확인합니다.
 
-- trusted project 경로
-- `skill-packs/manifest.yaml`의 `scan_roots`와 `projects`
-- MCP executable 경로
-- enabled plugins
-- sandbox와 approval policy
+## License
 
-## 포함하지 않는 것
-
-- `auth.json`
-- 세션·보관 세션·로그·memory·state SQLite
-- API key, OAuth token, refresh token, service-role key
-- browser session
-- plugin runtime cache와 설치 바이너리
-- 생성 이미지와 개인 작업 산출물
-
-공개 전 권장 검사:
-
-```bash
-rg -n "(api[_-]?key|secret|token|password|Bearer|sk-[A-Za-z0-9]|gho_|github_pat|refresh_token|PRIVATE KEY)" .
-```
-
-문서 예시의 일반 단어가 일치할 수 있으므로 모든 결과를 직접 확인합니다.
-
-## 운영 메모
-
-- 기본 reasoning은 `high`, 가장 어려운 작업만 `xhigh` profile을 사용합니다.
-- `danger-full-access`와 넓은 trusted root는 개인 환경의 자율성 우선 선택입니다. 다른 환경에서는 더 좁게 설정하는 편이 안전합니다.
-- `/archive`는 세션을 보관할 뿐 디스크 용량을 줄이지 않습니다.
-- disposable CLI 작업은 `codex exec --ephemeral`을 사용할 수 있습니다.
-
-## License And Notices
-
-Vendored skill이 자체 `LICENSE`를 포함하면 해당 라이선스가 그 디렉터리에 적용됩니다. 자세한 내용은 `NOTICE.md`를 참고하세요.
+Vendored skill 디렉터리에 `LICENSE`, `LICENSE.txt` 또는 `NOTICE.txt`가 있으면 해당 파일의 조건이 적용됩니다.
