@@ -9,9 +9,21 @@
     />
     <title>Codex Agent Kit | Installable Personal Setup</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="assets/app.css?v=apple-clean" />
+    <script>
+      (() => {
+        try {
+          const savedTheme = localStorage.getItem("cak-theme");
+          const systemTheme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+          document.documentElement.dataset.theme = savedTheme || systemTheme;
+        } catch {
+          document.documentElement.dataset.theme = "light";
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="assets/app.css?v=docs-navigation" />
   </head>
   <body>
+    <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
     <header class="topbar">
       <a class="brand" href="#top" aria-label="Codex Agent Kit 홈">
         <span class="brand-mark" aria-hidden="true">CAK</span>
@@ -24,10 +36,59 @@
         <a href="#plugins">플러그인</a>
         <a href="#install">설치</a>
       </nav>
-      <a class="repo-link" href="https://github.com/Seung-Won-Yu/codex-agent-kit">GitHub</a>
+      <div class="top-actions">
+        <button
+          class="search-trigger"
+          id="siteSearchTrigger"
+          type="button"
+          aria-haspopup="dialog"
+          aria-controls="siteSearchDialog"
+          aria-label="페이지와 스킬 검색"
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5"></circle>
+            <path d="m16 16 4 4"></path>
+          </svg>
+          <span>검색</span>
+          <kbd>⌘K</kbd>
+        </button>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-label="다크 모드로 전환">
+          <svg class="theme-icon sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="3.5"></circle>
+            <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path>
+          </svg>
+          <svg class="theme-icon moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 15.2A8 8 0 0 1 8.8 4a8.1 8.1 0 1 0 11.2 11.2Z"></path>
+          </svg>
+        </button>
+        <a class="repo-link" href="https://github.com/Seung-Won-Yu/codex-agent-kit">GitHub</a>
+      </div>
+      <div class="reading-progress" aria-hidden="true"><span id="readingProgress"></span></div>
     </header>
 
-    <main id="top">
+    <dialog class="search-dialog" id="siteSearchDialog" aria-labelledby="siteSearchTitle">
+      <div class="search-panel">
+        <div class="search-panel-head">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="11" cy="11" r="6.5"></circle>
+            <path d="m16 16 4 4"></path>
+          </svg>
+          <label class="visually-hidden" for="siteSearchInput" id="siteSearchTitle">페이지와 스킬 검색</label>
+          <input
+            id="siteSearchInput"
+            type="search"
+            placeholder="구성, 에이전트, 스킬 이름 검색"
+            autocomplete="off"
+          />
+          <button class="search-close" id="siteSearchClose" type="button" aria-label="검색 닫기">Esc</button>
+        </div>
+        <p class="search-hint" id="siteSearchHint">섹션과 47개 스킬을 한 번에 찾습니다.</p>
+        <div class="search-results" id="siteSearchResults" role="region" aria-label="검색 결과" aria-live="polite"></div>
+      </div>
+    </dialog>
+
+    <main id="main-content">
+      <div id="top" aria-hidden="true"></div>
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
           <p class="eyebrow">Codex, tuned for how I work.</p>
@@ -81,6 +142,38 @@
         <div><strong>10</strong><span>connected plugins</span></div>
       </section>
 
+      <section id="quickstart" class="quick-path" aria-labelledby="quickstart-title">
+        <div class="quick-path-heading">
+          <p class="eyebrow">Start in three steps</p>
+          <h2 id="quickstart-title">설치하고, 확인하고, 바로 쓰기.</h2>
+          <p>긴 설명보다 먼저 실행해 볼 수 있게 핵심 경로만 남겼습니다.</p>
+          <a class="button primary" href="#install">설치 명령 보기</a>
+        </div>
+        <ol class="quick-path-steps">
+          <li>
+            <span>01</span>
+            <div>
+              <strong>Install</strong>
+              <p>전역 규칙·에이전트·스킬·플러그인을 한 번에 적용합니다.</p>
+            </div>
+          </li>
+          <li>
+            <span>02</span>
+            <div>
+              <strong>Validate</strong>
+              <p>skill graph와 경로를 검사해 빠진 연결을 바로 확인합니다.</p>
+            </div>
+          </li>
+          <li>
+            <span>03</span>
+            <div>
+              <strong>Run</strong>
+              <p><code>codex --profile xhigh</code>로 quality-max 프로필을 시작합니다.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
       <section id="setup" class="section-grid" aria-labelledby="setup-title">
         <div class="section-heading">
           <p class="eyebrow">Designed around intent</p>
@@ -107,7 +200,7 @@
         </div>
       </section>
 
-      <section class="section-grid section-tint" aria-labelledby="routing-title">
+      <section id="routing" class="section-grid section-tint" aria-labelledby="routing-title">
         <div class="section-heading">
           <p class="eyebrow">Routing Contract</p>
           <h2 id="routing-title">필요한 역할만 최대 네 슬롯</h2>
@@ -281,7 +374,7 @@ codex --profile xhigh</code></pre>
       <span>Codex Agent Kit · installable personal source of truth</span>
       <a href="https://github.com/Seung-Won-Yu/codex-agent-kit">Source on GitHub</a>
     </footer>
-    <script src="assets/skills.js?v=apple-clean"></script>
-    <script src="assets/app.js?v=apple-clean"></script>
+    <script src="assets/skills.js?v=docs-navigation"></script>
+    <script src="assets/app.js?v=docs-navigation"></script>
   </body>
 </html>
