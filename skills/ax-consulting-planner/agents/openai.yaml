@@ -1,0 +1,4 @@
+interface:
+  display_name: "AX Consulting Planner"
+  short_description: "Plan AI transformation, PoCs, roadmaps, and dev handoffs"
+  default_prompt: "Use $ax-consulting-planner to turn an AI transformation or AX consulting request into a prioritized PoC, roadmap, and implementation-ready plan."

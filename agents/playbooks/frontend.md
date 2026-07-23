@@ -1,6 +1,6 @@
 # Frontend Playbook
 
-Use this only for substantial or ambiguous frontend/product UI work.
+Use only for substantial or ambiguous frontend/product UI work. Preserve the request's intent and effect ceiling; this checklist never authorizes implementation.
 
 ## Principles
 
@@ -12,7 +12,7 @@ Use this only for substantial or ambiguous frontend/product UI work.
 
 ## Expected States
 
-Include the states a real user would expect:
+Include only the states a real stateful UI would expect:
 
 - loading
 - empty

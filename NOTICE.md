@@ -1,14 +1,7 @@
 # Notice
 
-This repository is a curated personal Codex setup.
+This repository is a curated personal Codex configuration snapshot.
 
-Some skills are original workflow notes, and some are adapted or vendored from community/open skill packs. Where a skill folder includes its own `LICENSE` file, that license applies to that skill folder.
+Some skills are original workflow notes and some are adapted or vendored from community or official skill packs. When a skill directory contains its own `LICENSE`, `LICENSE.txt`, or `NOTICE.txt`, that file governs the corresponding material.
 
-This repository includes a curated subset of Open Design skills under the `od-` prefix.
-
-- Source: https://github.com/nexu-io/open-design
-- License: Apache-2.0
-- Local license copy: `third_party/open-design/LICENSE`
-- Import notes: `docs/open-design-imports.md`
-
-The repository does not include private Codex state, auth data, local session history, model credentials, browser state, generated screenshots, or plugin runtime caches.
+The repository does not include Codex authentication data, session history, SQLite runtime state, browser sessions, credentials, generated private artifacts, or plugin runtime caches.

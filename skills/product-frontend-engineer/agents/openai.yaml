@@ -1,0 +1,4 @@
+interface:
+  display_name: "Product Frontend Engineer"
+  short_description: "Plan, design, build, and verify web apps"
+  default_prompt: "Use $product-frontend-engineer to plan and implement this product feature with strong frontend UX and verification."

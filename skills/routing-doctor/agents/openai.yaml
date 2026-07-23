@@ -1,0 +1,4 @@
+interface:
+  display_name: "Routing Doctor"
+  short_description: "Audit Codex routing and skill boundaries"
+  default_prompt: "Use $routing-doctor to audit this Codex routing setup and run its routing regression checks."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Synthesizer"
+  short_description: "Search, compare, and cite current sources"
+  default_prompt: "Use $research-synthesizer to research this topic, compare sources, and give me a cited recommendation."

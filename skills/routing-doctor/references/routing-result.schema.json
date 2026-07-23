@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "expected_intent",
+    "expected_effect",
+    "primary",
+    "adapter",
+    "verifier",
+    "safety",
+    "delegate",
+    "must_ask",
+    "write_allowed"
+  ],
+  "properties": {
+    "expected_intent": {
+      "enum": ["answer", "inspect", "research", "diagnose", "propose", "create", "modify", "operate", "monitor"]
+    },
+    "expected_effect": {
+      "enum": ["read-only", "workspace-write", "external-write", "destructive"]
+    },
+    "primary": {"type": ["string", "null"]},
+    "adapter": {"type": ["string", "null"]},
+    "verifier": {"type": ["string", "null"]},
+    "safety": {"type": ["string", "null"]},
+    "delegate": {"enum": ["none", "parallel", "sequential"]},
+    "must_ask": {"type": "boolean"},
+    "write_allowed": {"type": "boolean"}
+  }
+}

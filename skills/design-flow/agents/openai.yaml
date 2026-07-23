@@ -1,0 +1,4 @@
+interface:
+  display_name: "Adaptive Design Flow"
+  short_description: "Run an end-to-end design, build, and verification flow"
+  default_prompt: "Use $design-flow to take this substantial product idea from intent through verified implementation."

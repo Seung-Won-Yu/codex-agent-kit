@@ -1,124 +1,117 @@
 ---
 name: design-flow
-description: Run the full design-to-build workflow as a guided sequence. Orchestrates all designer skills in order, from grilling through review. Use when user wants to go through the complete design process, start a project from scratch, run the full flow, or mentions "design flow" or "full workflow".
+description: 'Run a substantial end-to-end product design, build, and verification workflow. Use for a greenfield product, major feature, redesign, or explicit full flow; not for a small UI fix, visual concept, or audit-only request.'
 ---
 
-This skill orchestrates the full designer workflow by running each skill in sequence. You are a guide walking the designer through each phase. Do not rush. Each phase must be completed and confirmed before moving to the next.
+# Design Flow
 
-## Example prompts
+Own the full path from rough intent to a verified working experience. Keep one phase owner at a time, reuse existing project context, and continue without ceremonial approval between phases unless a decision materially changes the artifact or implementation path.
 
-- "Run the full design flow"
-- "Walk me through the complete process for a new project"
-- "Start from scratch and take me through everything"
-- "Design flow for a dashboard app"
+## Operating Rules
 
-## The Sequence
+1. Inspect the repository, closest `AGENTS.md`, existing design system, and any `.design/` artifacts before planning.
+2. Silently normalize intent, authorized effect, goal, context, deliverable, boundaries, and done criteria when the request is rough. Preserve read-only requests such as audits, diagnosis, and proposals.
+3. State the interpreted outcome and phase plan in at most three concise lines when the route matters.
+4. Skip phases already satisfied by reliable project artifacts or explicit user input.
+5. Ask one question only when a missing decision would materially change the product, audience, architecture, permissions, or visual direction.
+6. Use one phase specialist at a time. Allow only one code-writing agent or skill at a time.
+7. Verify the built result before final delivery. Do not treat generated files as proof that the experience works.
 
-```
-1. Grill Me          → Clarify thinking
-2. Design Brief      → Document intent
-3. Info Architecture  → Define structure
-4. Design Tokens     → Establish visual system
-5. Brief to Tasks    → Plan the build
-6. Frontend Design   → Build it
-—
-7. Design Review     → Run separately when ready
-```
+## Workflow
 
-## Rules
-
-1. **At the start**, tell the designer what the full sequence looks like (phases 1-6, with review available separately) and ask if they want to skip any phases. Common skip patterns:
-   - Already have a clear idea → skip grill-me
-   - Single component, not a full page → skip information-architecture
-   - Existing project with tokens → skip design-tokens
-
-2. **Before each phase**, announce which phase you are entering and what it will produce. Example: "Phase 2: Design Brief. I'll interview you about the project and produce a DESIGN_BRIEF.md file. Ready?"
-
-3. **During each phase**, read the corresponding SKILL.md file and follow its full instructions. Do not summarize or abbreviate the skill. Run it properly.
-
-4. **After each phase**, summarize what was produced (the file name, the key decisions, any open questions) and ask: "Ready to move to the next phase?" Wait for confirmation.
-
-5. **Between phases**, check if the output from the previous phase changes anything about the next phase. For example, if the brief names a philosophy, mention that the tokens phase will use it.
-
-6. **The designer can stop at any point.** If they say "that's enough for now," summarize where they are in the sequence and what the next phase would be when they return.
-
-## Phase Details
-
-### Phase 1: Grill Me
-
-Read the `grill-me` skill (grill-me/SKILL.md) and follow its instructions.
-**Produces**: Shared understanding of the project. No file output.
-**Transition**: "We've resolved the key decisions. Ready to capture this as a design brief?"
-
-### Phase 2: Design Brief
-
-Read the `design-brief` skill (design-brief/SKILL.md) and follow its instructions.
-**Produces**: `.design/<feature-slug>/DESIGN_BRIEF.md`.
-**Transition**: "The brief is saved. Next is information architecture, where we'll define the page structure and navigation. Skip this if you're building a single component. Continue?"
-
-### Phase 3: Information Architecture
-
-Read the `information-architecture` skill (information-architecture/SKILL.md) and follow its instructions.
-**Produces**: `.design/<feature-slug>/INFORMATION_ARCHITECTURE.md`.
-**Transition**: "IA is defined. Next we'll generate design tokens (colors, spacing, typography) based on the philosophy from the brief. Continue?"
-
-### Phase 4: Design Tokens
-
-Read the `design-tokens` skill (design-tokens/SKILL.md) and follow its instructions.
-**Produces**: Token file (CSS variables, Tailwind config, or theme file depending on stack).
-**Transition**: "Tokens are set. Next I'll break the brief into a task list so we can build in order. Continue?"
-
-### Phase 5: Brief to Tasks
-
-Read the `brief-to-tasks` skill (brief-to-tasks/SKILL.md) and follow its instructions.
-**Produces**: `.design/<feature-slug>/TASKS.md`.
-**Transition**: "Tasks are ready. Now we build. I'll start with the first task on the list. Continue?"
-
-### Phase 6: Frontend Design
-
-Read the `frontend-design` skill (frontend-design/SKILL.md) and follow its instructions.
-Work through the tasks from `TASKS.md` in order. After completing each task, check it off and confirm with the designer before moving to the next task.
-**Produces**: Built components and pages.
-**Transition**: "The flow is complete. Your brief, IA, tokens, and tasks are all saved in the project. When you're ready for a design review, run `/design-review` and I'll critique the build against the brief."
-
-**The flow ends here.** Phase 7 is not automatic.
-
-### Phase 7: Design Review (on request only)
-
-This phase does NOT run automatically. It only runs if:
-
-- The designer explicitly asks for a review during the flow
-- The designer runs `/design-review` separately after building
-
-The review requires built code to examine. If no components or pages have been built yet, do not run this phase. Instead, remind the designer: "Run `/design-review` once you have something built. It will check the output against the brief."
-
-When triggered, read the `design-review` skill (design-review/SKILL.md) and follow its instructions. The review will capture screenshots of the running application using Playwright MCP (preferred), the Cursor IDE Browser (fallback), or by asking the user to provide them manually if no browser tool is available.
-
-**Produces**: `.design/<feature-slug>/DESIGN_REVIEW.md` + screenshots saved in `.design/<feature-slug>/screenshots/`.
-**Transition**: "Review is done. Screenshots are saved in `.design/<feature-slug>/screenshots/`. If there are must-fix items, I can address them now."
-
-## Project Files Structure
-
-All design flow artifacts are saved under `.design/<feature-slug>/` where `<feature-slug>` is a short, lowercase, hyphenated name derived from the feature being designed. This ensures multiple features can be designed independently without overwriting each other.
-
-```
-.design/
-└── <feature-slug>/
-    ├── DESIGN_BRIEF.md              ← Phase 2: Project intent, goals, aesthetic direction
-    ├── INFORMATION_ARCHITECTURE.md  ← Phase 3: Navigation, page structure, user flows
-    ├── DESIGN_TOKENS.*              ← Phase 4: Colors, spacing, typography, shadows (CSS/Tailwind/theme)
-    ├── TASKS.md                     ← Phase 5: Ordered build checklist from the brief
-    ├── DESIGN_REVIEW.md             ← Phase 7: Prioritized critique against the brief
-    └── screenshots/                 ← Phase 7: Visual evidence from the running app
-        ├── review-[page]-desktop-1280.png
-        ├── review-[page]-tablet-768.png
-        ├── review-[page]-mobile-375.png
-        ├── review-[page]-dark-mode-*.png
-        └── review-[component]-[state].png
+```text
+1. Intent and brief
+2. Experience structure
+3. Design direction
+4. Build plan
+5. Implementation
+6. Audit and verification
 ```
 
-The `screenshots/` subfolder is created during the design review phase. All visual evidence of the review (responsive breakpoints, interactive states, dark mode) is saved here with descriptive filenames so findings in `DESIGN_REVIEW.md` are traceable.
+### 1. Intent And Brief
 
-## If the Designer Returns Mid-Flow
+Use `$planning-document-writer` to select the lightest useful artifact. Add `$create-prd` only when a full PRD is genuinely needed.
 
-Check the `.design/` folder for existing feature subfolders. If files from earlier phases exist (DESIGN_BRIEF.md, INFORMATION_ARCHITECTURE.md, TASKS.md) inside a feature folder, read them to understand where the designer left off. Ask which feature to resume if multiple folders exist. Resume from the next incomplete phase.
+Capture:
+
+- target user and problem
+- primary outcome and success signal
+- scope and non-scope
+- core user flow
+- constraints, risks, and done criteria
+
+For durable project work, save `.design/<feature-slug>/DESIGN_BRIEF.md`. For a small but still end-to-end feature, keep the brief in the working plan instead of creating files for ceremony.
+
+### 2. Experience Structure
+
+Use `$product-frontend-engineer` to define the experience before visual implementation.
+
+Capture:
+
+- screen or route map
+- navigation and primary actions
+- loading, empty, error, disabled, success, and permission states
+- responsive behavior
+- data and API dependencies
+
+Save `.design/<feature-slug>/EXPERIENCE_MAP.md` only when it will help implementation or future maintenance.
+
+### 3. Design Direction
+
+Choose one owner by intended output:
+
+- Use an installed high-art-direction web skill for distinctive production direction and motion.
+- Use an installed standalone visual-concept skill for HTML mockups, posters, decks, or alternatives.
+- In game projects, use the visible game UI art-direction skill for HUDs, rewards, shops, missions, or playful screens.
+- `$frontend-ui-engineering` when the project already has a clear design system and the task is implementation-led.
+
+Reuse existing tokens and components before inventing new ones. Record only decisions that affect implementation: hierarchy, typography, color roles, spacing, component states, motion, and responsive rules.
+
+### 4. Build Plan
+
+Use `$incremental-implementation` for multi-file work. Split the change into independently verifiable slices, identify the single writing owner, and define a focused verification step for each slice.
+
+Save `.design/<feature-slug>/TASKS.md` only for work that spans multiple meaningful milestones.
+
+### 5. Implementation
+
+Use `$frontend-ui-engineering` for the UI implementation. Use `$product-frontend-engineer` instead when product behavior, frontend architecture, and UX decisions remain tightly coupled.
+
+During implementation:
+
+- preserve existing conventions and user changes
+- implement real loading, empty, error, and success behavior when relevant
+- keep accessibility and responsive stability in scope
+- avoid parallel edits to the same files
+- run focused tests, lint, type checks, or builds as slices land
+
+### 6. Audit And Verification
+
+Use `$frontend-design-audit` as the review owner and `$webapp-testing` or `$playwright` as the verifier.
+
+Check:
+
+- primary flow completion
+- hierarchy and usability
+- responsive layouts
+- keyboard and accessibility basics
+- loading, empty, error, and permission states
+- browser console and obvious regressions
+
+For substantial visual work, save evidence under `.design/<feature-slug>/screenshots/` and record actionable findings in `.design/<feature-slug>/REVIEW.md`.
+
+## Resume Behavior
+
+When `.design/` artifacts exist, read them and inspect the implementation before deciding where to resume. Do not assume an artifact is current merely because it exists. Continue from the earliest incomplete or contradicted phase.
+
+## Final Delivery
+
+Report:
+
+- the experience delivered
+- important design or architecture decisions
+- files or artifacts created
+- verification performed and result
+- material residual risks or next decisions
+
+Do not repeat the full phase history unless the user asks.

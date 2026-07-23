@@ -1,6 +1,6 @@
 ---
 name: media-image-director
-description: Direct Codex image generation and editing. Use when the user wants an image made inside Codex, a better image prompt, an image variation, poster/thumbnail/reference art, product mockup direction, or critique-and-regenerate guidance.
+description: 'Direct image generation or editing in Codex. Use for a new image, prompt improvement, variation, poster, thumbnail, reference art, product mockup, or critique-and-regenerate loop.'
 ---
 
 # Media Image Director

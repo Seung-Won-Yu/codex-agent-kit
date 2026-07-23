@@ -1,23 +1,20 @@
 #:schema https://developers.openai.com/codex/config-schema.json
 
-# Redacted sample based on the active local Codex setup.
-# Replace model names, paths, hashes, and project roots for your own machine.
-
-model = "gpt-5.5"
-model_reasoning_effort = "xhigh"
-
-service_tier = "default"
+# Quality-first default. Use xhigh.config.sample.toml only for the hardest work.
+model = "gpt-5.6-sol"
+model_reasoning_effort = "high"
 sandbox_mode = "danger-full-access"
+personality = "pragmatic"
 
 [features]
 goals = true
-unified_exec = true
-shell_tool = true
 multi_agent = true
-shell_snapshot = true
 tool_suggest = true
 skill_mcp_dependency_install = true
-js_repl = false
+
+[agents]
+max_threads = 4
+max_depth = 1
 
 [plugins."documents@openai-primary-runtime"]
 enabled = true
@@ -28,16 +25,25 @@ enabled = true
 [plugins."presentations@openai-primary-runtime"]
 enabled = true
 
-[plugins."notion@openai-curated"]
+[plugins."pdf@openai-primary-runtime"]
 enabled = true
 
-[plugins."pdf@openai-primary-runtime"]
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[plugins."sites@openai-bundled"]
 enabled = true
 
 [plugins."browser@openai-bundled"]
 enabled = true
 
-[plugins."template-creator@openai-primary-runtime"]
+[plugins."chrome@openai-bundled"]
+enabled = true
+
+[plugins."computer-use@openai-bundled"]
+enabled = true
+
+[plugins."visualize@openai-bundled"]
 enabled = true
 
 [projects."/path/to/your/workspace"]
@@ -45,22 +51,22 @@ trust_level = "trusted"
 
 [desktop]
 ambient-suggestions-enabled = true
-conversationDetailMode = "STEPS_COMMANDS"
+conversationDetailMode = "STEPS_PROSE"
+followUpQueueMode = "queue"
+enabled-reasoning-efforts = ["low", "medium", "high", "xhigh", "ultra"]
+
+[mcp_servers.openaiDeveloperDocs]
+url = "https://developers.openai.com/mcp"
 
 [mcp_servers.node_repl]
 args = []
-command = "/path/to/Codex.app/Contents/Resources/cua_node/bin/node_repl"
+command = "/path/to/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"
 startup_timeout_sec = 120
 
 [mcp_servers.node_repl.env]
 CODEX_HOME = "/path/to/.codex"
-NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
-NODE_REPL_NODE_MODULE_DIRS = "/path/to/Codex.app/Contents/Resources/cua_node/lib/node_modules"
-NODE_REPL_NODE_PATH = "/path/to/Codex.app/Contents/Resources/cua_node/bin/node"
+NODE_REPL_NODE_MODULE_DIRS = "/path/to/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/path/to/ChatGPT.app/Contents/Resources/cua_node/bin/node"
 NODE_REPL_TRUSTED_CODE_PATHS = "/path/to/.codex"
 BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
-NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
-NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives unless the user explicitly mentions an alternative."
-BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "replace-with-installed-version"
-CODEX_CLI_PATH = "/path/to/Codex.app/Contents/Resources/codex"
+CODEX_CLI_PATH = "/path/to/ChatGPT.app/Contents/Resources/codex"

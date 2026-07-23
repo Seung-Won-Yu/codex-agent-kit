@@ -1,6 +1,6 @@
 ---
 name: frontend-design-audit
-description: Evaluate and improve the usability of existing front-end interfaces — either local source code or live websites by URL. Use this skill whenever the user has existing front-end code OR a live website URL and wants to understand why users struggle with it, find usability problems, or make it easier to use. Triggers on direct requests like "review my UI", "audit my interface", "check accessibility", "evaluate my design", "improve the UX", "audit this website", "review https://example.com" — but ALSO on indirect symptom descriptions like "users keep abandoning this form", "something feels off about this page", "we're getting complaints about the checkout flow", "conversion dropped after the redesign", "people say it's confusing", or "make this less painful to use". If someone has a front-end component, page, or URL and the problem sounds like usability, user confusion, or poor interaction design rather than a bug or performance issue — use this skill. NOT for building new interfaces from scratch, performance optimization, or backend logic.
+description: 'Audit an existing frontend, component, flow, or live site and prioritize UI/UX improvements. Use for usability review or user-friction diagnosis; not for greenfield design, settled-design implementation, or performance-only work.'
 ---
 
 # Frontend Design Audit
@@ -412,7 +412,7 @@ Every finding must reference:
 
 ## When Not to Use This Skill
 
-- Building a new interface from scratch → use `interface-design` or `frontend-design`
+- Building a new interface from scratch → use `product-frontend-engineer` or `frontend-ui-engineering`
 - Performance optimization → this focuses on usability, not speed
 - Security audit → different domain entirely
 

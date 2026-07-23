@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Design Audit"
+  short_description: "Audit and improve an existing frontend interface"
+  default_prompt: "Use $frontend-design-audit to inspect this existing interface, prioritize usability issues, and propose or implement focused improvements."

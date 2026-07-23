@@ -1,0 +1,68 @@
+version: 1
+scan_roots:
+  - ~/Documents/Playground/projects
+  - ~/Documents/색칠하기_codex
+  - ~/Documents/EST작업/cplatgit
+skills:
+  - name: mobile-game-design
+    pack: game
+    projects:
+      - ~/Documents/Playground/projects/rune-drift-survivors
+      - ~/Documents/Playground/projects/사과게임
+      - ~/Documents/색칠하기_codex
+  - name: mobile-game-qa
+    pack: game
+    projects:
+      - ~/Documents/Playground/projects/rune-drift-survivors
+      - ~/Documents/Playground/projects/사과게임
+      - ~/Documents/색칠하기_codex
+  - name: game-reference-research
+    pack: game
+    projects:
+      - ~/Documents/Playground/projects/rune-drift-survivors
+      - ~/Documents/Playground/projects/사과게임
+      - ~/Documents/색칠하기_codex
+  - name: game-ui-art-direction
+    pack: game
+    projects:
+      - ~/Documents/Playground/projects/rune-drift-survivors
+      - ~/Documents/Playground/projects/사과게임
+      - ~/Documents/색칠하기_codex
+  - name: player-experience-review
+    pack: game
+    projects:
+      - ~/Documents/Playground/projects/rune-drift-survivors
+      - ~/Documents/Playground/projects/사과게임
+      - ~/Documents/색칠하기_codex
+  - name: prototype-slice-planner
+    pack: game
+    projects:
+      - ~/Documents/Playground/projects/rune-drift-survivors
+      - ~/Documents/Playground/projects/사과게임
+      - ~/Documents/색칠하기_codex
+  - name: gpt-taste
+    pack: visual
+    projects:
+      - ~/Documents/Playground/projects/car-3d-showroom
+  - name: image-to-code
+    pack: visual
+    projects:
+      - ~/Documents/Playground/projects/car-3d-showroom
+      - ~/Documents/Playground/projects/pocket-desk-os
+      - ~/Documents/Playground/projects/ax컨설팅
+      - ~/Documents/색칠하기_codex
+  - name: claude-design
+    pack: visual
+    projects:
+      - ~/Documents/Playground/projects/car-3d-showroom
+      - ~/Documents/Playground/projects/pocket-desk-os
+      - ~/Documents/Playground/projects/ax컨설팅
+  - name: supabase
+    pack: supabase
+    projects:
+      - ~/Documents/Playground/projects/paperclip
+  - name: supabase-postgres-best-practices
+    pack: supabase
+    projects:
+      - ~/Documents/Playground/projects/paperclip
+      - ~/Documents/EST작업/cplatgit

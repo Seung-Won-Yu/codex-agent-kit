@@ -9,7 +9,7 @@ Before publishing or updating this repository, check:
 - [ ] No browser session files
 - [ ] No generated screenshots that reveal private data
 - [ ] No plugin runtime cache or installed binary bundle
-- [ ] No machine-specific project list unless sanitized
+- [ ] Machine-specific paths use `~/...` or documented placeholders
 - [ ] No private customer, company, or personal data in examples
 
 Suggested scan:

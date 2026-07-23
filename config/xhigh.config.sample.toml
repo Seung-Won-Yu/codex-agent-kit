@@ -1,0 +1,3 @@
+# Copy to ~/.codex/xhigh.config.toml and select with: codex --profile xhigh
+# All other values continue to come from ~/.codex/config.toml.
+model_reasoning_effort = "xhigh"

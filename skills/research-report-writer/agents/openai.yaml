@@ -1,0 +1,4 @@
+interface:
+  display_name: "Research Report Writer"
+  short_description: "Create cited reports, benchmarks, and decision memos"
+  default_prompt: "Use $research-report-writer to research and produce a formal evidence-backed report for this decision."

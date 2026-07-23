@@ -1,0 +1,4 @@
+interface:
+  display_name: "Planning Document Writer"
+  short_description: "Choose and draft formal planning and handoff documents"
+  default_prompt: "Use $planning-document-writer to choose and create the smallest useful planning or handoff artifact."
