@@ -19,6 +19,18 @@ const demoPermission = document.querySelector("#demoPermission");
 const demoTitle = document.querySelector("#demoTitle");
 const demoSummary = document.querySelector("#demoSummary");
 const demoSlots = Array.from(document.querySelectorAll("[data-slot]"));
+const demoRun = document.querySelector("#demoRun");
+const demoStatus = document.querySelector("#demoStatus");
+const demoPhases = Array.from(document.querySelectorAll("[data-stage-phase]"));
+const storyCanvas = document.querySelector("#storyCanvas");
+const storySequence = document.querySelector("#storySequence");
+const storyCoreTitle = document.querySelector("#storyCoreTitle");
+const storyCoreStatus = document.querySelector("#storyCoreStatus");
+const storyChapters = Array.from(document.querySelectorAll("[data-story-key]"));
+const storyTriggers = Array.from(document.querySelectorAll("[data-story-trigger]"));
+const storyNodes = Array.from(document.querySelectorAll("[data-story-node]"));
+const storyLines = Array.from(document.querySelectorAll("[data-network-line]"));
+const storyLogs = Array.from(document.querySelectorAll("[data-story-log]"));
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const skillCatalog = Array.isArray(window.CODEX_SKILL_CATALOG) ? window.CODEX_SKILL_CATALOG : [];
 const previewLimit = 12;
@@ -175,6 +187,64 @@ const demoScenarios = {
   },
 };
 
+const demoPhaseLabels = {
+  interpret: "의도를 정리했습니다.",
+  permission: "허용된 작업 범위를 확인했습니다.",
+  route: "필요한 책임과 스킬을 선택했습니다.",
+  verify: "결과 검증을 완료했습니다.",
+};
+
+let demoPhaseTimers = [];
+
+function clearDemoTimeline() {
+  demoPhaseTimers.forEach((timer) => window.clearTimeout(timer));
+  demoPhaseTimers = [];
+}
+
+function runDemoTimeline() {
+  if (!productStage || !demoPhases.length) return;
+  clearDemoTimeline();
+  productStage.classList.add("is-running");
+  if (demoRun) demoRun.disabled = true;
+
+  demoPhases.forEach((phase) => {
+    phase.classList.remove("is-active", "is-complete");
+  });
+
+  if (reduceMotion) {
+    demoPhases.forEach((phase) => phase.classList.add("is-complete"));
+    productStage.classList.remove("is-running");
+    if (demoRun) demoRun.disabled = false;
+    if (demoStatus) demoStatus.textContent = "요청 처리와 검증이 완료되었습니다.";
+    return;
+  }
+
+  demoPhases.forEach((phase, index) => {
+    demoPhaseTimers.push(
+      window.setTimeout(() => {
+        demoPhases.forEach((item, itemIndex) => {
+          item.classList.toggle("is-complete", itemIndex < index);
+          item.classList.toggle("is-active", itemIndex === index);
+        });
+        const phaseName = phase.dataset.stagePhase;
+        if (demoStatus) demoStatus.textContent = demoPhaseLabels[phaseName];
+      }, index * 430),
+    );
+  });
+
+  demoPhaseTimers.push(
+    window.setTimeout(() => {
+      demoPhases.forEach((phase) => {
+        phase.classList.remove("is-active");
+        phase.classList.add("is-complete");
+      });
+      productStage.classList.remove("is-running");
+      if (demoRun) demoRun.disabled = false;
+      if (demoStatus) demoStatus.textContent = "요청 처리와 검증이 완료되었습니다.";
+    }, demoPhases.length * 430 + 180),
+  );
+}
+
 function setDemoTitle(lines) {
   if (!demoTitle) return;
   demoTitle.replaceChildren();
@@ -188,7 +258,6 @@ let demoSwitchTimer;
 function activateDemo(key) {
   const scenario = demoScenarios[key];
   if (!scenario || !productStage) return;
-
   window.clearTimeout(demoSwitchTimer);
   productStage.classList.add("is-switching");
   demoButtons.forEach((button) => {
@@ -206,13 +275,32 @@ function activateDemo(key) {
       if (valueNode) valueNode.textContent = value;
       slot.classList.toggle("is-active", isActive);
     });
-    requestAnimationFrame(() => productStage.classList.remove("is-switching"));
+    requestAnimationFrame(() => {
+      productStage.classList.remove("is-switching");
+      runDemoTimeline();
+    });
   }, reduceMotion ? 0 : 180);
 }
 
 demoButtons.forEach((button) => {
   button.addEventListener("click", () => activateDemo(button.dataset.demo));
 });
+
+demoRun?.addEventListener("click", runDemoTimeline);
+
+if (productStage && "IntersectionObserver" in window) {
+  const demoObserver = new IntersectionObserver(
+    (entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      runDemoTimeline();
+      demoObserver.disconnect();
+    },
+    { threshold: 0.34 },
+  );
+  demoObserver.observe(productStage);
+} else if (productStage) {
+  runDemoTimeline();
+}
 
 if (productStage && !reduceMotion) {
   productStage.addEventListener("pointermove", (event) => {
@@ -228,9 +316,97 @@ if (productStage && !reduceMotion) {
   });
 }
 
+const storyStates = {
+  intent: {
+    sequence: "01 / 04",
+    title: "Intent",
+    status: "normalizing request",
+  },
+  permission: {
+    sequence: "02 / 04",
+    title: "Permission",
+    status: "preserving effect ceiling",
+  },
+  route: {
+    sequence: "03 / 04",
+    title: "Route",
+    status: "matching responsibilities",
+  },
+  verify: {
+    sequence: "04 / 04",
+    title: "Verify",
+    status: "closing with evidence",
+  },
+};
+
+const storyOrder = Object.keys(storyStates);
+
+function activateStory(key) {
+  const state = storyStates[key];
+  if (!state || !storyCanvas) return;
+  const activeIndex = storyOrder.indexOf(key);
+  storyCanvas.dataset.storyActive = key;
+  if (storySequence) storySequence.textContent = state.sequence;
+  if (storyCoreTitle) storyCoreTitle.textContent = state.title;
+  if (storyCoreStatus) storyCoreStatus.textContent = state.status;
+
+  storyChapters.forEach((chapter) => {
+    const isActive = chapter.dataset.storyKey === key;
+    chapter.classList.toggle("is-active", isActive);
+    chapter.querySelector("[data-story-trigger]")?.setAttribute("aria-pressed", String(isActive));
+  });
+
+  [storyNodes, storyLines, storyLogs].forEach((items) => {
+    items.forEach((item) => {
+      const itemKey = item.dataset.storyNode || item.dataset.networkLine || item.dataset.storyLog;
+      const itemIndex = storyOrder.indexOf(itemKey);
+      item.classList.toggle("is-active", itemKey === key);
+      item.classList.toggle("is-complete", itemIndex >= 0 && itemIndex < activeIndex);
+    });
+  });
+}
+
+storyTriggers.forEach((trigger) => {
+  trigger.addEventListener("click", () => {
+    const chapter = trigger.closest("[data-story-key]");
+    if (!chapter) return;
+    activateStory(chapter.dataset.storyKey);
+  });
+});
+
+let storyScrollFrame;
+function updateStoryFromScroll() {
+  storyScrollFrame = null;
+  if (!storyChapters.length || !storyCanvas) return;
+  const storyBounds = storyCanvas.closest(".story-layout")?.getBoundingClientRect();
+  if (!storyBounds || storyBounds.top > window.innerHeight || storyBounds.bottom < 0) return;
+  const focusLine = window.innerHeight * 0.52;
+  const closest = storyChapters
+    .map((chapter) => {
+      const bounds = chapter.getBoundingClientRect();
+      return {
+        chapter,
+        distance: Math.abs(bounds.top + bounds.height * 0.5 - focusLine),
+      };
+    })
+    .sort((a, b) => a.distance - b.distance)[0];
+  if (closest) activateStory(closest.chapter.dataset.storyKey);
+}
+
+activateStory("intent");
+window.addEventListener(
+  "scroll",
+  () => {
+    if (storyScrollFrame) return;
+    storyScrollFrame = window.requestAnimationFrame(updateStoryFromScroll);
+  },
+  { passive: true },
+);
+window.addEventListener("resize", updateStoryFromScroll);
+
 const sectionSearchItems = Array.from(document.querySelectorAll("section[id]")).map((section) => {
   const heading = section.querySelector("h2");
-  const summary = section.querySelector(".section-note, .quick-path-heading > p:not(.eyebrow)");
+  const summary = section.querySelector(".section-note, .story-intro > p:last-child");
   return {
     type: "섹션",
     title: heading ? heading.textContent.trim() : section.id,
@@ -409,12 +585,13 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
 
 const revealGroups = [
   ".hero-copy > *",
+  ".hero-readout",
   ".product-stage",
   ".stats-band > div",
-  ".quick-path-heading, .quick-path-steps > li",
+  ".story-intro > *",
+  ".story-canvas",
   ".section-heading",
   ".principle-grid > .card",
-  ".workflow-grid > .workflow-card",
   ".layer-list > .layer-item",
   ".skill-cloud > .skill-card:not(.is-hidden)",
   ".catalog-grid > section",

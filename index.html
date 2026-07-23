@@ -9,12 +9,20 @@
     />
     <meta id="themeColor" name="theme-color" content="#ffffff" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Codex Agent Kit" />
+    <meta property="og:locale" content="ko_KR" />
     <meta property="og:title" content="Codex Agent Kit | 말은 대충. 결과는 정확하게." />
     <meta
       property="og:description"
       content="프롬프트 보정, 정확한 스킬 라우팅, 제한된 에이전트 위임을 한 번에 설치하는 개인 Codex 운영 체계."
     />
     <meta property="og:url" content="https://seung-won-yu.github.io/codex-agent-kit/" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="Codex Agent Kit | 말은 대충. 결과는 정확하게." />
+    <meta
+      name="twitter:description"
+      content="프롬프트 보정, 정확한 스킬 라우팅, 제한된 에이전트 위임을 한 번에 설치하는 개인 Codex 운영 체계."
+    />
     <link rel="canonical" href="https://seung-won-yu.github.io/codex-agent-kit/" />
     <title>Codex Agent Kit | Installable Personal Setup</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
@@ -34,7 +42,15 @@
         }, 2500);
       })();
     </script>
-    <link rel="stylesheet" href="assets/app.css?v=landing-v3" />
+    <noscript>
+      <style>
+        .story-chapter {
+          opacity: 1 !important;
+          transform: none !important;
+        }
+      </style>
+    </noscript>
+    <link rel="stylesheet" href="assets/app.css?v=landing-v4" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
@@ -104,14 +120,19 @@
     <main id="main-content">
       <div id="top" aria-hidden="true"></div>
       <section class="hero" aria-labelledby="hero-title">
-        <div class="hero-aura" aria-hidden="true">
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+        <svg class="hero-map" viewBox="0 0 1200 760" aria-hidden="true" preserveAspectRatio="xMidYMid slice">
+          <path class="hero-route hero-route-a" d="M-40 600C220 600 226 122 500 122S780 488 1240 488"></path>
+          <path class="hero-route hero-route-b" d="M-60 332C176 332 322 684 600 684S890 214 1260 214"></path>
+          <path class="hero-route hero-route-c" d="M136 760C136 488 374 430 600 430S1044 356 1044-24"></path>
+          <circle cx="500" cy="122" r="5"></circle>
+          <circle cx="600" cy="430" r="5"></circle>
+          <circle cx="1044" cy="214" r="5"></circle>
+        </svg>
+        <div class="hero-coordinate hero-coordinate-top" aria-hidden="true">37.5665° N · PERSONAL ORCHESTRATION</div>
+        <div class="hero-coordinate hero-coordinate-side" aria-hidden="true">AUTHORITY PRESERVED / 04 SLOTS</div>
         <div class="hero-copy">
           <p class="eyebrow hero-kicker" data-reveal>
-            <span aria-hidden="true"></span> Codex, tuned for how I work.
+            <span aria-hidden="true"></span> A personal operating layer for Codex
           </p>
           <h1 id="hero-title" data-reveal>말은 대충.<br /><span>결과는 정확하게.</span></h1>
           <p class="hero-line" data-reveal>
@@ -132,6 +153,12 @@
             <span>One writing lane</span>
           </div>
         </div>
+        <div class="hero-readout" aria-label="요청 처리 핵심 단계" data-reveal>
+          <span><i>01</i><b>Interpret</b><em>의도 보정</em></span>
+          <span><i>02</i><b>Permission</b><em>권한 보존</em></span>
+          <span><i>03</i><b>Route</b><em>책임 선택</em></span>
+          <span><i>04</i><b>Verify</b><em>결과 검증</em></span>
+        </div>
       </section>
 
       <section class="product-stage" aria-label="Codex 요청 처리 예시" data-reveal>
@@ -139,14 +166,25 @@
         <div class="stage-chrome">
           <span class="stage-dot"></span>
           <span>Codex Agent Kit</span>
-          <span class="stage-version">Personal OS · v3</span>
+          <span class="stage-version">Personal OS · v4</span>
           <strong><span aria-hidden="true"></span> Ready</strong>
+          <button class="stage-run" id="demoRun" type="button" aria-label="현재 요청 처리 흐름 다시 실행">
+            <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7.2 5.6 6 4.4-6 4.4Z"></path></svg>
+            <span>다시 실행</span>
+          </button>
         </div>
         <div class="stage-presets" role="group" aria-label="데모 요청 선택">
           <button type="button" data-demo="build" aria-pressed="true">구현하기</button>
           <button type="button" data-demo="inspect" aria-pressed="false">원인만 보기</button>
           <button type="button" data-demo="secure" aria-pressed="false">민감 작업</button>
         </div>
+        <ol class="stage-progress" aria-label="현재 요청 처리 단계">
+          <li data-stage-phase="interpret"><span>01</span><b>Interpret</b><em>의도 정리</em></li>
+          <li data-stage-phase="permission"><span>02</span><b>Permission</b><em>권한 확인</em></li>
+          <li data-stage-phase="route"><span>03</span><b>Route</b><em>스킬 선택</em></li>
+          <li data-stage-phase="verify"><span>04</span><b>Verify</b><em>결과 검증</em></li>
+        </ol>
+        <p class="visually-hidden" id="demoStatus" aria-live="polite">요청 처리 준비됨</p>
         <div class="stage-body">
           <div class="stage-prompt">
             <span class="stage-label">Your rough prompt</span>
@@ -185,87 +223,85 @@
         <div><strong data-count="10">10</strong><span>connected plugins</span></div>
       </section>
 
-      <section id="quickstart" class="quick-path" aria-labelledby="quickstart-title">
-        <div class="quick-path-heading">
-          <p class="eyebrow">Start in three steps</p>
-          <h2 id="quickstart-title">설치하고, 확인하고, 바로 쓰기.</h2>
-          <p>긴 설명보다 먼저 실행해 볼 수 있게 핵심 경로만 남겼습니다.</p>
-          <a class="button primary" href="#install">설치 명령 보기</a>
+      <section id="setup" class="system-story" aria-labelledby="story-title">
+        <div class="story-intro">
+          <p class="eyebrow">The operating contract</p>
+          <h2 id="story-title">알아서 하되.<br />함부로 하지는 않게.</h2>
+          <p>
+            자동화의 핵심은 더 많은 것을 시키는 게 아니라, 매 순간 무엇을 해도 되는지와
+            누가 책임질지를 선명하게 만드는 것입니다.
+          </p>
         </div>
-        <ol class="quick-path-steps">
-          <li>
-            <span>01</span>
-            <div>
-              <strong>Install</strong>
-              <p>전역 규칙·에이전트·스킬·플러그인을 한 번에 적용합니다.</p>
+        <div class="story-layout">
+          <div class="story-sticky">
+            <div class="story-canvas" id="storyCanvas" data-story-active="intent" aria-hidden="true">
+              <div class="story-canvas-head">
+                <span><i aria-hidden="true"></i> Live orchestration map</span>
+                <em id="storySequence">01 / 04</em>
+              </div>
+              <svg class="story-network" viewBox="0 0 720 620" aria-hidden="true">
+                <circle class="network-orbit network-orbit-outer" cx="360" cy="292" r="210"></circle>
+                <circle class="network-orbit network-orbit-inner" cx="360" cy="292" r="118"></circle>
+                <path data-network-line="intent" d="M183 154C248 154 260 224 360 292"></path>
+                <path data-network-line="permission" d="M175 430C252 430 274 350 360 292"></path>
+                <path data-network-line="route" d="M360 292C444 230 470 154 545 154"></path>
+                <path data-network-line="verify" d="M360 292C440 356 470 430 552 430"></path>
+              </svg>
+              <div class="story-core">
+                <span>ROOT</span>
+                <strong id="storyCoreTitle">Intent</strong>
+                <em id="storyCoreStatus">normalizing request</em>
+              </div>
+              <div class="story-node story-node-intent" data-story-node="intent">
+                <span>01</span><b>Intent</b><em>goal · context · done</em>
+              </div>
+              <div class="story-node story-node-permission" data-story-node="permission">
+                <span>02</span><b>Permission</b><em>read-only</em>
+              </div>
+              <div class="story-node story-node-route" data-story-node="route">
+                <span>03</span><b>Route</b><em>primary + verifier</em>
+              </div>
+              <div class="story-node story-node-verify" data-story-node="verify">
+                <span>04</span><b>Verify</b><em>evidence attached</em>
+              </div>
+              <div class="story-log" aria-hidden="true">
+                <span data-story-log="intent"><i></i> rough prompt normalized</span>
+                <span data-story-log="permission"><i></i> effect ceiling preserved</span>
+                <span data-story-log="route"><i></i> narrowest responsibility matched</span>
+                <span data-story-log="verify"><i></i> focused checks passed</span>
+              </div>
             </div>
-          </li>
-          <li>
-            <span>02</span>
-            <div>
-              <strong>Validate</strong>
-              <p>skill graph와 경로를 검사해 빠진 연결을 바로 확인합니다.</p>
-            </div>
-          </li>
-          <li>
-            <span>03</span>
-            <div>
-              <strong>Run</strong>
-              <p><code>codex --profile xhigh</code>로 quality-max 프로필을 시작합니다.</p>
-            </div>
-          </li>
-        </ol>
-      </section>
-
-      <section id="setup" class="section-grid" aria-labelledby="setup-title">
-        <div class="section-heading">
-          <p class="eyebrow">Designed around intent</p>
-          <h2 id="setup-title">요청 해석부터 검증까지 하나의 운영 체계</h2>
-          <p class="section-note">더 많은 스킬을 켜는 대신, 매 순간 필요한 책임만 정확하게 연결합니다.</p>
-        </div>
-        <div class="principle-grid">
-          <article class="card accent-green">
-            <h3>프롬프트 자동 보정</h3>
-            <p>짧고 거칠거나 한국어·영어가 섞여도 목표, 필요한 맥락, 산출물과 완료 조건을 내부적으로 정리합니다.</p>
-          </article>
-          <article class="card accent-blue">
-            <h3>권한을 넘지 않는 실행</h3>
-            <p>확인·분석·제안은 read-only로 유지하고, 고쳐줘·적용해줘처럼 명확한 표현이 있을 때만 파일을 바꿉니다.</p>
-          </article>
-          <article class="card accent-amber">
-            <h3>정확한 스킬 자동 연결</h3>
-            <p>별도 router ceremony 없이 description matching으로 가장 좁은 primary를 고르고 필요한 도구만 조합합니다.</p>
-          </article>
-          <article class="card accent-red">
-            <h3>품질 중심 에이전트 사용</h3>
-            <p>큰 독립 작업축만 병렬화하고, 루트가 쓰기·통합·최종 판단을 소유해 결과가 흩어지지 않게 합니다.</p>
-          </article>
-        </div>
-      </section>
-
-      <section id="routing" class="section-grid section-tint" aria-labelledby="routing-title">
-        <div class="section-heading">
-          <p class="eyebrow">Routing Contract</p>
-          <h2 id="routing-title">필요한 역할만 최대 네 슬롯</h2>
-          <p class="section-note">스킬을 많이 켜는 것이 아니라 책임을 정확히 나누는 방식입니다.</p>
-        </div>
-        <div class="workflow-grid">
-          <article class="workflow-card">
-            <h3>Primary</h3>
-            <p><strong>내용과 결정을 소유합니다.</strong> 구현, 진단, 리서치, 설계 중 가장 정확한 스킬 하나를 선택합니다.</p>
-          </article>
-          <article class="workflow-card">
-            <h3>Adapter</h3>
-            <p><strong>산출물 형식을 담당합니다.</strong> DOCX, PDF, PPTX, spreadsheet처럼 파일 형식이 필요할 때만 추가합니다.</p>
-          </article>
-          <article class="workflow-card">
-            <h3>Verifier</h3>
-            <p><strong>결과를 독립 검증합니다.</strong> 테스트, 빌드, 브라우저 흐름이나 고위험 변경 리뷰가 필요할 때 붙입니다.</p>
-          </article>
-          <article class="workflow-card">
-            <h3>Safety</h3>
-            <p><strong>민감 경계를 보호합니다.</strong> 인증, 권한, 결제, webhook, production data 작업에만 조건부로 추가합니다.</p>
-          </article>
+          </div>
+          <div class="story-chapters">
+            <article class="story-chapter is-active" data-story-key="intent">
+              <button type="button" data-story-trigger aria-pressed="true">
+                <span>01</span><strong>Interpret</strong>
+              </button>
+              <h3>말투가 아니라<br />해야 할 일을 읽습니다.</h3>
+              <p>짧고 거칠거나 한국어·영어가 섞여도 목표, 맥락, 산출물과 완료 조건만 조용히 정리합니다.</p>
+            </article>
+            <article class="story-chapter" data-story-key="permission">
+              <button type="button" data-story-trigger aria-pressed="false">
+                <span>02</span><strong>Permission</strong>
+              </button>
+              <h3>알아서 움직여도<br />선을 넘지는 않습니다.</h3>
+              <p>확인·분석·제안은 read-only로 유지하고, 명확히 고쳐 달라고 한 범위 안에서만 파일을 바꿉니다.</p>
+            </article>
+            <article class="story-chapter" data-story-key="route">
+              <button type="button" data-story-trigger aria-pressed="false">
+                <span>03</span><strong>Route</strong>
+              </button>
+              <h3>많이 부르지 않고<br />정확히 연결합니다.</h3>
+              <p>가장 좁은 primary 하나를 고르고, 파일 형식·독립 검증·보안 경계가 필요할 때만 슬롯을 추가합니다.</p>
+            </article>
+            <article class="story-chapter" data-story-key="verify">
+              <button type="button" data-story-trigger aria-pressed="false">
+                <span>04</span><strong>Verify</strong>
+              </button>
+              <h3>만들었다가 아니라<br />확인했다로 끝냅니다.</h3>
+              <p>테스트, 빌드, 실제 브라우저 흐름처럼 결과를 바꿀 수 있는 가장 가까운 검증을 수행합니다.</p>
+            </article>
+          </div>
         </div>
       </section>
 
@@ -350,16 +386,16 @@
           <h2 id="plugins-title">스킬이 실제 도구와 파일 작업으로 이어지게</h2>
         </div>
         <div class="catalog-grid">
-          <section><h3>Documents</h3><p>Word·DOCX 문서를 생성, 편집, redline하고 렌더링까지 검증합니다.</p></section>
-          <section><h3>Spreadsheets</h3><p>XLSX·CSV 분석과 workbook 생성을 담당합니다.</p></section>
-          <section><h3>Presentations</h3><p>PowerPoint·Google Slides용 발표 자료를 만들고 편집합니다.</p></section>
-          <section><h3>PDF</h3><p>PDF를 읽고 생성하며 페이지 렌더링으로 레이아웃을 확인합니다.</p></section>
-          <section><h3>Template Creator</h3><p>기존 문서를 재사용 가능한 Codex artifact template로 변환합니다.</p></section>
-          <section><h3>Sites</h3><p>웹사이트 source, version, production deployment와 access control을 관리합니다.</p></section>
-          <section><h3>Browser</h3><p>Codex 안의 독립 브라우저로 페이지 탐색, 입력과 화면 검증을 수행합니다.</p></section>
-          <section><h3>Chrome</h3><p>로그인 상태와 기존 탭이 필요한 작업을 사용자의 Chrome에서 처리합니다.</p></section>
-          <section><h3>Computer Use</h3><p>전용 API가 없는 macOS 앱과 데스크톱 UI를 직접 조작합니다.</p></section>
-          <section><h3>Visualize</h3><p>차트, 비교 도구, 시뮬레이터와 interactive visualization을 대화 안에서 만듭니다.</p></section>
+          <section><span class="plugin-mark" aria-hidden="true">DOC</span><h3>Documents</h3><p>Word·DOCX 문서를 생성, 편집, redline하고 렌더링까지 검증합니다.</p></section>
+          <section><span class="plugin-mark" aria-hidden="true">XLS</span><h3>Spreadsheets</h3><p>XLSX·CSV 분석과 workbook 생성을 담당합니다.</p></section>
+          <section><span class="plugin-mark" aria-hidden="true">PPT</span><h3>Presentations</h3><p>PowerPoint·Google Slides용 발표 자료를 만들고 편집합니다.</p></section>
+          <section><span class="plugin-mark" aria-hidden="true">PDF</span><h3>PDF</h3><p>PDF를 읽고 생성하며 페이지 렌더링으로 레이아웃을 확인합니다.</p></section>
+          <section><span class="plugin-mark" aria-hidden="true">TPL</span><h3>Template Creator</h3><p>기존 문서를 재사용 가능한 Codex artifact template로 변환합니다.</p></section>
+          <section><span class="plugin-mark" aria-hidden="true">WEB</span><h3>Sites</h3><p>웹사이트 source, version, production deployment와 access control을 관리합니다.</p></section>
+          <section><span class="plugin-mark" aria-hidden="true">BRS</span><h3>Browser</h3><p>Codex 안의 독립 브라우저로 페이지 탐색, 입력과 화면 검증을 수행합니다.</p></section>
+          <section><span class="plugin-mark" aria-hidden="true">CHR</span><h3>Chrome</h3><p>로그인 상태와 기존 탭이 필요한 작업을 사용자의 Chrome에서 처리합니다.</p></section>
+          <section><span class="plugin-mark" aria-hidden="true">CUA</span><h3>Computer Use</h3><p>전용 API가 없는 macOS 앱과 데스크톱 UI를 직접 조작합니다.</p></section>
+          <section><span class="plugin-mark" aria-hidden="true">VIZ</span><h3>Visualize</h3><p>차트, 비교 도구, 시뮬레이터와 interactive visualization을 대화 안에서 만듭니다.</p></section>
         </div>
       </section>
 
@@ -424,6 +460,6 @@ codex --profile xhigh</code></pre>
       </nav>
     </footer>
     <script src="assets/skills.js?v=docs-navigation"></script>
-    <script src="assets/app.js?v=landing-v3"></script>
+    <script src="assets/app.js?v=landing-v4"></script>
   </body>
 </html>
