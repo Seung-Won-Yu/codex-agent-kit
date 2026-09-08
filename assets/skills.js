@@ -57,7 +57,7 @@ window.CODEX_SKILL_CATALOG = [
     name: "diagnose",
     scope: "global",
     category: "구현",
-    description: "버그·실패·크래시·성능 저하를 재현하고 원인을 좁혀 수정과 회귀 테스트까지 연결합니다.",
+    description: "코드·로그로 원인을 좁히고 가능한 범위에서 재현·검증합니다. 수정은 승인된 범위에서만 진행합니다.",
   },
   {
     name: "docker-debugger",
@@ -112,6 +112,12 @@ window.CODEX_SKILL_CATALOG = [
     scope: "global",
     category: "구현",
     description: "전용 스킬이 없는 큰 기능이나 리팩터링을 작고 검증 가능한 slice로 나눠 구현합니다.",
+  },
+  {
+    name: "intent-refiner",
+    scope: "global",
+    category: "의도 보정",
+    description: "해석에 따라 결과가 달라질 요청만 목적·필수 조건·완료 기준으로 보정한 뒤 작업합니다. 명확한 요청은 바로 처리합니다.",
   },
   {
     name: "media-image-director",

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Intent Refiner"
+  short_description: "Clarify rough intent into usable work, then execute"
+  default_prompt: "Use $intent-refiner to clarify my intended outcome and complete the work within the agreed scope."
+policy:
+  allow_implicit_invocation: true

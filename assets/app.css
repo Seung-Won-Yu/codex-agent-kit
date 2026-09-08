@@ -3119,3 +3119,13 @@ html.theme-changing .stage-ambient {
     transform: none;
   }
 }
+
+/* Make the demo's intake decision and completion criterion explicit. */
+.stage-result .stage-check {
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--stage-line);
+  color: var(--stage-muted);
+  font-size: 0.8rem;
+  line-height: 1.65;
+}

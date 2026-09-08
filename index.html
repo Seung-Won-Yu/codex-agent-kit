@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="짧은 요청의 의도 정리, 자동 skill routing, 제한된 병렬 에이전트와 project pack을 한 번에 설치하는 개인 Codex 설정."
+      content="GPT-6 Astra를 위한 조건부 의도 보정과 직접 실행. 필요한 스킬만 읽고 중복 작업을 줄이는 개인 Codex 설정."
     />
     <meta id="themeColor" name="theme-color" content="#ffffff" />
     <meta property="og:type" content="website" />
@@ -14,14 +14,14 @@
     <meta property="og:title" content="Codex Agent Kit | 요청은 간단하게. 결과는 정확하게." />
     <meta
       property="og:description"
-      content="프롬프트 보정, 정확한 스킬 라우팅, 제한된 에이전트 위임을 한 번에 설치하는 개인 Codex 운영 체계."
+      content="명확하면 바로 실행, 모호하면 한 번 보정. GPT-6 Astra high와 48개 스킬을 연결하는 개인 Codex 운영 설정."
     />
     <meta property="og:url" content="https://seung-won-yu.github.io/codex-agent-kit/" />
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Codex Agent Kit | 요청은 간단하게. 결과는 정확하게." />
     <meta
       name="twitter:description"
-      content="프롬프트 보정, 정확한 스킬 라우팅, 제한된 에이전트 위임을 한 번에 설치하는 개인 Codex 운영 체계."
+      content="명확하면 바로 실행, 모호하면 한 번 보정. GPT-6 Astra high와 48개 스킬을 연결하는 개인 Codex 운영 설정."
     />
     <link rel="canonical" href="https://seung-won-yu.github.io/codex-agent-kit/" />
     <title>Codex Agent Kit | Installable Personal Setup</title>
@@ -50,7 +50,7 @@
         }
       </style>
     </noscript>
-    <link rel="stylesheet" href="assets/app.css?v=landing-v6" />
+    <link rel="stylesheet" href="assets/app.css?v=astra-intake-v1" />
   </head>
   <body>
     <a class="skip-link" href="#main-content">본문으로 건너뛰기</a>
@@ -112,7 +112,7 @@
           />
           <button class="search-close" id="siteSearchClose" type="button" aria-label="검색 닫기">Esc</button>
         </div>
-        <p class="search-hint" id="siteSearchHint">섹션과 47개 스킬을 한 번에 찾습니다.</p>
+        <p class="search-hint" id="siteSearchHint">섹션과 48개 스킬을 한 번에 찾습니다.</p>
         <div class="search-results" id="siteSearchResults" role="region" aria-label="검색 결과" aria-live="polite"></div>
       </div>
     </dialog>
@@ -138,21 +138,21 @@
             요청은 간단하게.<br /><span class="hero-gradient">결과는 정확하게</span><span class="hero-stop">.</span>
           </h1>
           <p class="hero-line" data-reveal>
-            짧은 요청의 의도를 이해하고, 필요한 스킬만 연결하고,<br class="desktop-break" />
-            끝까지 검증하는 개인 Codex 세팅.
+            명확하면 바로 실행하고, 모호하면 한 번 보정하고,<br class="desktop-break" />
+            쓸 수 있는 결과까지 완성하는 개인 Codex 세팅.
           </p>
           <p class="lede" data-reveal>
-            GPT-5.6 Sol high를 중심으로 전역 규칙, 3개 전문 에이전트,
-            47개 personal skill과 10개 plugin을 하나의 흐름으로 정리했습니다.
+            GPT-6 Astra high를 중심으로 전역 규칙, 3개 전문 에이전트,
+            48개 personal skill과 10개 plugin을 하나의 흐름으로 정리했습니다.
           </p>
           <div class="hero-actions" data-reveal>
             <a class="button primary" href="#install">내 세팅 설치하기</a>
-            <a class="button secondary" href="#skills">47개 스킬 살펴보기 <span aria-hidden="true">›</span></a>
+            <a class="button secondary" href="#skills">48개 스킬 살펴보기 <span aria-hidden="true">›</span></a>
           </div>
           <div class="hero-signals" aria-label="핵심 운영 원칙" data-reveal>
-            <span>Quality-first</span>
-            <span>Native routing</span>
-            <span>One writing lane</span>
+            <span>조건부 보정</span>
+            <span>맥락 재사용</span>
+            <span>필요한 검증</span>
           </div>
         </div>
         <div class="hero-readout" aria-label="요청 처리 핵심 단계" data-reveal>
@@ -168,7 +168,7 @@
         <div class="stage-chrome">
           <span class="stage-dot"></span>
           <span>Codex Agent Kit</span>
-          <span class="stage-version">Personal OS · v4</span>
+          <span class="stage-version">흐름 예시 · 모델 호출 없음</span>
           <strong><span aria-hidden="true"></span> Ready</strong>
           <button class="stage-run" id="demoRun" type="button" aria-label="현재 요청 처리 흐름 다시 실행">
             <svg viewBox="0 0 20 20" aria-hidden="true"><path d="m7.2 5.6 6 4.4-6 4.4Z"></path></svg>
@@ -176,7 +176,8 @@
           </button>
         </div>
         <div class="stage-presets" role="group" aria-label="데모 요청 선택">
-          <button type="button" data-demo="build" aria-pressed="true">구현하기</button>
+          <button type="button" data-demo="direct" aria-pressed="false">바로 처리</button>
+          <button type="button" data-demo="build" aria-pressed="true">보정 후 작업</button>
           <button type="button" data-demo="inspect" aria-pressed="false">원인만 보기</button>
           <button type="button" data-demo="secure" aria-pressed="false">민감 작업</button>
         </div>
@@ -190,36 +191,37 @@
         <div class="stage-body">
           <div class="stage-prompt">
             <span class="stage-label">Starting request</span>
-            <p id="demoPrompt">“내 Codex 설정을 더 효율적으로 다듬어줘”</p>
+            <p id="demoPrompt">“이 메모로 신입이 혼자 실습할 수 있게 안내문을 만들어줘”</p>
             <span class="stage-permission" id="demoPermission">workspace-write</span>
           </div>
           <div class="stage-arrow" aria-hidden="true">
             <span></span>
           </div>
           <div class="stage-result" id="demoResult" aria-live="polite">
-            <span class="stage-label">Intent structured · ready to run</span>
-            <h2 id="demoTitle">의도를 다듬고.<br />구현은 끝까지.</h2>
-            <p id="demoSummary">제품 방향을 정리하고, 가장 좁은 스킬로 구현한 뒤 실제 화면까지 검증합니다.</p>
+            <span class="stage-label" id="demoIntake">보정 사용 · intent-refiner</span>
+            <h2 id="demoTitle">거친 메모를.<br />혼자 끝내는 실습으로.</h2>
+            <p id="demoSummary">대상과 사용 목적을 기준으로 준비·실습 순서·성공 확인을 보완하고, 확인된 명령은 보존합니다.</p>
+            <p class="stage-check" id="demoCheck">완료 기준: 초보자가 안내문만 보고 실습을 끝내고 성공 여부를 알 수 있음</p>
           </div>
           <div class="stage-slots" aria-label="스킬 조합 슬롯">
             <span data-slot="primary" class="is-active">
-              <small>Primary</small><em>frontend-ui-engineering</em>
+              <small>Primary</small><em>technical-writer</em>
             </span>
-            <span data-slot="adapter" class="is-active">
-              <small>Adapter</small><em>Browser</em>
+            <span data-slot="adapter">
+              <small>Adapter</small><em>필요 없음</em>
             </span>
-            <span data-slot="verifier" class="is-active">
-              <small>Verifier</small><em>webapp-testing</em>
+            <span data-slot="verifier">
+              <small>Verifier</small><em>필요 없음</em>
             </span>
             <span data-slot="safety">
-              <small>Safety</small><em>Not required</em>
+              <small>Safety</small><em>필요 없음</em>
             </span>
           </div>
         </div>
       </section>
 
       <section class="stats-band" aria-label="현재 구성 수치">
-        <div><strong data-count="36">36</strong><span>global personal skills</span></div>
+        <div><strong data-count="37">37</strong><span>global personal skills</span></div>
         <div><strong data-count="11">11</strong><span>project-packed skills</span></div>
         <div><strong data-count="3">3</strong><span>custom agent roles</span></div>
         <div><strong data-count="10">10</strong><span>connected plugins</span></div>
@@ -230,8 +232,8 @@
           <p class="eyebrow">The operating contract</p>
           <h2 id="story-title">알아서 하되.<br />권한은 지키게.</h2>
           <p>
-            자동화의 핵심은 더 많은 것을 시키는 게 아니라, 매 순간 무엇을 해도 되는지와
-            누가 책임질지를 선명하게 만드는 것입니다.
+            목적과 완료 기준을 필요한 만큼만 정리합니다. 반복 설명·재탐색·불필요한 검증을 줄이고,
+            그 여력을 결과를 완성하는 데 씁니다.
           </p>
         </div>
         <div class="story-layout">
@@ -280,28 +282,28 @@
                 <span>01</span><strong>Interpret</strong>
               </button>
               <h3>표현보다<br />해야 할 일을 읽습니다.</h3>
-              <p>짧거나 맥락이 생략된 요청도 목표, 맥락, 산출물과 완료 조건을 기준으로 정리합니다.</p>
+              <p>길이가 기준은 아닙니다. 명확한 요청은 바로 실행하고, 해석이 결과를 바꿀 때만 intent-refiner를 읽어 목적·필수 조건·완료 기준을 정리합니다.</p>
             </article>
             <article class="story-chapter" data-story-key="permission">
               <button type="button" data-story-trigger aria-pressed="false">
                 <span>02</span><strong>Permission</strong>
               </button>
               <h3>알아서 움직여도<br />선을 넘지는 않습니다.</h3>
-              <p>확인·분석·제안은 read-only로 유지하고, 명확히 고쳐 달라고 한 범위 안에서만 파일을 바꿉니다.</p>
+              <p>이전 수정 승인은 같은 대상에서 이어받고, “원인만 / 수정하지 마” 같은 새 제한은 지킵니다. 보정이 임의의 기능 추가나 외부 전송으로 이어지지 않게 합니다.</p>
             </article>
             <article class="story-chapter" data-story-key="route">
               <button type="button" data-story-trigger aria-pressed="false">
                 <span>03</span><strong>Route</strong>
               </button>
               <h3>많이 부르지 않고<br />정확히 연결합니다.</h3>
-              <p>가장 좁은 primary 하나를 고르고, 파일 형식·독립 검증·보안 경계가 필요할 때만 슬롯을 추가합니다.</p>
+              <p>보정은 별도 모델이나 에이전트 없이 한 번만 합니다. 이후 가장 좁은 primary로 작업하고, 후속 요청에서는 기존 해석과 읽은 자료를 재사용합니다.</p>
             </article>
             <article class="story-chapter" data-story-key="verify">
               <button type="button" data-story-trigger aria-pressed="false">
                 <span>04</span><strong>Verify</strong>
               </button>
               <h3>만들었다가 아니라<br />확인했다로 끝냅니다.</h3>
-              <p>테스트, 빌드, 실제 브라우저 흐름처럼 결과를 바꿀 수 있는 가장 가까운 검증을 수행합니다.</p>
+              <p>변경에 맞는 검증을 수행하고, 새 문제가 없으면 통과한 검사를 반복하지 않습니다. 요청 항목과 실제 사용 목적을 함께 확인합니다. 토큰 절감률은 아직 비교 측정하지 않았습니다.</p>
             </article>
           </div>
         </div>
@@ -358,10 +360,10 @@
 
       <section id="skills" class="section-grid section-tint" aria-labelledby="skills-title">
         <div class="section-heading">
-          <p class="eyebrow">47 Personal Skills</p>
+          <p class="eyebrow">48 Personal Skills</p>
           <h2 id="skills-title">각 스킬이 맡는 일을 한눈에</h2>
           <p class="section-note">
-            36개 범용 스킬은 전역에서, game·visual·supabase 11개는 연결된 프로젝트에서만 자동 노출됩니다.
+            37개 범용 스킬은 전역에서, game·visual·supabase 11개는 연결된 프로젝트에서만 자동 노출됩니다.
           </p>
         </div>
         <div>
@@ -369,11 +371,11 @@
             <label for="skillSearch">이름·영역·설명 검색</label>
             <input id="skillSearch" type="search" placeholder="예: 프론트엔드, 리서치, Supabase, 검증" />
           </div>
-          <div class="skill-meta" id="skillMeta">47개 중 47개 표시</div>
+          <div class="skill-meta" id="skillMeta">48개 중 48개 표시</div>
           <div class="skill-cloud" id="skillCloud" aria-live="polite"></div>
           <div class="skill-toggle-wrap">
             <button class="skill-toggle" id="skillToggle" type="button" aria-expanded="false">
-              전체 47개 보기 <span aria-hidden="true">＋</span>
+              전체 48개 보기 <span aria-hidden="true">＋</span>
             </button>
           </div>
           <noscript>
@@ -397,7 +399,7 @@
           <section><span class="plugin-mark" aria-hidden="true">WEB</span><h3>Sites</h3><p>웹사이트 source, version, production deployment와 access control을 관리합니다.</p></section>
           <section><span class="plugin-mark" aria-hidden="true">BRS</span><h3>Browser</h3><p>Codex 안의 독립 브라우저로 페이지 탐색, 입력과 화면 검증을 수행합니다.</p></section>
           <section><span class="plugin-mark" aria-hidden="true">CHR</span><h3>Chrome</h3><p>로그인 상태와 기존 탭이 필요한 작업을 사용자의 Chrome에서 처리합니다.</p></section>
-          <section><span class="plugin-mark" aria-hidden="true">CUA</span><h3>Computer Use</h3><p>전용 API가 없는 macOS 앱과 데스크톱 UI를 직접 조작합니다.</p></section>
+          <section><span class="plugin-mark" aria-hidden="true">CUA</span><h3>Unified Computer Use</h3><p>연결된 브라우저 UI를 탐색하고 조작합니다. 지원 범위는 실행 환경에 따라 달라집니다.</p></section>
           <section><span class="plugin-mark" aria-hidden="true">VIZ</span><h3>Visualize</h3><p>차트, 비교 도구, 시뮬레이터와 interactive visualization을 대화 안에서 만듭니다.</p></section>
         </div>
       </section>
@@ -429,9 +431,9 @@ cd codex-agent-kit
             <article class="card accent-green">
               <h3>한 번에 적용되는 구성</h3>
               <ul>
-                <li>Global AGENTS.md와 quality-first config</li>
+                <li>Global AGENTS.md와 Astra high · workspace-write config</li>
                 <li>3 custom agents와 4 domain playbooks</li>
-                <li>36 global + 11 packed personal skills</li>
+                <li>37 global + 11 packed personal skills</li>
                 <li>xhigh profile, validator, 10 plugins</li>
               </ul>
             </article>
@@ -468,7 +470,7 @@ codex --profile xhigh</code></pre>
         <a href="https://github.com/Seung-Won-Yu/codex-agent-kit">Source on GitHub</a>
       </nav>
     </footer>
-    <script src="assets/skills.js?v=catalog-v2"></script>
-    <script src="assets/app.js?v=landing-v6"></script>
+    <script src="assets/skills.js?v=catalog-v3"></script>
+    <script src="assets/app.js?v=astra-intake-v1"></script>
   </body>
 </html>

@@ -103,7 +103,7 @@ fi
 echo
 echo "Codex Agent Kit installed into $TARGET_CODEX_HOME"
 echo "- AGENTS.md, 3 agents, 4 playbooks"
-echo "- 36 global skills, 11 packed skills"
+echo "- 37 global skills, 11 packed skills"
 echo "- xhigh profile and validation scripts"
 if [ "$INSTALL_CONFIG" = true ]; then
   echo "- portable quality-first config.toml"

@@ -1,34 +1,35 @@
 # Codex Agent Kit
 
-현재 실제로 사용하는 개인 Codex 운영 레이어의 source of truth입니다. 짧은 요청의 의도를 정리하고, 가장 정확한 스킬과 필요한 에이전트만 연결해 품질 높은 결과를 내도록 구성했습니다.
+GPT-6 Astra에 맞춘 개인 Codex 운영 설정입니다. 명확한 요청은 바로 실행하고, 해석에 따라 결과가 달라질 요청만 `intent-refiner`로 보정합니다. 필요한 작업을 끝까지 완성하면서 반복 설명·탐색·검증을 줄입니다.
 
 공개 페이지: <https://seung-won-yu.github.io/codex-agent-kit/>
 
 ## 한눈에 보기
 
-> **간단히 요청해도 → 의도를 정리하고 → 필요한 스킬만 연결하고 → 필요할 때만 에이전트를 쓰고 → 루트가 끝까지 검증합니다.**
+> **명확하면 바로 실행 → 모호하면 한 번 보정 → 필요한 스킬로 작업 → 쓸 수 있는 결과까지 검증합니다.**
 
 | 단계 | 실제 동작 |
 | --- | --- |
-| 요청 이해 | 목표, 필요한 산출물과 수정 권한의 상한을 내부적으로 정리 |
+| 요청 이해 | 기존 맥락과 결정을 재사용하고 명확한 요청은 바로 실행 |
+| 조건부 보정 | `intent-refiner`로 목적·필수 조건·완료 기준 정리 후 도메인 작업으로 진행 |
 | 스킬 선택 | 가장 좁은 `primary` 1개와 필요한 `adapter / verifier / safety`만 연결 |
 | 에이전트 위임 | 서로 기다리지 않는 큰 작업축이 2개 이상일 때만 최대 3개 사용 |
 | 통합과 검증 | 루트가 단일 writing lane, 결과 통합, 최종 검증과 사용자 응답을 소유 |
-| 프로젝트 분리 | 범용 36개는 전역, 전문 11개는 연결된 프로젝트에서만 노출 |
+| 프로젝트 분리 | 범용 37개는 전역, 전문 11개는 연결된 프로젝트에서만 노출 |
 
 ## 현재 구성
 
 | 영역 | 설정 |
 | --- | --- |
-| 기본 모델 | `gpt-5.6-sol` + `high` |
-| 최고품질 profile | `codex --profile xhigh` |
+| 기본 모델 | `gpt-6-astra` + `high` |
+| 선택형 추론 profile | `codex --profile xhigh` |
 | Custom agents | 3 |
-| Global personal skills | 36 |
+| Global personal skills | 37 |
 | Project-packed skills | 11 |
 | Project packs | `game`, `visual`, `supabase` |
 | Domain playbooks | 4 |
 | Connected plugins | 10 |
-| Routing regression cases | 40 |
+| Routing regression cases | 52 |
 
 ## 설치
 
@@ -43,10 +44,10 @@ cd codex-agent-kit
 이 명령은 다음 personal layer를 설치합니다.
 
 - Global `AGENTS.md`
-- quality-first `config.toml`
+- Astra high · workspace-write `config.toml`
 - `xhigh.config.toml`
 - 3 custom agents와 4 playbooks
-- 36 global skills
+- 37 global skills
 - 11 packed skills와 project manifest
 - validator와 routing corpus
 - 현재 사용하는 10개 Codex plugin
@@ -78,14 +79,18 @@ Codex의 최신 profile 방식은 기본 `~/.codex/config.toml` 위에 `~/.codex
 
 ```mermaid
 flowchart TD
-  A["1. 사용자 요청"] --> B["2. 목표 · 산출물 · 권한"]
-  B --> C["3. 필요한 스킬만 연결"]
-  C --> D["4. 조건부 에이전트 위임"]
-  D --> E["5. Root 통합 · 검증 · 보고"]
+  A["사용자 요청 + 기존 맥락"] --> B{"해석이 결과를 바꾸는가?"}
+  B -->|아니요| D["직접 실행 / 가장 좁은 도메인 스킬"]
+  B -->|예| C["intent-refiner: 목적 · 필수 조건 · 완료 기준"]
+  C --> D
+  D --> E["필요한 검증 → 바로 쓸 수 있는 결과"]
 ```
 
-- 정확한 스킬이 필요 없으면 루트가 바로 실행합니다.
-- 에이전트는 독립적인 큰 작업축이 2개 이상일 때만 사용합니다.
+- 길이가 아니라 해석의 불확실성이 기준입니다. 긴 명세, 작은 수정, 산출물이 명확한 점검·제안은 보정을 건너뜁니다.
+- 보정은 같은 모델에서 한 번 수행하며 별도 모델·에이전트·라우터를 호출하지 않습니다. 후속 요청에서는 바뀐 결정만 반영합니다.
+- 이전 수정 승인은 같은 대상에서 이어받고, “원인만 / 수정하지 마” 같은 이후 제한은 지킵니다.
+- 검증은 변경에 맞춰 수행하고 새로운 문제 없이 통과한 검사를 반복하지 않습니다. 토큰 절감률은 비교 측정하지 않았습니다.
+- 에이전트는 독립적인 큰 작업축의 병렬 작업이나, 중요한 변경 뒤의 독립 검증에만 사용합니다.
 
 ## Custom agents
 
@@ -99,7 +104,7 @@ flowchart TD
 
 ## Personal skills
 
-36개 global skill은 여러 프로젝트에서 반복되는 범용 작업을 담당합니다.
+37개 global skill은 여러 프로젝트에서 반복되는 범용 작업을 담당합니다.
 
 | 영역 | Skills |
 | --- | --- |
@@ -109,7 +114,7 @@ flowchart TD
 | 기획·전략 | `create-prd`, `product-strategy`, `planning-document-writer`, `ax-consulting-planner`, `risk-assessment` |
 | 리서치·문서 | `research-synthesizer`, `research-report-writer`, `technical-writer`, `documentation-and-adrs`, `runbook-generator`, `release-notes`, `handoff` |
 | 개발 운영 | `gh-cli`, `gh-fix-ci`, `dependency-auditor`, `docker-debugger`, `env-setup-wizard`, `vercel-deploy` |
-| 미디어·모드·설정 | `media-image-director`, `caveman`, `routing-doctor` |
+| 의도·미디어·모드·설정 | `intent-refiner`, `media-image-director`, `caveman`, `routing-doctor` |
 
 11개 specialist skill은 필요한 프로젝트의 `.agents/skills/`에서만 보입니다.
 
@@ -133,7 +138,7 @@ flowchart TD
 | Sites | 웹사이트 source, version, production deployment 관리 |
 | Browser | Codex 내 독립 브라우저 자동화 |
 | Chrome | 기존 로그인과 탭을 사용하는 Chrome 자동화 |
-| Computer Use | macOS 앱과 데스크톱 UI 제어 |
+| Unified Computer Use | 연결된 브라우저 UI 제어; 지원 범위는 실행 환경에 따름 |
 | Visualize | 차트, 비교 도구와 interactive visualization |
 
 Plugin만 설치하려면:
@@ -155,7 +160,7 @@ Plugin만 설치하려면:
 ├── config/
 │   ├── codex.config.sample.toml
 │   └── xhigh.config.sample.toml
-├── skills/                    # 36 global personal skills
+├── skills/                    # 37 global personal skills
 ├── skill-packs/               # 11 project-packed skills
 ├── scripts/
 │   ├── install.sh
@@ -168,12 +173,25 @@ Plugin만 설치하려면:
 
 ## 검증
 
+Python 3와 PyYAML이 필요합니다. 계정 연결이나 개인 프로젝트 경로 없이 저장소를 검사하려면:
+
+```bash
+python3 scripts/validate-skills.py --root . --static
+python3 scripts/test_static_validation.py
+```
+
+설치된 환경과 연결 상태를 확인하려면:
+
 ```bash
 python3 "$HOME/.codex/scripts/validate-skills.py"
 python3 "$HOME/.codex/skills/routing-doctor/scripts/audit_routing.py"
 ```
 
-Validator는 skill metadata, 내부 링크, canonical name 중복, project pack symlink, visible skill graph, legacy routing 잔존과 40개 한국어 routing case를 함께 확인합니다.
+Validator는 skill metadata, 내부 링크, canonical name 중복, project pack symlink, visible skill graph, legacy routing 잔존과 52개 한국어 routing case를 함께 확인합니다.
+
+보정 구조는 Astra high의 격리된 두 작업에서 확인했습니다. 명확한 오타 수정은 보정을 생략했고, 거친 교육 메모는 보정 후 준비·절차·성공 확인이 있는 안내문으로 완성했습니다. 이는 대표 동작 확인이며 전체 작업 품질이나 토큰 절감률의 벤치마크는 아닙니다.
+
+설계 근거: [공식 Astra 행동 가이드](https://developers.openai.com/api/docs/guides/latest-model#gpt-6-astra-behavior).
 
 ## License
 

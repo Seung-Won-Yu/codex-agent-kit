@@ -18,6 +18,8 @@ const demoPrompt = document.querySelector("#demoPrompt");
 const demoPermission = document.querySelector("#demoPermission");
 const demoTitle = document.querySelector("#demoTitle");
 const demoSummary = document.querySelector("#demoSummary");
+const demoIntake = document.querySelector("#demoIntake");
+const demoCheck = document.querySelector("#demoCheck");
 const demoSlots = Array.from(document.querySelectorAll("[data-slot]"));
 const demoRun = document.querySelector("#demoRun");
 const demoStatus = document.querySelector("#demoStatus");
@@ -149,41 +151,41 @@ if (themeToggle) {
 }
 
 const demoScenarios = {
-  build: {
-    prompt: "“내 Codex 설정을 더 효율적으로 다듬어줘”",
+  direct: {
+    prompt: "“README의 설치하새요를 설치하세요로 바꿔줘”",
     permission: "workspace-write",
-    title: ["의도를 다듬고.", "구현은 끝까지."],
-    summary: "제품 방향을 정리하고, 가장 좁은 스킬로 구현한 뒤 실제 화면까지 검증합니다.",
-    slots: {
-      primary: ["frontend-ui-engineering", true],
-      adapter: ["Browser", true],
-      verifier: ["webapp-testing", true],
-      safety: ["Not required", false],
-    },
+    intake: "보정 생략 · 명확한 요청",
+    title: ["한 군데 수정은.", "바로 끝냅니다."],
+    summary: "대상과 변경이 명확하므로 보정 스킬을 읽지 않습니다. 요청한 오타만 수정하고 나머지 내용은 유지합니다.",
+    check: "완료 기준: 지정한 오타만 수정되고 나머지 내용은 동일함",
+    slots: { primary: ["직접 실행", false], adapter: ["필요 없음", false], verifier: ["필요 없음", false], safety: ["필요 없음", false] },
+  },
+  build: {
+    prompt: "“이 메모로 신입이 혼자 실습할 수 있게 안내문을 만들어줘”",
+    permission: "workspace-write",
+    intake: "보정 사용 · intent-refiner",
+    title: ["거친 메모를.", "혼자 끝내는 실습으로."],
+    summary: "대상과 사용 목적을 기준으로 준비·실습 순서·성공 확인을 보완하고, 확인된 명령은 보존합니다.",
+    check: "완료 기준: 초보자가 안내문만 보고 실습을 끝내고 성공 여부를 알 수 있음",
+    slots: { primary: ["technical-writer", true], adapter: ["필요 없음", false], verifier: ["필요 없음", false], safety: ["필요 없음", false] },
   },
   inspect: {
-    prompt: "“이 설정에서 문제인 부분만 확인해줘”",
+    prompt: "“이 오류 로그에서 원인 후보만 찾아줘. 수정하지 마”",
     permission: "read-only",
-    title: ["원인만 찾고.", "파일은 그대로."],
-    summary: "확인 요청의 권한을 보존해 근거와 원인만 정리하고, 사용자가 고쳐 달라고 하기 전에는 수정하지 않습니다.",
-    slots: {
-      primary: ["diagnose", true],
-      adapter: ["Not required", false],
-      verifier: ["Focused checks", true],
-      safety: ["Not required", false],
-    },
+    intake: "보정 생략 · 진단 범위 명확",
+    title: ["근거로 좁히고.", "한계도 분명하게."],
+    summary: "재현 환경이 없어도 코드와 로그로 원인을 좁힙니다. 확인된 사실과 가설을 구분하고, 승인하지 않은 수정은 하지 않습니다.",
+    check: "완료 기준: 근거가 있는 원인 후보와 이를 구분할 다음 확인을 제시함",
+    slots: { primary: ["diagnose", true], adapter: ["필요 없음", false], verifier: ["필요 없음", false], safety: ["필요 없음", false] },
   },
   secure: {
-    prompt: "“결제 webhook을 안전하게 수정하고 검증해줘”",
+    prompt: "“결제 webhook 중복 처리 원인을 찾아 고치고 검증해줘”",
     permission: "workspace-write · sensitive",
-    title: ["보안 경계를 세우고.", "변경은 검증까지."],
-    summary: "인증·권한·결제처럼 민감한 경계에서는 안전성 검토를 추가하고 회귀 검증까지 마친 뒤 결과를 전달합니다.",
-    slots: {
-      primary: ["security-and-hardening", true],
-      adapter: ["Existing stack", true],
-      verifier: ["reviewer-deep", true],
-      safety: ["Sensitive boundary", true],
-    },
+    intake: "보정 생략 · 목표와 범위 명확",
+    title: ["원인을 고치고.", "보안 경계도 검증."],
+    summary: "진단 스킬이 구현을 맡고 보안 스킬이 결제 경계를 검토합니다. 중요한 변경은 독립 리뷰와 관련 회귀 검증까지 수행합니다.",
+    check: "완료 기준: 중복 요청에도 주문이 중복 생성되지 않고 권한 검증이 유지됨",
+    slots: { primary: ["diagnose", true], adapter: ["필요 없음", false], verifier: ["code-review-and-quality", true], safety: ["security-and-hardening", true] },
   },
 };
 
@@ -269,6 +271,8 @@ function activateDemo(key) {
     if (demoPermission) demoPermission.textContent = scenario.permission;
     setDemoTitle(scenario.title);
     if (demoSummary) demoSummary.textContent = scenario.summary;
+    if (demoIntake) demoIntake.textContent = scenario.intake;
+    if (demoCheck) demoCheck.textContent = scenario.check;
     demoSlots.forEach((slot) => {
       const [value, isActive] = scenario.slots[slot.dataset.slot];
       const valueNode = slot.querySelector("em");
@@ -456,7 +460,7 @@ function renderSiteSearchResults() {
   if (siteSearchHint) {
     siteSearchHint.textContent = query
       ? `${siteSearchItems.length}개 항목 중 ${matches.length}개 결과`
-      : "섹션과 47개 스킬을 한 번에 찾습니다.";
+      : `섹션과 ${skillCatalog.length}개 스킬을 한 번에 찾습니다.`;
   }
 
   if (!matches.length) {

@@ -1,6 +1,6 @@
 # Skill Catalog
 
-이 설정은 36개 global personal skill과 11개 project-packed specialist skill을 사용합니다. 명확한 요청은 가장 좁은 primary 하나에서 시작하고, 실제 산출물 형식이나 독립 검증이 필요할 때만 adapter와 verifier를 추가합니다.
+이 설정은 37개 global personal skill과 11개 project-packed specialist skill을 사용합니다. 명확한 요청은 바로 처리하고, 해석이 결과를 바꿀 때만 `intent-refiner`를 먼저 읽습니다. 이후 가장 좁은 primary 하나에서 시작하고, 실제 산출물 형식이나 독립 검증이 필요할 때만 adapter와 verifier를 추가합니다.
 
 ## Global skills
 
@@ -15,7 +15,7 @@
 | `database-schema-designer` | SQL·NoSQL 스키마, 관계, 제약, 인덱스, ERD와 migration 설계 |
 | `dependency-auditor` | npm 취약점, outdated·unused dependency 감사 |
 | `design-flow` | 신규 제품·대형 기능·리디자인의 기획→구현→검증 전체 흐름 |
-| `diagnose` | 버그·실패·크래시·성능 저하의 재현, 원인 분리, 수정과 회귀 테스트 |
+| `diagnose` | 코드·로그 기반 원인 분리, 가능한 재현·검증, 승인 범위 안의 수정 |
 | `docker-debugger` | Dockerfile, container, Compose와 image 최적화 문제 해결 |
 | `documentation-and-adrs` | 아키텍처 결정, trade-off와 저장소 규칙을 ADR로 기록 |
 | `env-setup-wizard` | 환경 변수, `.env`와 환경별 configuration 관리 |
@@ -25,6 +25,7 @@
 | `gh-fix-ci` | GitHub Actions 실패 진단, 수정 계획, 적용과 재검증 |
 | `handoff` | 현재 상태, 결정, 검증 근거와 남은 일을 다음 에이전트용으로 압축 |
 | `incremental-implementation` | 전용 스킬이 없는 큰 기능·리팩터링을 얇은 slice로 구현 |
+| `intent-refiner` | 재작업 위험이 있는 요청만 목적·필수 조건·완료 기준으로 보정한 뒤 도메인 작업으로 진행 |
 | `media-image-director` | 이미지 생성·편집·variation의 prompt와 critique-regenerate 지휘 |
 | `planning-document-writer` | 기획서, 요구사항, 기능·화면 명세, IA, QA/UAT 문서 선택·작성 |
 | `playwright` | 실제 브라우저 탐색, 입력, 캡처, 추출과 UI 문제 재현 |

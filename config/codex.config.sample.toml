@@ -2,9 +2,9 @@
 
 # Portable quality-first base. Machine paths and project trust are added by Codex
 # on the target computer, while this file owns the shared operating defaults.
-model = "gpt-5.6-sol"
+model = "gpt-6-astra"
 model_reasoning_effort = "high"
-sandbox_mode = "danger-full-access"
+sandbox_mode = "workspace-write"
 personality = "pragmatic"
 
 [features]
@@ -14,7 +14,7 @@ tool_suggest = true
 skill_mcp_dependency_install = true
 
 [agents]
-max_threads = 4
+max_concurrent_threads_per_session = 3
 max_depth = 1
 
 [plugins."documents@openai-primary-runtime"]
@@ -41,7 +41,7 @@ enabled = true
 [plugins."chrome@openai-bundled"]
 enabled = true
 
-[plugins."computer-use@openai-bundled"]
+[plugins."unified-computer-use@openai-bundled"]
 enabled = true
 
 [plugins."visualize@openai-bundled"]

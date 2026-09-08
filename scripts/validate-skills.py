@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import os
 import re
@@ -23,8 +24,6 @@ PACK_MANIFEST = PACKS_DIR / "manifest.yaml"
 VALIDATOR = SKILLS_DIR / ".system" / "skill-creator" / "scripts" / "quick_validate.py"
 ROUTING_CHECK = SKILLS_DIR / "routing-doctor" / "scripts" / "audit_routing.py"
 
-FRONTMATTER_NAME = re.compile(r"(?m)^name:\s*['\"]?([^'\"\n]+)['\"]?\s*$")
-FRONTMATTER_DESCRIPTION = re.compile(r"(?m)^description:\s*['\"]?(.+?)['\"]?\s*$")
 MARKDOWN_LINK = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 SKILL_REFERENCE = re.compile(r"(?<![\\\w])\$([a-z][a-z0-9-]*(?::[A-Za-z][A-Za-z0-9-]*)?)")
 EXTERNAL_SCHEME = re.compile(r"^[a-z][a-z0-9+.-]*:", re.IGNORECASE)
@@ -38,12 +37,18 @@ def path_key(path: Path) -> str:
 
 def frontmatter(skill_file: Path) -> tuple[str | None, str]:
     text = skill_file.read_text(encoding="utf-8")
-    header = text.split("\n---", 1)[0]
-    name_match = FRONTMATTER_NAME.search(header)
-    description_match = FRONTMATTER_DESCRIPTION.search(header)
+    if not text.startswith("---\n") or "\n---" not in text[4:]:
+        return None, ""
+    try:
+        header = yaml.safe_load(text[4:].split("\n---", 1)[0])
+    except yaml.YAMLError:
+        return None, ""
+    if not isinstance(header, dict):
+        return None, ""
+    name, description = header.get("name"), header.get("description")
     return (
-        name_match.group(1).strip() if name_match else None,
-        description_match.group(1).strip() if description_match else "",
+        name.strip() if isinstance(name, str) else None,
+        description.strip() if isinstance(description, str) else "",
     )
 
 
@@ -67,7 +72,7 @@ def global_skill_dirs() -> list[Path]:
     )
 
 
-def load_pack_dirs(errors: list[str]) -> list[Path]:
+def load_pack_dirs(errors: list[str], check_runtime: bool = True) -> list[Path]:
     if not PACK_MANIFEST.is_file():
         errors.append(f"missing pack manifest: {PACK_MANIFEST}")
         return []
@@ -92,7 +97,7 @@ def load_pack_dirs(errors: list[str]) -> list[Path]:
     if len(scan_roots) != len(payload["scan_roots"]):
         errors.append("all pack manifest scan_roots must be path strings")
     for scan_root in scan_roots:
-        if not scan_root.is_dir():
+        if check_runtime and not scan_root.is_dir():
             errors.append(f"missing pack scan root: {scan_root}")
     for entry in payload["skills"]:
         if not isinstance(entry, dict):
@@ -114,6 +119,8 @@ def load_pack_dirs(errors: list[str]) -> list[Path]:
             link = Path(raw_project).expanduser() / ".agents" / "skills" / name
             registered_links.add(path_key(link))
             project_roots.add(Path(raw_project).expanduser())
+            if not check_runtime:
+                continue
             if not link.is_symlink():
                 errors.append(f"missing project skill link: {link}")
             elif link.resolve() != canonical.resolve():
@@ -134,6 +141,8 @@ def load_pack_dirs(errors: list[str]) -> list[Path]:
                 continue
         if not covered:
             errors.append(f"packed-skill project is outside scan_roots: {project}")
+    if not check_runtime:
+        return sorted(packed)
     ignored_dirs = {".git", "node_modules", "dist", "build", "coverage", ".next", ".cache"}
     for scan_root in scan_roots:
         if not scan_root.is_dir():
@@ -201,17 +210,34 @@ def overlap_warnings(skill_dirs: list[Path], descriptions: dict[str, str]) -> li
 
 
 def main() -> int:
+    global CODEX_DIR, SKILLS_DIR, PACKS_DIR, PACK_MANIFEST, ROUTING_CHECK, VALIDATOR
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--root", type=Path, default=CODEX_DIR, help="kit repository or installed Codex root")
+    parser.add_argument("--static", action="store_true", help="check repository assets without runtime or project links")
+    args = parser.parse_args()
+    CODEX_DIR = args.root.expanduser().resolve()
+    SKILLS_DIR = CODEX_DIR / "skills"
+    PACKS_DIR = CODEX_DIR / "skill-packs"
+    PACK_MANIFEST = PACKS_DIR / "manifest.yaml"
+    ROUTING_CHECK = SKILLS_DIR / "routing-doctor/scripts/audit_routing.py"
+    VALIDATOR = SKILLS_DIR / ".system/skill-creator/scripts/quick_validate.py"
+    if not SKILLS_DIR.is_dir():
+        parser.error(f"missing skills directory: {SKILLS_DIR}")
     errors: list[str] = []
     globals_ = global_skill_dirs()
-    packed = load_pack_dirs(errors)
+    packed = load_pack_dirs(errors, check_runtime=not args.static)
     skill_dirs = globals_ + packed
     canonical_names: dict[str, Path] = {}
     descriptions: dict[str, str] = {}
 
-    if not VALIDATOR.is_file():
+    if not args.static and not VALIDATOR.is_file():
         errors.append(f"missing official validator: {VALIDATOR}")
     for skill_dir in skill_dirs:
         name, description = frontmatter(skill_dir / "SKILL.md")
+        if not name or not description:
+            errors.append(f"missing skill name/description: {skill_dir}")
+        elif not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*", name):
+            errors.append(f"invalid personal skill name: {name}")
         if name in LEGACY_META:
             errors.append(f"legacy runtime meta skill still installed: {name}")
         if name:
@@ -219,7 +245,7 @@ def main() -> int:
                 errors.append(f"duplicate canonical skill name: {name}: {canonical_names[name]} and {skill_dir}")
             canonical_names[name] = skill_dir
             descriptions[name] = description
-        if VALIDATOR.is_file():
+        if not args.static and VALIDATOR.is_file():
             result = subprocess.run(
                 [sys.executable, str(VALIDATOR), str(skill_dir)],
                 capture_output=True, text=True, check=False,
@@ -228,7 +254,7 @@ def main() -> int:
                 detail = (result.stdout + result.stderr).strip().replace("\n", " | ")
                 errors.append(f"invalid metadata: {skill_dir.name}: {detail}")
 
-    installed = visible_skill_names() | set(canonical_names)
+    installed = set(canonical_names) | (set() if args.static else visible_skill_names())
     for skill_dir in skill_dirs:
         for markdown in skill_dir.rglob("*.md"):
             text = markdown_without_fences(markdown)
@@ -242,11 +268,12 @@ def main() -> int:
             for name in SKILL_REFERENCE.findall(text):
                 if name in LEGACY_META:
                     errors.append(f"legacy $skill reference: {markdown}:${name}")
-                elif name not in installed:
+                elif not args.static and name not in installed:
                     errors.append(f"missing $skill: {markdown}:${name}")
 
     if ROUTING_CHECK.is_file():
-        result = subprocess.run([sys.executable, str(ROUTING_CHECK)], capture_output=True, text=True, check=False)
+        command = [sys.executable, str(ROUTING_CHECK)] + (["--static"] if args.static else [])
+        result = subprocess.run(command, capture_output=True, text=True, check=False)
         if result.returncode:
             errors.append("routing corpus failed: " + (result.stdout + result.stderr).strip().replace("\n", " | "))
     else:
@@ -258,9 +285,10 @@ def main() -> int:
         for error in sorted(set(errors)):
             print(f"- {error}")
         return 1
+    checks = "metadata, local links, pack registration, and corpus structure" if args.static else "metadata, links, references, pack targets, and routing corpus"
     print(
         f"OK: {len(globals_)} global + {len(packed)} packed personal skills; "
-        "metadata, links, references, pack targets, and routing corpus are valid."
+        f"{checks} are valid."
     )
     if warnings:
         print("Advisories:")

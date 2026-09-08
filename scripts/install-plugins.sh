@@ -15,7 +15,7 @@ PLUGINS=(
   "sites@openai-bundled"
   "browser@openai-bundled"
   "chrome@openai-bundled"
-  "computer-use@openai-bundled"
+  "unified-computer-use@openai-bundled"
   "visualize@openai-bundled"
 )
 

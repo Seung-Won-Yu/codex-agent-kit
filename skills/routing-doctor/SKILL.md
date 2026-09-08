@@ -11,8 +11,8 @@ Keep routing native and measurable. Diagnose the setup, change it only when auth
 
 1. Read the active global/project `AGENTS.md`, `config.toml`, custom agent definitions, visible skill descriptions, and relevant project skill roots.
 2. Establish the request's intent and effect ceiling. An audit or proposal is read-only; configuration edits require explicit create/modify authority.
-3. Prefer native skill-description matching. Remove runtime meta-routing layers that repeat global instructions.
-4. Check the four independent slots: one `primary`, optional `adapter`, optional `verifier`, and conditional `safety` overlay.
+3. Prefer direct domain-skill selection. Allow one conditional intent-refiner intake pass for consequential ambiguity; remove redundant dispatcher stages and repeated prompt rewriting.
+4. Check optional `intake` (intent-refiner only), then domain `primary`, optional `adapter`, optional `verifier`, and conditional `safety`. Intake does not replace the domain owner.
 5. Check agent economics: parallel work requires at least two independent substantial axes; keep one writer and depth one. A sequential reviewer/verifier is allowed after substantial or risky work.
 6. Run the static validator and routing corpus check before and after changes.
 7. For a costly behavioral evaluation, run only a representative sample first; run the full corpus only when the user wants it or a major routing change warrants it.
@@ -26,6 +26,8 @@ python3 scripts/audit_routing.py
 python3 scripts/audit_routing.py --run --ids R03,R13,R18,R27,R35,R39
 python3 scripts/audit_routing.py --run
 ```
+
+Use `--codex /path/to/codex` to test the intended runtime when app and terminal versions differ.
 
 The default command is deterministic and makes no model calls. `--run` launches ephemeral read-only Codex classification tasks and compares their JSON output with the corpus.
 

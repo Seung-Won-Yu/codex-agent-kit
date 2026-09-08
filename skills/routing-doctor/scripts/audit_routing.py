@@ -21,6 +21,7 @@ SCHEMA_FILE = SKILL_DIR / "references" / "routing-result.schema.json"
 FIELDS = (
     "expected_intent",
     "expected_effect",
+    "intake",
     "primary",
     "adapter",
     "verifier",
@@ -46,9 +47,9 @@ def load_cases() -> list[dict]:
     return cases
 
 
-def visible_skill_names(cwd: Path) -> set[str]:
+def visible_skill_names(cwd: Path, codex_binary: str = "codex") -> set[str]:
     result = subprocess.run(
-        ["codex", "debug", "prompt-input", "routing corpus visibility check"],
+        [codex_binary, "debug", "prompt-input", "routing corpus visibility check"],
         cwd=cwd, capture_output=True, text=True, timeout=30, check=False,
     )
     if result.returncode:
@@ -65,7 +66,7 @@ def visible_skill_names(cwd: Path) -> set[str]:
     return names
 
 
-def validate_cases(cases: list[dict], default_cwd: Path) -> list[str]:
+def validate_cases(cases: list[dict], default_cwd: Path, codex_binary: str = "codex", check_runtime: bool = True) -> list[str]:
     errors: list[str] = []
     ids: set[str] = set()
     required = {"id", "prompt", *FIELDS}
@@ -85,15 +86,19 @@ def validate_cases(cases: list[dict], default_cwd: Path) -> list[str]:
             errors.append(f"{case_id}: invalid expected_intent")
         if case.get("expected_effect") not in EFFECTS:
             errors.append(f"{case_id}: invalid expected_effect")
+        if case.get("intake") not in {None, "intent-refiner"}:
+            errors.append(f"{case_id}: invalid intake")
+        if any(case.get(slot) == "intent-refiner" for slot in ("primary", "adapter", "verifier", "safety")):
+            errors.append(f"{case_id}: intent-refiner belongs only in intake")
         if case.get("delegate") not in DELEGATION:
             errors.append(f"{case_id}: invalid delegate")
         if not isinstance(case.get("must_ask"), bool) or not isinstance(case.get("write_allowed"), bool):
             errors.append(f"{case_id}: must_ask and write_allowed must be booleans")
-        if "cwd" in case and (not isinstance(case["cwd"], str) or not Path(case["cwd"]).expanduser().is_dir()):
+        if "cwd" in case and (not isinstance(case["cwd"], str) or (check_runtime and not Path(case["cwd"]).expanduser().is_dir())):
             errors.append(f"{case_id}: cwd must name an existing directory")
         if case.get("expected_effect") == "read-only" and case.get("write_allowed"):
             errors.append(f"{case_id}: read-only case cannot allow writes")
-        for slot in ("primary", "adapter", "verifier", "safety"):
+        for slot in ("intake", "primary", "adapter", "verifier", "safety"):
             value = case.get(slot)
             if value is not None and not isinstance(value, str):
                 errors.append(f"{case_id}: {slot} must be a string or null")
@@ -105,20 +110,24 @@ def validate_cases(cases: list[dict], default_cwd: Path) -> list[str]:
             errors.append(f"{case_id}: routing-doctor selected for a normal task")
     if len(cases) < 40:
         errors.append(f"corpus too small: {len(cases)} cases; expected at least 40")
+    if not check_runtime:
+        return errors
     visibility_cache: dict[Path, set[str]] = {}
+    visibility_failed: set[Path] = set()
     for case in cases:
         case_id = str(case.get("id", "<missing>"))
         case_cwd = Path(case.get("cwd", default_cwd)).expanduser().resolve()
-        if not case_cwd.is_dir():
+        if not case_cwd.is_dir() or case_cwd in visibility_failed:
             continue
         try:
             if case_cwd not in visibility_cache:
-                visibility_cache[case_cwd] = visible_skill_names(case_cwd)
+                visibility_cache[case_cwd] = visible_skill_names(case_cwd, codex_binary)
             visible = visibility_cache[case_cwd]
         except (OSError, RuntimeError, json.JSONDecodeError, subprocess.TimeoutExpired) as exc:
+            visibility_failed.add(case_cwd)
             errors.append(f"{case_id}: could not inspect visible skills at {case_cwd}: {exc}")
             continue
-        for slot in ("primary", "adapter", "verifier", "safety"):
+        for slot in ("intake", "primary", "adapter", "verifier", "safety"):
             expected = case.get(slot)
             if isinstance(expected, str) and expected not in visible:
                 errors.append(f"{case_id}: expected {slot} skill {expected!r} is not visible at {case_cwd}")
@@ -131,20 +140,21 @@ Apply the active global AGENTS.md and visible skill descriptions. Classify the r
 
 Definitions:
 - expected_effect is the maximum side effect requested: read-only, workspace-write, external-write, or destructive.
-- write_allowed asks only whether the wording explicitly authorizes any mutation, external action, or destructive action. It is always false for read-only. It may remain true when must_ask is also true, because clarification or confirmation can still block immediate execution.
+- write_allowed asks only whether the request or established conversation authorization permits a mutation, external action, or destructive action. It is always false for read-only. It may remain true when must_ask is also true, because clarification or confirmation can still block immediate execution.
 - delegate is none, parallel for 2+ independent substantial axes, or sequential for a valuable post-change reviewer/verifier.
-- primary, adapter, verifier, and safety contain exact visible skill names or null.
+- intake is intent-refiner only when the request needs consequential intent refinement, otherwise null. It is separate from the domain primary and does not imply delegation.
+- primary, adapter, verifier, and safety contain exact visible domain skill names or null; never use intent-refiner in these slots.
 - routing-doctor is valid only when Codex routing/configuration itself is the subject.
 
 User request:
 {prompt}"""
 
 
-def run_case(case: dict, cwd: Path, model: str | None, effort: str) -> tuple[dict | None, str | None]:
+def run_case(case: dict, cwd: Path, model: str | None, effort: str, codex_binary: str = "codex") -> tuple[dict | None, str | None]:
     with tempfile.TemporaryDirectory(prefix="routing-eval-") as temp_dir:
         output_file = Path(temp_dir) / "result.json"
         command = [
-            "codex", "exec", "--ephemeral", "--skip-git-repo-check",
+            codex_binary, "exec", "--ephemeral", "--skip-git-repo-check",
             "--sandbox", "read-only", "--output-schema", str(SCHEMA_FILE),
             "--output-last-message", str(output_file), "--cd", str(cwd),
             "-c", f'model_reasoning_effort="{effort}"',
@@ -162,7 +172,7 @@ def run_case(case: dict, cwd: Path, model: str | None, effort: str) -> tuple[dic
             return None, f"invalid model JSON: {exc}"
 
 
-def evaluate(cases: list[dict], cwd: Path, model: str | None, effort: str) -> int:
+def evaluate(cases: list[dict], cwd: Path, model: str | None, effort: str, codex_binary: str = "codex") -> int:
     mismatches: list[str] = []
     critical: list[str] = []
     field_hits: Counter[str] = Counter()
@@ -170,7 +180,7 @@ def evaluate(cases: list[dict], cwd: Path, model: str | None, effort: str) -> in
     actual_rows: list[tuple[dict, dict]] = []
     for index, case in enumerate(cases, 1):
         case_cwd = Path(case.get("cwd", cwd)).expanduser().resolve()
-        actual, error = run_case(case, case_cwd, model, effort)
+        actual, error = run_case(case, case_cwd, model, effort, codex_binary)
         if error:
             mismatches.append(f"{case['id']}: {error}")
             critical.append(f"{case['id']}: no valid result")
@@ -185,7 +195,7 @@ def evaluate(cases: list[dict], cwd: Path, model: str | None, effort: str) -> in
                 mismatches.append(message)
                 if field in CRITICAL:
                     critical.append(message)
-        print(f"[{index:02d}/{len(cases):02d}] {case['id']}")
+        print(f"[{index:02d}/{len(cases):02d}] {case['id']}", flush=True)
 
     matched = sum(field_hits.values())
     accuracy = matched / total_fields if total_fields else 0.0
@@ -214,10 +224,15 @@ def evaluate(cases: list[dict], cwd: Path, model: str | None, effort: str) -> in
     legacy_hits = [
         f"{expected['id']}.{slot}: {actual.get(slot)}"
         for expected, actual in actual_rows
-        for slot in ("primary", "adapter", "verifier", "safety")
+        for slot in ("intake", "primary", "adapter", "verifier", "safety")
         if actual.get(slot) in LEGACY_META
     ]
     gate_failures: list[str] = []
+    intake_accuracy = field_hits["intake"] / len(cases) if cases else 0.0
+    if intake_accuracy < 0.90:
+        gate_failures.append(f"intake accuracy {intake_accuracy:.1%} < 90%")
+    if any(actual.get(slot) == "intent-refiner" for _, actual in actual_rows for slot in ("primary", "adapter", "verifier", "safety")):
+        gate_failures.append("intent-refiner incorrectly replaced a domain skill")
     if primary_accuracy < 0.90:
         gate_failures.append(f"primary accuracy {primary_accuracy:.1%} < 90%")
     if adapter_precision < 1.0:
@@ -253,20 +268,24 @@ def evaluate(cases: list[dict], cwd: Path, model: str | None, effort: str) -> in
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--static", action="store_true", help="validate case structure without runtime, account, or project-path checks")
     parser.add_argument("--run", action="store_true", help="run model-backed classification after static validation")
     parser.add_argument("--limit", type=int, help="run only the first N cases")
     parser.add_argument("--ids", help="comma-separated case IDs to run, for example R03,R13,R27")
-    parser.add_argument("--cwd", type=Path, default=Path.home() / "Documents" / "Playground")
+    parser.add_argument("--cwd", type=Path, default=Path.cwd())
+    parser.add_argument("--codex", default="codex", help="Codex executable; use the app-bundled binary to validate app behavior")
     parser.add_argument("--model", help="optional model override")
     parser.add_argument("--effort", choices=("low", "medium", "high", "xhigh"), default="medium")
     args = parser.parse_args()
+    if args.static and args.run:
+        parser.error("--static cannot be combined with --run")
 
     try:
         cases = load_cases()
     except (OSError, ValueError, yaml.YAMLError) as exc:
         print(f"FAIL: {exc}")
         return 1
-    errors = validate_cases(cases, args.cwd.expanduser().resolve())
+    errors = validate_cases(cases, args.cwd.expanduser().resolve(), args.codex, check_runtime=not args.static)
     if errors:
         print("Routing corpus validation failed:")
         for error in errors:
@@ -288,7 +307,7 @@ def main() -> int:
     if not selected:
         print("FAIL: no cases selected")
         return 1
-    return evaluate(selected, args.cwd.expanduser().resolve(), args.model, args.effort)
+    return evaluate(selected, args.cwd.expanduser().resolve(), args.model, args.effort, args.codex)
 
 
 if __name__ == "__main__":
