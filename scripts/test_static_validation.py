@@ -58,6 +58,13 @@ class StaticValidationTests(unittest.TestCase):
             self.assertIn("--static", run.call_args.args[0])
             self.assertIn("audit_routing.py", run.call_args.args[0][1])
 
+    def test_visibility_uses_selected_runtime(self):
+        payload = '[{"content":[{"text":"<skills_instructions>\\n- example: test (file: /tmp/SKILL.md)"}]}]'
+        result = subprocess.CompletedProcess([], 0, payload, "")
+        with patch.object(validator.subprocess, "run", return_value=result) as run:
+            self.assertEqual(validator.visible_skill_names("/chosen/codex"), {"example"})
+            self.assertEqual(run.call_args.args[0][0], "/chosen/codex")
+
     def test_malformed_yaml_cannot_pass_metadata_check(self):
         with tempfile.TemporaryDirectory() as temp:
             skill = Path(temp) / "SKILL.md"

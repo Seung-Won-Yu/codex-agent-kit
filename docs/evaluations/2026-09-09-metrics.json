@@ -1,0 +1,230 @@
+[
+  {
+    "id": "E01",
+    "variant": "before",
+    "skill": "incremental-implementation",
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 24.78,
+    "usage": [
+      {
+        "input_tokens": 62756,
+        "cached_input_tokens": 46592,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 422,
+        "reasoning_output_tokens": 0
+      }
+    ],
+    "tool_calls": 5,
+    "skill_sha256": "33f5fbe09858b31df45aaf132fed532ef1f89d02e22ae51671c253e870521394"
+  },
+  {
+    "id": "E01",
+    "variant": "after",
+    "skill": "incremental-implementation",
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 30.68,
+    "usage": [
+      {
+        "input_tokens": 83704,
+        "cached_input_tokens": 61312,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 446,
+        "reasoning_output_tokens": 0
+      }
+    ],
+    "tool_calls": 6,
+    "skill_sha256": "083b400b677e244483a7edcd64fe432d2e4c0f1442d3aa969ba96fc3a5d85671"
+  },
+  {
+    "id": "E02",
+    "variant": "before",
+    "skill": "code-review-and-quality",
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 43.67,
+    "usage": [
+      {
+        "input_tokens": 98187,
+        "cached_input_tokens": 79488,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1093,
+        "reasoning_output_tokens": 58
+      }
+    ],
+    "tool_calls": 4,
+    "skill_sha256": "d25ff0dfe448582edf1c00d4f6c1517bb682d02f78c10b7ed55370f38f5b9c1d"
+  },
+  {
+    "id": "E02",
+    "variant": "after",
+    "skill": "code-review-and-quality",
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 34.46,
+    "usage": [
+      {
+        "input_tokens": 102147,
+        "cached_input_tokens": 77440,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 807,
+        "reasoning_output_tokens": 29
+      }
+    ],
+    "tool_calls": 3,
+    "skill_sha256": "79487f66f46eac4d407b3597dc587d47622728abeba80ef7524cefb88d3f6060"
+  },
+  {
+    "id": "E03",
+    "variant": "before",
+    "skill": "frontend-ui-engineering",
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 40.94,
+    "usage": [
+      {
+        "input_tokens": 87111,
+        "cached_input_tokens": 63232,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1023,
+        "reasoning_output_tokens": 21
+      }
+    ],
+    "tool_calls": 6,
+    "skill_sha256": "e349198f3becdd1e43099a429bdbfb0001bcbc1a8942cdb323125c3c80d96574"
+  },
+  {
+    "id": "E03",
+    "variant": "after",
+    "skill": "frontend-ui-engineering",
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 45.35,
+    "usage": [
+      {
+        "input_tokens": 86880,
+        "cached_input_tokens": 69376,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1049,
+        "reasoning_output_tokens": 38
+      }
+    ],
+    "tool_calls": 6,
+    "skill_sha256": "1b5662c87d7ac9b8e91f961f2df9b2d574926c9abc038dc9c29c4a857565f610"
+  },
+  {
+    "id": "E04",
+    "variant": "before",
+    "skill": "product-frontend-engineer",
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 133.98,
+    "usage": [
+      {
+        "input_tokens": 127902,
+        "cached_input_tokens": 109184,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3547,
+        "reasoning_output_tokens": 71
+      }
+    ],
+    "tool_calls": 8,
+    "skill_sha256": "57f410424b235548ffa3a15b3fd19d62d4f9c0e72b5975a720ec2593eb469e1c"
+  },
+  {
+    "id": "E04",
+    "variant": "after",
+    "skill": "product-frontend-engineer",
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 114.87,
+    "usage": [
+      {
+        "input_tokens": 105562,
+        "cached_input_tokens": 67712,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 3327,
+        "reasoning_output_tokens": 39
+      }
+    ],
+    "tool_calls": 5,
+    "skill_sha256": "a0a1ae4297d121e32a7a5ef2c1dcd2f94bf1c99450046691e3d8a343b026d249"
+  },
+  {
+    "id": "E05",
+    "variant": "before",
+    "skill": "research-synthesizer",
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 17.74,
+    "usage": [
+      {
+        "input_tokens": 58631,
+        "cached_input_tokens": 38272,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 283,
+        "reasoning_output_tokens": 0
+      }
+    ],
+    "tool_calls": 3,
+    "skill_sha256": "7ee2345bd22e4a213b00e7fc57e737dd7f0b10632ed1bdc0c0097a74ea01a5d7"
+  },
+  {
+    "id": "E05",
+    "variant": "after",
+    "skill": "research-synthesizer",
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 18.56,
+    "usage": [
+      {
+        "input_tokens": 58140,
+        "cached_input_tokens": 25216,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 257,
+        "reasoning_output_tokens": 0
+      }
+    ],
+    "tool_calls": 2,
+    "skill_sha256": "0a0a48f7221811fae38eb1441a3f16670fb7bda2c672f286b4b45df3dbded1dc"
+  },
+  {
+    "id": "E06",
+    "variant": "before",
+    "skill": "ax-consulting-planner",
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 84.48,
+    "usage": [
+      {
+        "input_tokens": 60734,
+        "cached_input_tokens": 38912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 2299,
+        "reasoning_output_tokens": 309
+      }
+    ],
+    "tool_calls": 3,
+    "skill_sha256": "e32f2bcd92277c26084870b9e6bf641a140dd5cb513137f966a4473c615492d4"
+  },
+  {
+    "id": "E06",
+    "variant": "after",
+    "skill": "ax-consulting-planner",
+    "returncode": 0,
+    "timed_out": false,
+    "seconds": 75.72,
+    "usage": [
+      {
+        "input_tokens": 60819,
+        "cached_input_tokens": 38912,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 1900,
+        "reasoning_output_tokens": 230
+      }
+    ],
+    "tool_calls": 3,
+    "skill_sha256": "7400e99c04baccb0186739a343f605729faaf8831db4a099547c70bc75abea52"
+  }
+]

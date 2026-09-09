@@ -42,27 +42,22 @@ skills:
       - ~/Documents/색칠하기_codex
   - name: gpt-taste
     pack: visual
-    projects:
-      - ~/Documents/Playground/projects/car-3d-showroom
+    projects: []
   - name: image-to-code
     pack: visual
     projects:
-      - ~/Documents/Playground/projects/car-3d-showroom
       - ~/Documents/Playground/projects/pocket-desk-os
       - ~/Documents/Playground/projects/ax컨설팅
       - ~/Documents/색칠하기_codex
   - name: claude-design
     pack: visual
     projects:
-      - ~/Documents/Playground/projects/car-3d-showroom
       - ~/Documents/Playground/projects/pocket-desk-os
       - ~/Documents/Playground/projects/ax컨설팅
   - name: supabase
     pack: supabase
-    projects:
-      - ~/Documents/Playground/projects/paperclip
+    projects: []
   - name: supabase-postgres-best-practices
     pack: supabase
     projects:
-      - ~/Documents/Playground/projects/paperclip
       - ~/Documents/EST작업/cplatgit

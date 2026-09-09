@@ -89,7 +89,7 @@ flowchart TD
 - 길이가 아니라 해석의 불확실성이 기준입니다. 긴 명세, 작은 수정, 산출물이 명확한 점검·제안은 보정을 건너뜁니다.
 - 보정은 같은 모델에서 한 번 수행하며 별도 모델·에이전트·라우터를 호출하지 않습니다. 후속 요청에서는 바뀐 결정만 반영합니다.
 - 이전 수정 승인은 같은 대상에서 이어받고, “원인만 / 수정하지 마” 같은 이후 제한은 지킵니다.
-- 검증은 변경에 맞춰 수행하고 새로운 문제 없이 통과한 검사를 반복하지 않습니다. 토큰 절감률은 비교 측정하지 않았습니다.
+- 검증은 변경에 맞춰 수행하고 새로운 문제 없이 통과한 검사를 반복하지 않습니다. 고정 화면 크기·단계별 전체 빌드·자동 커밋을 완료 조건으로 강제하지 않습니다.
 - 에이전트는 독립적인 큰 작업축의 병렬 작업이나, 중요한 변경 뒤의 독립 검증에만 사용합니다.
 
 ## Custom agents
@@ -178,6 +178,7 @@ Python 3와 PyYAML이 필요합니다. 계정 연결이나 개인 프로젝트 �
 ```bash
 python3 scripts/validate-skills.py --root . --static
 python3 scripts/test_static_validation.py
+python3 scripts/test_efficiency_harness.py
 ```
 
 설치된 환경과 연결 상태를 확인하려면:
@@ -187,9 +188,13 @@ python3 "$HOME/.codex/scripts/validate-skills.py"
 python3 "$HOME/.codex/skills/routing-doctor/scripts/audit_routing.py"
 ```
 
+앱과 터미널의 Codex 버전이 다르면 두 검사 모두 `--codex /path/to/codex`로 검증할 실행 파일을 지정할 수 있습니다. 프로젝트를 이동하거나 삭제했다면 `skill-packs/manifest.yaml`의 연결도 정리하세요. `projects: []`인 스킬은 보관된 상태이며 필요한 프로젝트에 연결할 수 있습니다.
+
 Validator는 skill metadata, 내부 링크, canonical name 중복, project pack symlink, visible skill graph, legacy routing 잔존과 52개 한국어 routing case를 함께 확인합니다.
 
 보정 구조는 Astra high의 격리된 두 작업에서 확인했습니다. 명확한 오타 수정은 보정을 생략했고, 거친 교육 메모는 보정 후 준비·절차·성공 확인이 있는 안내문으로 완성했습니다. 이는 대표 동작 확인이며 전체 작업 품질이나 토큰 절감률의 벤치마크는 아닙니다.
+
+스킬 절차 완화는 추가로 6개 요청을 수정 전·후 각각 실행해 비교했습니다. 표본의 완료 품질과 권한 준수는 유지됐고 일부 도구 호출은 줄었지만, 입력 토큰은 감소하지 않았습니다. [실행 조건·사례별 결과·측정 한계](docs/evaluations/2026-09-09.md)를 확인하세요.
 
 설계 근거: [공식 Astra 행동 가이드](https://developers.openai.com/api/docs/guides/latest-model#gpt-6-astra-behavior).
 

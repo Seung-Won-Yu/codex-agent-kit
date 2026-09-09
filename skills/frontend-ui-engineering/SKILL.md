@@ -111,7 +111,7 @@ Server state (React Query, SWR)  → Remote data with caching
 Global store (Zustand, Redux)    → Complex client state shared app-wide
 ```
 
-**Avoid prop drilling deeper than 3 levels.** If you're passing props through components that don't use them, introduce context or restructure the component tree.
+Deep prop passing is a signal to inspect ownership, not an automatic refactor trigger. Introduce context or restructure only when it resolves a demonstrated maintenance or behavior problem within scope.
 
 ## Design System Adherence
 
@@ -164,7 +164,7 @@ Don't skip heading levels. Don't use heading styles for non-heading content.
 
 ## Accessibility (WCAG 2.1 AA)
 
-Every component must meet these standards:
+Preserve accessibility in changed components. Apply the relevant standards below; a local fix does not require a whole-site accessibility audit.
 
 ### Keyboard Navigation
 
@@ -253,7 +253,7 @@ Design for mobile first, then expand:
 ">
 ```
 
-Test at these breakpoints: 320px, 768px, 1024px, 1440px.
+Verify the affected breakpoint and a nearby unaffected layout using the project's responsive rules. For broad responsive changes, sample representative phone, tablet, and desktop widths; 320px, 768px, 1024px, and 1440px are examples, not a mandatory matrix.
 
 ## Loading and Transitions
 
@@ -294,21 +294,11 @@ function useToggleTask() {
 
 ## See Also
 
-For detailed accessibility requirements and testing, use `$accessibility`.
-
-## Common Rationalizations
-
-| Rationalization | Reality |
-|---|---|
-| "Accessibility is a nice-to-have" | It's a legal requirement in many jurisdictions and an engineering quality standard. |
-| "We'll make it responsive later" | Retrofitting responsive design is 3x harder than building it from the start. |
-| "The design isn't final, so I'll skip styling" | Use the design system defaults. Unstyled UI creates a broken first impression for reviewers. |
-| "This is just a prototype" | Prototypes become production code. Build the foundation right. |
-| "The AI aesthetic is fine for now" | It signals low quality. Use the project's actual design system from the start. |
+Use `$accessibility` when a dedicated accessibility audit or complex accessibility work is needed.
 
 ## Red Flags
 
-- Components with more than 200 lines (split them)
+- Components whose mixed responsibilities make the requested change difficult; length alone does not require splitting
 - Inline styles or arbitrary pixel values
 - Missing error states, loading states, or empty states
 - No keyboard navigation testing
@@ -317,12 +307,12 @@ For detailed accessibility requirements and testing, use `$accessibility`.
 
 ## Verification
 
-After building UI:
+Verify changed behavior with the smallest useful checks. Expand only for integration risk, failures, or unresolved concerns:
 
 - [ ] Component renders without console errors
-- [ ] All interactive elements are keyboard accessible (Tab through the page)
-- [ ] Screen reader can convey the page's content and structure
-- [ ] Responsive: works at 320px, 768px, 1024px, 1440px
-- [ ] Loading, error, and empty states all handled
+- [ ] Changed controls support keyboard interaction and visible focus
+- [ ] Changed labels, roles, and announcements convey the intended meaning; use screen-reader testing when those interactions are affected
+- [ ] Changed layout works at affected and representative adjacent widths
+- [ ] Relevant loading, error, and empty states are handled
 - [ ] Follows the project's design system (spacing, colors, typography)
-- [ ] No accessibility warnings in dev tools or axe-core
+- [ ] Use automated accessibility checks where available and relevant; report material unverified areas

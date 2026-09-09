@@ -11,10 +11,10 @@ Build in thin vertical slices — implement one piece, test it, verify it, then 
 
 ## When to Use
 
-- Implementing any multi-file change
+- Implementing a substantial change with independently verifiable behavior
 - Building a new feature from a task breakdown
 - Refactoring existing code
-- Any time you're tempted to write more than ~100 lines before testing
+- Refactoring across meaningful contracts or uncertain behavior; file and line counts alone are not triggers
 
 **When NOT to use:** Single-file, single-function changes where the scope is already minimal.
 
@@ -25,7 +25,7 @@ Build in thin vertical slices — implement one piece, test it, verify it, then 
 │                                      │
 │   Implement ──→ Test ──→ Verify ──┐  │
 │       ▲                           │  │
-│       └───── Commit ◄─────────────┘  │
+│       └───── Check  ◄─────────────┘  │
 │              │                       │
 │              ▼                       │
 │          Next slice                  │
@@ -36,9 +36,9 @@ Build in thin vertical slices — implement one piece, test it, verify it, then 
 For each slice:
 
 1. **Implement** the smallest complete piece of functionality
-2. **Test** — run the test suite (or write a test if none exists)
+2. **Test** — run the nearest meaningful check; add a test when it verifies a real new behavior or failure
 3. **Verify** — confirm the slice works as expected (tests pass, build succeeds, manual check)
-4. **Checkpoint** -- verify the slice and summarize it clearly; commit only when the user asked for Git work or the active workflow requires it.
+4. **Checkpoint** -- verify the slice and summarize it clearly; commit only when the user requested committing or established workflow authorization includes it. A skill checklist does not grant Git authority.
 5. **Move to the next slice** — carry forward, don't restart
 
 ## Slicing Strategies
@@ -136,13 +136,13 @@ NOTICED BUT NOT TOUCHING:
 
 Each increment changes one logical thing. Don't mix concerns:
 
-**Bad:** One commit that adds a new component, refactors an existing one, and updates the build config.
+**Bad:** One slice mixes a new component, an unrelated refactor, and an unrelated build change.
 
-**Good:** Three separate commits — one for each change.
+**Good:** Separate meaningful changes into verifiable slices. Commit boundaries apply only when committing is authorized.
 
 ### Rule 2: Keep It Compilable
 
-After each increment, the project must build and existing tests must pass. Don't leave the codebase in a broken state between slices.
+Keep each increment usable and pass its relevant focused checks. Run a build or broader existing tests at integration boundaries where the change could affect them; do not repeat unchanged checks for every slice.
 
 ### Rule 3: Feature Flags for Incomplete Features
 
@@ -177,69 +177,38 @@ Each increment should be independently revertable:
 
 - Additive changes (new files, new functions) are easy to revert
 - Modifications to existing code should be minimal and focused
-- Database migrations should have corresponding rollback migrations
-- Avoid deleting something in one commit and replacing it in the same commit — separate them
-
-## Working with Agents
-
-When directing an agent to implement incrementally:
-
-```
-"Let's implement Task 3 from the plan.
-
-Start with just the database schema change and the API endpoint.
-Don't touch the UI yet — we'll do that in the next increment.
-
-After implementing, run `npm test` and `npm run build` to verify
-nothing is broken."
-```
-
-Be explicit about what's in scope and what's NOT in scope for each increment.
+- For schema or data changes, identify a safe recovery path; do not assume destructive rollback is possible
+- Keep a replacement and its necessary removal together when separating them would break behavior
 
 ## Increment Checklist
 
 After each increment, verify:
 
 - [ ] The change does one thing and does it completely
-- [ ] All existing tests still pass (`npm test`)
-- [ ] The build succeeds (`npm run build`)
-- [ ] Type checking passes (`npx tsc --noEmit`)
-- [ ] Linting passes (`npm run lint`)
+- [ ] Relevant existing checks pass; choose tests, build, type checking, or lint according to the changed behavior and repository commands
 - [ ] The new functionality works as expected
-- [ ] The change is committed with a descriptive message
+- [ ] If committing was requested, the commit contains only the authorized changes
 
 **Note:** Run each verification command after a change that could affect it. After a successful run, don't repeat the same command unless the code has changed since — re-running on unchanged code adds no information.
 
-## Common Rationalizations
-
-| Rationalization | Reality |
-|---|---|
-| "I'll test it all at the end" | Bugs compound. A bug in Slice 1 makes Slices 2-5 wrong. Test each slice. |
-| "It's faster to do it all at once" | It *feels* faster until something breaks and you can't find which of 500 changed lines caused it. |
-| "These changes are too small to commit separately" | Small commits are free. Large commits hide bugs and make rollbacks painful. |
-| "I'll add the feature flag later" | If the feature isn't complete, it shouldn't be user-visible. Add the flag now. |
-| "This refactor is small enough to include" | Refactors mixed with features make both harder to review and debug. Separate them. |
-| "Let me run the build command again just to be sure" | After a successful run, repeating the same command adds nothing unless the code has changed since. Run it again after subsequent edits, not as reassurance. |
-
 ## Red Flags
 
-- More than 100 lines of code written without running tests
+- Several uncertain behavior changes accumulating without useful verification
 - Multiple unrelated changes in a single increment
 - "Let me just quickly add this too" scope expansion
 - Skipping the test/verify step to move faster
 - Build or tests broken between increments
-- Large uncommitted changes accumulating
-- Building abstractions before the third use case demands it
+- Unrelated changes mixed together so their behavior cannot be verified independently
+- Abstractions whose complexity is not justified by the current requirements
 - Touching files outside the task scope "while I'm here"
-- Creating new utility files for one-time operations
+- Helper layers that obscure rather than simplify the requested behavior
 - Running the same build/test command twice in a row without any intervening code change
 
 ## Verification
 
 After completing all increments for a task:
 
-- [ ] Each increment was individually tested and committed
-- [ ] The full test suite passes
-- [ ] The build is clean
+- [ ] Each meaningful increment has appropriate verification evidence
+- [ ] Broader tests or a build were run where integration risk warranted them
 - [ ] The feature works end-to-end as specified
-- [ ] No uncommitted changes remain
+- [ ] User changes remain intact; no temporary artifacts from this task are left unintentionally. Uncommitted changes are allowed.

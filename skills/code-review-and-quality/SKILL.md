@@ -229,7 +229,7 @@ Slow reviews block entire teams. The cost of context-switching to review is less
 - **Respond within one business day** — this is the maximum, not the target
 - **Ideal cadence:** Respond shortly after a review request arrives, unless deep in focused coding. A typical change should complete multiple review rounds in a single day
 - **Prioritize fast individual responses** over quick final approval. Quick feedback reduces frustration even if multiple rounds are needed
-- **Large changes:** Ask the author to split them rather than reviewing one massive changeset
+- **Large changes:** Review the highest-risk behavior and interfaces first. State unreviewed areas and limitations; recommend a split when useful without withholding the review that is already possible.
 
 ## Handling Disagreements
 
@@ -240,7 +240,7 @@ When resolving review disputes, apply this hierarchy:
 3. **Software design** must be evaluated on engineering principles, not personal preference
 4. **Codebase consistency** is acceptable if it doesn't degrade overall health
 
-**Don't accept "I'll clean it up later."** Experience shows deferred cleanup rarely happens. Require cleanup before submission unless it's a genuine emergency. If surrounding issues can't be addressed in this change, require filing a bug with self-assignment.
+Require fixes for concrete correctness or safety problems in scope. Report surrounding issues separately when relevant; do not block the requested review on unrelated cleanup. Creating or assigning external issues requires user authorization for that action.
 
 ## Honesty in Review
 

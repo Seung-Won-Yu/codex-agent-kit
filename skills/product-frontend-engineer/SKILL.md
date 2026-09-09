@@ -9,8 +9,8 @@ Use this skill to move from product intent to a working, verified frontend witho
 
 ## Operating Loop
 
-1. Frame the product problem before coding.
-2. Sketch the user flow, screen states, and acceptance criteria.
+1. Reuse the established brief, decisions, and acceptance criteria; frame the product problem only where these are missing.
+2. Fill in domain-specific flow or screen states needed for implementation without repeating intake or settled questions.
 3. Inspect the existing codebase and design conventions.
 4. Implement the smallest useful version that satisfies the acceptance criteria.
 5. Verify behavior, responsiveness, accessibility, and performance with the best available checks.
@@ -27,7 +27,7 @@ Read only the reference needed for the task:
 
 ## Product Before UI
 
-- Convert vague requests into a concrete user, job, flow, and success signal.
+- Use an existing refined brief as the starting point. Clarify the user, job, flow, or success signal only where a consequential gap remains.
 - Prefer one primary workflow over many speculative options.
 - Define empty, loading, error, success, disabled, and mobile states before implementation when they affect the experience.
 - Keep acceptance criteria observable: a person or test should be able to confirm each one.

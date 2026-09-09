@@ -166,10 +166,10 @@ def load_pack_dirs(errors: list[str], check_runtime: bool = True) -> list[Path]:
     return sorted(packed)
 
 
-def visible_skill_names() -> set[str]:
+def visible_skill_names(codex_binary: str = "codex") -> set[str]:
     try:
         result = subprocess.run(
-            ["codex", "debug", "prompt-input", "skill graph validation"],
+            [codex_binary, "debug", "prompt-input", "skill graph validation"],
             capture_output=True, text=True, timeout=30, check=False,
         )
         if result.returncode == 0:
@@ -214,6 +214,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=CODEX_DIR, help="kit repository or installed Codex root")
     parser.add_argument("--static", action="store_true", help="check repository assets without runtime or project links")
+    parser.add_argument("--codex", default="codex", help="Codex executable used for both visibility and routing checks")
     args = parser.parse_args()
     CODEX_DIR = args.root.expanduser().resolve()
     SKILLS_DIR = CODEX_DIR / "skills"
@@ -254,7 +255,7 @@ def main() -> int:
                 detail = (result.stdout + result.stderr).strip().replace("\n", " | ")
                 errors.append(f"invalid metadata: {skill_dir.name}: {detail}")
 
-    installed = set(canonical_names) | (set() if args.static else visible_skill_names())
+    installed = set(canonical_names) | (set() if args.static else visible_skill_names(args.codex))
     for skill_dir in skill_dirs:
         for markdown in skill_dir.rglob("*.md"):
             text = markdown_without_fences(markdown)
@@ -272,7 +273,7 @@ def main() -> int:
                     errors.append(f"missing $skill: {markdown}:${name}")
 
     if ROUTING_CHECK.is_file():
-        command = [sys.executable, str(ROUTING_CHECK)] + (["--static"] if args.static else [])
+        command = [sys.executable, str(ROUTING_CHECK)] + (["--static"] if args.static else ["--codex", args.codex])
         result = subprocess.run(command, capture_output=True, text=True, check=False)
         if result.returncode:
             errors.append("routing corpus failed: " + (result.stdout + result.stderr).strip().replace("\n", " | "))

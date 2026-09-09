@@ -5,13 +5,13 @@ description: 'Research current facts, tools, libraries, markets, or documentatio
 
 # Research Synthesizer
 
-Use this skill when the answer depends on current or source-backed information. Browse first, prefer primary sources, and return a concise synthesis with links.
+Use this skill when the answer depends on current or source-backed information. Use current primary evidence and return a concise synthesis with links. Reuse relevant verified sources while current.
 
 ## Workflow
 
-1. Restate the decision or research question in one sentence.
-2. Search broadly enough to discover candidates.
-3. Open primary sources for shortlisted candidates.
+1. Resolve the decision or research question from the conversation; restate it only when useful.
+2. Inspect a supplied authoritative source or known official reference directly. Search for candidates or broaden coverage when comparison, discovery, or an evidence gap requires it.
+3. Open the primary sources needed to establish the answer; do not repeat searches after a narrow question is resolved.
 4. Compare fit, evidence quality, freshness, risks, and implementation cost.
 5. Cite sources used in the final answer.
 
