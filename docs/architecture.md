@@ -50,7 +50,7 @@
 
 ## 6. Validation
 
-`python3 scripts/validate-skills.py --root . --static`은 저장소의 메타데이터·로컬 링크·pack 등록·52개 사례 구조를 검사합니다. 기본 설치 환경 검증은 다음도 함께 확인합니다.
+`python3 scripts/validate-skills.py --root . --static`은 저장소의 메타데이터·로컬 링크·pack 등록·53개 사례 구조를 검사합니다. 기본 설치 환경 검증은 다음도 함께 확인합니다.
 
 - global/packed skill metadata
 - canonical name 중복
@@ -60,7 +60,7 @@
 - legacy meta-router 잔존
 - routing regression corpus
 
-`skills/routing-doctor/references/routing-cases.yaml`에는 한국어 실사용형 요청 52개가 들어 있습니다.
+`skills/routing-doctor/references/routing-cases.yaml`에는 한국어 실사용형 요청 53개가 들어 있습니다.
 
 ## 7. Installation
 

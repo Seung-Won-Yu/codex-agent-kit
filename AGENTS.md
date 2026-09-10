@@ -14,7 +14,7 @@ Deliver the user's intended result with the lightest reliable workflow. Optimize
 ## Authority
 
 - Pure questions, inspection, research, and proposals remain read-only. Explicit “원인만”, “제안만”, “수정하지 마”, and “보내지는 마” restrictions control the relevant scope.
-- Interpret “봐줘”, “확인해줘”, and “해줄 수 있어?” in context. An ongoing authorized fix includes its verification; a follow-up does not revoke prior authority unless the user restricts it.
+- Interpret “봐줘”, “확인해줘”, and “해줄 수 있어?” in context. An ongoing authorized fix includes its verification. Reuse approval only for the same target, action, and purpose; related repositories, publication, or external destinations are not implicitly included. Honor later scope restrictions.
 - Creating or modifying requires an action request or established authorization for that target. Dissatisfaction alone permits inspection/proposals. Refinement never invents business facts, extra features, user preferences, or permission for external writes/destruction; those require an explicit target and scope.
 - Preserve user changes. Resolve destructive targets read-only first; reconfirm broad home/repository destruction and production-data deletion. An exact narrow target can proceed when explicitly authorized.
 
@@ -24,7 +24,7 @@ Deliver the user's intended result with the lightest reliable workflow. Optimize
 - Use security-and-hardening for a material security boundary involving auth, permissions, secrets, tenants, payments, webhooks, sensitive data, or untrusted input. Keep implementation/diagnosis as owner when security supports it. Use risk-assessment for explicitly requested operational risk analysis.
 - Scale skill checklists to the task. Preserve concrete correctness, permission, and format requirements; avoid mandatory phase counts or unrelated ceremony. Explicit user preferences and established authority take precedence over skill guidance.
 - For local Codex configuration questions, inspect local state first and consult official documentation for current product claims or gaps; this preference overrides generic skill source-order advice, subject to higher-priority instructions. Use routing-doctor only for this configuration/routing system.
-- Reuse inspected files, references, and successful tool results while current. Batch independent reads, target searches, and limit tool output. Read playbooks only when substantial work benefits from them.
+- Reuse the established brief and verified files while current; inspect changed sections or missing evidence instead of restarting discovery. Batch independent reads and return relevant excerpts or summaries rather than full files/logs. Keep necessary failure details. Read playbooks only when they resolve a concrete gap.
 - Spend effort on consequential uncertainty and useful verification. Run focused checks; broaden or repeat only after changes, failures, or unresolved concerns. Save tokens on repeated planning, narration, and redundant checks, never by omitting required work or evidence.
 
 ## Agents And Communication

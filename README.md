@@ -29,7 +29,7 @@ GPT-6 Astra에 맞춘 개인 Codex 운영 설정입니다. 명확한 요청은 �
 | Project packs | `game`, `visual`, `supabase` |
 | Domain playbooks | 4 |
 | Connected plugins | 10 |
-| Routing regression cases | 52 |
+| Routing regression cases | 53 |
 
 ## 설치
 
@@ -171,6 +171,15 @@ Plugin만 설치하려면:
 └── assets/
 ```
 
+## 불필요한 중간 작업 줄이기
+
+- 디자인 단계마다 스킬을 연쇄 호출하지 않고, 기존 brief와 담당 스킬로 해결하지 못하는 부분에만 전문 지침을 추가합니다.
+- 문서의 완성도와 파일 형식을 별도로 판단합니다. 사용 목적과 기존 형식에 맞춰 Markdown·Office를 선택하며 필요한 파일 생성·렌더 검증은 유지합니다.
+- 확인한 자료는 재사용하고, 변경 부분과 필요한 오류 근거를 우선 읽습니다. 사용자 레퍼런스를 따르는 색·카드·효과를 일괄 금지하지 않습니다.
+- 이전 승인은 같은 대상·행위·목적에만 이어받습니다. 개인 설정 변경이 관련 저장소 수정이나 게시 승인으로 확대되지 않습니다.
+
+두 스킬(`design-flow`, `planning-document-writer`)의 본문을 포함한 SKILL.md 글자 수 합계는 10,205자에서 6,695자로 약 34% 줄었습니다. 이는 실제 작업 토큰 절감률이 아닙니다. 이번 정리는 정적·설치 검사로 확인했으며 추가 모델 벤치마크를 실행하지 않았습니다. 공개 모델 예시와 각 사용자의 개인 기본값은 별도로 관리합니다.
+
 ## 검증
 
 Python 3와 PyYAML이 필요합니다. 계정 연결이나 개인 프로젝트 경로 없이 저장소를 검사하려면:
@@ -190,7 +199,7 @@ python3 "$HOME/.codex/skills/routing-doctor/scripts/audit_routing.py"
 
 앱과 터미널의 Codex 버전이 다르면 두 검사 모두 `--codex /path/to/codex`로 검증할 실행 파일을 지정할 수 있습니다. 프로젝트를 이동하거나 삭제했다면 `skill-packs/manifest.yaml`의 연결도 정리하세요. `projects: []`인 스킬은 보관된 상태이며 필요한 프로젝트에 연결할 수 있습니다.
 
-Validator는 skill metadata, 내부 링크, canonical name 중복, project pack symlink, visible skill graph, legacy routing 잔존과 52개 한국어 routing case를 함께 확인합니다.
+Validator는 skill metadata, 내부 링크, canonical name 중복, project pack symlink, visible skill graph, legacy routing 잔존과 53개 한국어 routing case를 함께 확인합니다.
 
 보정 구조는 Astra high의 격리된 두 작업에서 확인했습니다. 명확한 오타 수정은 보정을 생략했고, 거친 교육 메모는 보정 후 준비·절차·성공 확인이 있는 안내문으로 완성했습니다. 이는 대표 동작 확인이며 전체 작업 품질이나 토큰 절감률의 벤치마크는 아닙니다.
 

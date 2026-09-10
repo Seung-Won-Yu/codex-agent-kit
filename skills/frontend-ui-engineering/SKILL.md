@@ -117,7 +117,7 @@ Deep prop passing is a signal to inspect ownership, not an automatic refactor tr
 
 ### Avoid the AI Aesthetic
 
-AI-generated UI has recognizable patterns. Avoid all of them:
+Follow the user's references, brand, and product purpose first. The patterns below are diagnostic examples of unmotivated styling, not banned colors, components, or effects. Keep them when they serve the intended design.
 
 | AI Default | Why It Is a Problem | Production Quality |
 |---|---|---|
